@@ -32,9 +32,8 @@
 > **Prerequisite**: [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installed. No sudo required.
 
 ```bash
-# 0. Set up conda environment (Python + Node.js + BLAST+)
-conda create -n hapbrowser -c conda-forge -c bioconda \
-    python=3.11 nodejs blast -y
+# 0. Setup conda environment (Python + Node.js + BLAST+)
+conda create -n hapbrowser -c conda-forge -c bioconda python=3.11 nodejs blast -y
 conda activate hapbrowser
 
 # 1. Clone the repository
