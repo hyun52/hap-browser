@@ -19,13 +19,13 @@
 
 ## Features
 
-- ** Per-gene haplotype matrix** — Sample × variant grid for any RAP-DB gene, with SNP / InDel / Gap clustering
-- ** Canvas-based rendering** — 60fps interaction with 200 samples × 10,000+ variant positions via virtual scrolling
-- ** KASP & InDel marker design** — Allele-specific primers with Primer3-validated Tm / hairpin / dimer
-- ** Variant-aware primer design** — Optionally avoid neighboring SNP/InDel sites in primer regions
-- ** Phenotype overlay** — Upload phenotype CSV → automatic haplotype-level box plots
-- ** Publication-ready export** — CSV matrices, Excel sheets, SVG box plots
-- ** Reproducible pipeline** — Snakemake workflow: FASTQ → BAM → pileup → haplotype → browser, in one command
+- **Per-gene haplotype matrix** — Sample × variant grid for any RAP-DB gene, with SNP / InDel / Gap clustering
+- **Canvas-based rendering** — 60fps interaction with 200 samples × 10,000+ variant positions via virtual scrolling
+- **KASP & InDel marker design** — Allele-specific primers with Primer3-validated Tm / hairpin / dimer
+- **Variant-aware primer design** — Optionally avoid neighboring SNP/InDel sites in primer regions
+- **Phenotype overlay** — Upload phenotype CSV → automatic haplotype-level box plots
+- **Publication-ready export** — CSV matrices, Excel sheets, SVG box plots
+- **Reproducible pipeline** — Snakemake workflow: FASTQ → BAM → pileup → haplotype → browser, in one command
 
 ## Quick Start
 
@@ -125,12 +125,12 @@ Then follow [`USER_GUIDE_ADD_GENES.md`](USER_GUIDE_ADD_GENES.md).
 └─────────────────┘              └────────┬───────┘
                                           │
                                           v
-                  ┌────────────────────────────────────┐
-                  │ React + Canvas Frontend (Vite)     │
-                  │ - GenomeView (Canvas + virtual scroll)
-                  │ - HapMatrix (custom position view)
-                  │ - MarkerPanel (KASP / InDel design)
-                  └─────────┬──────────────────────────┘
+                  ┌────────────────────────────────────────┐
+                  │ React + Canvas Frontend (Vite)         │
+                  │ - GenomeView (Canvas + virtual scroll) │
+                  │ - HapMatrix (custom position view)     │
+                  │ - MarkerPanel (KASP / InDel design)    │
+                  └─────────┬──────────────────────────────┘
                             │
                             v
                   ┌────────────────────────┐
