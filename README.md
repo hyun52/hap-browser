@@ -191,18 +191,22 @@ For commercial licensing inquiries, contact via GitHub.
 
 ## Citation
 
+> **Note**: A peer-reviewed publication is in preparation. Until it is published, please cite this repository directly.
+
 If you use HapBrowser in your research, please cite:
 
 ```bibtex
 @software{hapbrowser2026,
-  author       = {Lee, Hyunoh},
-  title        = {HapBrowser: A Rice Haplotype Browser with Integrated Marker Design},
-  year         = {2026},
-  publisher    = {Plant Genome and Breeding Lab, Jeonbuk National University},
-  url          = {https://github.com/hyun52/hap-browser},
-  version      = {1.0.0}
+  author    = {Lee, Hyunoh},
+  title     = {HapBrowser: A Rice Haplotype Browser with Integrated Marker Design},
+  year      = {2026},
+  publisher = {Plant Genome and Breeding Lab, Jeonbuk National University},
+  url       = {https://github.com/hyun52/hap-browser},
+  version   = {1.0.0}
 }
 ```
+
+Once the manuscript is published, please cite the published article instead. This page will be updated with the journal reference and DOI.
 
 Please also cite the underlying tools:
 - **Snakemake**: Köster J. & Rahmann S. (2012). *Bioinformatics* 28(19):2520–2522.
