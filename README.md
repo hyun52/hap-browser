@@ -29,30 +29,37 @@
 
 ## Quick Start
 
-### Run the browser
+> **Prerequisite**: [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installed. No sudo required.
 
 ```bash
-# Clone the repository
+# 0. Set up conda environment (Python + Node.js + BLAST+)
+conda create -n hapbrowser -c conda-forge -c bioconda \
+    python=3.11 nodejs blast -y
+conda activate hapbrowser
+
+# 1. Clone the repository
 git clone https://github.com/hyun52/hap-browser.git
 cd hap-browser
 
-# Download pileup data (~773 MB) from the v1.0.0 release
+# 2. Download pileup data (~773 MB) from the v1.0.0 release
 wget https://github.com/hyun52/hap-browser/releases/download/v1.0.0/hap-browser-pileup-data-v1.0.0.tar.gz
 tar xzf hap-browser-pileup-data-v1.0.0.tar.gz -C public/data/
 
-# Install JS dependencies
+# 3. Install JS dependencies
 npm install
 
-# Install Python backend (KASP validation via Primer3)
+# 4. Install Python backend libraries
 pip install -r backend/requirements.txt
 
-# Start frontend + backend
+# 5. Start frontend + backend
 bash start.sh
 # → Frontend: http://localhost:8080
 # → Backend:  http://localhost:8081
 ```
 
 The demo dataset includes 23 rice heading-date genes plus Sub1A across 200 IRRI accessions.
+
+> Don't have conda? Install [Miniconda](https://docs.conda.io/en/latest/miniconda.html) first (one script, no sudo).
 
 ### Add a new gene
 
