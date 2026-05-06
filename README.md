@@ -79,31 +79,42 @@ echo -e "Os07g0281400\tYield components\tDRO1" >> genes.tsv
 
 ## Screenshots
 
+### Visualization
+
 <table>
 <tr>
-<td align="center">
-  <img src="docs/screenshots/genome_view.png" width="400"><br>
-  <sub><b>Full Region View</b><br>JBrowse-style Canvas with zoom, pan, gene diagram</sub>
+<td align="center" width="50%">
+  <img src="docs/screenshots/genome_view.png" width="450"><br>
+  <sub><b>Genome view</b><br>JBrowse-style Canvas with zoom, pan, gene diagram</sub>
 </td>
-<td align="center">
-  <img src="docs/screenshots/marker_design.png" width="400"><br>
-  <sub><b>KASP Marker Design</b><br>Allele-specific primers with Primer3 validation</sub>
-</td>
-</tr>
-<tr>
-<td align="center">
-  <img src="docs/screenshots/hapmatrix.png" width="400"><br>
-  <sub><b>HapMatrix</b><br>Custom position table with phenotype box plots</sub>
-</td>
-<td align="center">
-  <img src="docs/screenshots/blocking_variants.png" width="400"><br>
-  <sub><b>Variant-aware diagnostics</b><br>Shows which neighboring variants block primer design</sub>
+<td align="center" width="50%">
+  <img src="docs/screenshots/protein_view.png" width="450"><br>
+  <sub><b>Protein view</b><br>Codon-level visualization with auto AA-change detection</sub>
 </td>
 </tr>
 </table>
 
-> *Screenshots will be added in the GitHub release.*
+### Marker Design & Search
 
+<table>
+<tr>
+<td align="center" width="50%">
+  <img src="docs/screenshots/marker_design.png" width="450"><br>
+  <sub><b>KASP marker design</b><br>Allele-specific primers with Primer3 validation</sub>
+</td>
+<td align="center" width="50%">
+  <img src="docs/screenshots/blast.png" width="450"><br>
+  <sub><b>BLAST search</b><br>Sequence search across haplotype consensus</sub>
+</td>
+</tr>
+</table>
+
+### Multi-position Analysis
+
+<p align="center">
+  <img src="docs/screenshots/hapmatrix.png" width="700"><br>
+  <sub><b>HapMatrix</b> — multi-gene position table with phenotype upload and box-plot analysis</sub>
+</p>
 ---
 
 ## Architecture
