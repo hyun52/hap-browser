@@ -32,7 +32,7 @@ When you first open HapBrowser (http://localhost:8080) and select a gene, the in
 The top bar contains the current gene info and primary action buttons.
 
 - **Gene name + RAP-DB ID** (e.g., `Hd1 · Os06g0275000`): currently loaded gene
-- **`☰ Genes`**: open gene navigator (mobile-friendly)
+- **`☰ Genes`**: open gene navigator
 - **`RAP-DB pos`** input + **`Go`**: jump to a specific genomic coordinate within the gene
 - **Action buttons** (right side):
   - **`HapMatrix`** — multi-position haplotype analysis with phenotype overlay
@@ -48,7 +48,7 @@ Lists genes available in the browser.
 - **Gene Navigator**: groups (e.g., `Heading date genes`, `Flood tolerance`) → expandable lists of every registered gene
 - Click any gene to load it. The currently selected gene is highlighted.
 
-### ③ Header rows
+### ③ Annotation
 
 The annotation rows above the haplotype matrix:
 
@@ -62,14 +62,28 @@ The annotation rows above the haplotype matrix:
 
 The main visualization. Each row is one sample (or a group of identical haplotypes); each column is one variant position.
 
-- **Colors**:
-  - 🟦 **Blue** = `A`
-  - 🟩 **Green** = `T`
-  - 🟧 **Orange** = `G`
-  - 🟥 **Red** = `C`
-  - **`·`** = identical to reference
-  - **Gap (`-`)** = deletion
-- **Haplotype groups**: samples sharing identical patterns are grouped under colored headers (`Haplotype 1`, `Haplotype 2`, ...). The number indicates the haplotype rank (most common first).
+**Colors**:
+- 🟦 **Blue** = `A`
+- 🟩 **Green** = `T`
+- 🟧 **Orange** = `G`
+- 🟥 **Red** = `C`
+- **`·`** = identical to reference
+- **Gap (`-`)** = deletion
+
+**Haplotype groups**: samples sharing identical patterns are grouped under colored headers (`Haplotype 1`, `Haplotype 2`, ...). The number indicates the haplotype rank (most common first).
+
+**Interactions**:
+
+| Action | Shortcut |
+|--------|----------|
+| Scroll vertically (samples) | Mouse wheel |
+| Scroll horizontally (positions) | Horizontal wheel |
+| Navigate | Arrow keys (↑ ↓ ← →) |
+| Select a single SNP for **KASP** marker design | **Shift + Click** on a column |
+| Select a range for **InDel** marker design | **Shift + Drag** across columns |
+| View haplotype details | Click a haplotype header |
+
+See [Section 5](#5-kasp-marker-design) for KASP and [Section 6](#6-indel-marker-design) for InDel design details.
 
 ### ⑤ Control Panel
 
