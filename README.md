@@ -60,28 +60,22 @@ The demo dataset includes 23 rice heading-date genes plus Sub1A across 200 IRRI 
 
 > Don't have conda? Install [Miniconda](https://docs.conda.io/en/latest/miniconda.html) first (one script, no sudo).
 
-### Add a new gene
+## Adding new genes (advanced)
+
+The Quick Start above is enough to use the included demo data. To add **new genes** from your own FASTQ files, install the pipeline tools:
 
 ```bash
-# Append to genes.tsv (tab-separated)
-echo -e "Os07g0281400\tYield components\tDRO1" >> genes.tsv
-
-# Run pipeline
-./add_genes.sh \
-    --tsv          genes.tsv \
-    --genome       /path/to/IRGSP-1.0_genome.fasta \
-    --locus        /path/to/locus.gff \
-    --transcripts  /path/to/transcripts.gff \
-    --fastq-dir    /path/to/fastq/trimmed \
-    --data-dir     public/data \
-    --log-dir      logs
+conda activate hapbrowser
+conda install -c bioconda -c conda-forge snakemake bwa-mem2 samtools -y
 ```
 
-≈ 30–45 min per new gene (200 samples, 72-core workstation).
+Then follow [`USER_GUIDE_ADD_GENES.md`](USER_GUIDE_ADD_GENES.md).
 
-**See [`USER_GUIDE_ADD_GENES.md`](USER_GUIDE_ADD_GENES.md) for a full walkthrough.**
-
----
+| Pipeline tool | Version |
+|---------------|---------|
+| Snakemake | 9.x |
+| BWA-MEM2  | 2.2.1+ |
+| samtools  | 1.10+ | 
 
 ## Screenshots
 
@@ -152,24 +146,6 @@ echo -e "Os07g0281400\tYield components\tDRO1" >> genes.tsv
 - **Frontend**: React 18, Vite 5, Canvas (no Konva/etc.), OffscreenCanvas + Web Workers for performance
 - **Backend**: FastAPI, [primer3-py](https://libnano.github.io/primer3-py/), Uvicorn
 - **Marker design**: Custom KASP algorithm + Primer3 validation (SantaLucia 1998 nearest-neighbor Tm, [Mg²⁺] / [dNTP] correction)
-
-## Requirements
-
-| Component | Version |
-|-----------|---------|
-| Node.js   | 18+     |
-| Python    | 3.10+   |
-| Snakemake | 9.x     |
-| BWA-MEM2  | 2.2.1+  |
-| samtools  | 1.10+   |
-| NCBI BLAST+ (optional) | 2.10+ |
-
-Install pipeline tools via conda:
-```bash
-conda create -n hapbrowser -c bioconda -c conda-forge \
-    snakemake bwa-mem2 samtools blast
-conda activate hapbrowser
-```
 
 ## Documentation
 
