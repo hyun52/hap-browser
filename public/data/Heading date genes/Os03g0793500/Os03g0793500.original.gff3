@@ -1,0 +1,70 @@
+##gff-version 3
+chr03	irgsp1_rep	five_prime_UTR	32994502	32994635	.	+	.	Parent=Os03t0793450-00
+chr03	irgsp1_locus	gene	32994502	32996265	.	+	.	ID=Os03g0793450;Name=Os03g0793450;Note=Hypothetical gene. (Os03t0793450-00);Transcript variants=Os03t0793450-00
+chr03	irgsp1_rep	mRNA	32994502	32996265	.	+	.	ID=Os03t0793450-00;Name=Os03t0793450-00;Locus_id=Os03g0793450;Note=Hypothetical gene.;Transcript_evidence=AK242952;ORF_evidence=longestORF
+chr03	irgsp1_rep	CDS	32994636	32994696	.	+	0	Parent=Os03t0793450-00
+chr03	irgsp1_rep	CDS	32994792	32994857	.	+	2	Parent=Os03t0793450-00
+chr03	irgsp1_rep	CDS	32994955	32995040	.	+	2	Parent=Os03t0793450-00
+chr03	irgsp1_rep	three_prime_UTR	32995041	32995464	.	+	.	Parent=Os03t0793450-00
+chr03	irgsp1_rep	three_prime_UTR	32995589	32995646	.	+	.	Parent=Os03t0793450-00
+chr03	irgsp1_rep	three_prime_UTR	32996009	32996265	.	+	.	Parent=Os03t0793450-00
+chr03	irgsp1_rep	five_prime_UTR	32999502	32999688	.	+	.	Parent=Os03t0793500-01
+chr03	irgsp1_locus	gene	32999502	33006898	.	+	.	ID=Os03g0793500;Name=Os03g0793500;Note=Casein kinase I%2C Photoperiodic control of flowering time%2C Long-day repression (Os03t0793500-01)%3BSimilar to Casein kinase-like protein. (Os03t0793500-02);Transcript variants=Os03t0793500-01,Os03t0793500-02;RAP-DB Gene Symbol Synonym(s)=HD16%2C Hd16%2C EL1%2C CK1;RAP-DB Gene Name Synonym(s)=HEADING DATE 16%2C EARLY FLOWERING 1%2C Early flowering1%2C Casein Kinase I;CGSNL Gene Symbol=HD16;CGSNL Gene Name=HEADING DATE 16;Oryzabase Gene Symbol Synonym(s)=Hd16%2C EL1%2C CK1%2C Hd16/CKI%2C Hd16/EL1;Oryzabase Gene Name Synonym(s)=EARLY FLOWERING 1%2C Early flowering1%2C Casein Kinase I
+chr03	irgsp1_rep	mRNA	32999502	33006898	.	+	.	ID=Os03t0793500-01;Name=Os03t0793500-01;Locus_id=Os03g0793500;RAP-DB Gene Symbol Synonym(s)=HD16%2C Hd16%2C EL1%2C CK1;RAP-DB Gene Name Synonym(s)=HEADING DATE 16%2C EARLY FLOWERING 1%2C Early flowering1%2C Casein Kinase I;CGSNL Gene Symbol=HD16;CGSNL Gene Name=HEADING DATE 16;Oryzabase Gene Symbol Synonym(s)=Hd16%2C EL1%2C CK1%2C Hd16/CKI%2C Hd16/EL1;Oryzabase Gene Name Synonym(s)=EARLY FLOWERING 1%2C Early flowering1%2C Casein Kinase I;Note=Casein kinase I%2C Photoperiodic control of flowering time%2C Long-day repression;Transcript_evidence=AK121620;ORF_evidence=Q852L0;GO=Biological Process: protein phosphorylation (GO:0006468),Molecular Function: ATP binding (GO:0005524),Molecular Function: protein kinase activity (GO:0004672);InterPro=Protein kinase domain (IPR000719),Serine/threonine-protein kinase%2C active site (IPR008271),Protein kinase-like domain superfamily (IPR011009),Protein kinase%2C ATP binding site (IPR017441),Casein Kinase 1 Ser/Thr Protein Kinase (IPR050235),Domain of unknown function DUF7477 (IPR055900);Manual Curation=November 21%2C 2013;Literature_PMID=23789941,20400938;Oryzabase=8704
+chr03	irgsp1_rep	five_prime_UTR	32999556	32999688	.	+	.	Parent=Os03t0793500-02
+chr03	irgsp1_rep	mRNA	32999556	33006651	.	+	.	ID=Os03t0793500-02;Name=Os03t0793500-02;Locus_id=Os03g0793500;CGSNL Gene Symbol=HD16;CGSNL Gene Name=HEADING DATE 16;Oryzabase Gene Symbol Synonym(s)=Hd16%2C EL1%2C CK1%2C Hd16/CKI%2C Hd16/EL1;Oryzabase Gene Name Synonym(s)=EARLY FLOWERING 1%2C Early flowering1%2C Casein Kinase I;Note=Similar to Casein kinase-like protein.;Transcript_evidence=AK103407;ORF_evidence=B6U8U2 (UniProt);GO=Biological Process: protein phosphorylation (GO:0006468),Molecular Function: ATP binding (GO:0005524),Molecular Function: protein kinase activity (GO:0004672);InterPro=Protein kinase domain (IPR000719),Serine/threonine-protein kinase%2C active site (IPR008271),Protein kinase-like domain superfamily (IPR011009),Protein kinase%2C ATP binding site (IPR017441),Casein Kinase 1 Ser/Thr Protein Kinase (IPR050235),Domain of unknown function DUF7477 (IPR055900);Oryzabase=8704
+chr03	irgsp1_rep	five_prime_UTR	33000382	33000434	.	+	.	Parent=Os03t0793500-01
+chr03	irgsp1_rep	five_prime_UTR	33000382	33000434	.	+	.	Parent=Os03t0793500-02
+chr03	irgsp1_rep	CDS	33000435	33000848	.	+	0	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33000435	33000848	.	+	0	Parent=Os03t0793500-02
+chr03	irgsp1_rep	three_prime_UTR	33001509	33001597	.	-	.	Parent=Os03t0793550-00
+chr03	irgsp1_locus	gene	33001509	33004482	.	-	.	ID=Os03g0793550;Name=Os03g0793550;Note=Hypothetical protein. (Os03t0793550-00);Transcript variants=Os03t0793550-00
+chr03	irgsp1_rep	mRNA	33001509	33004482	.	-	.	ID=Os03t0793550-00;Name=Os03t0793550-00;Locus_id=Os03g0793550;Note=Hypothetical protein.;Transcript_evidence=BT084747;ORF_evidence=longestORF;B5toI1=Exon-intron structures%2C exon and CDS sequences are different between Build 5 and IRGSP-1.0.
+chr03	irgsp1_rep	CDS	33001510	33001635	.	+	0	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33001510	33001635	.	+	0	Parent=Os03t0793500-02
+chr03	irgsp1_rep	three_prime_UTR	33001666	33001917	.	-	.	Parent=Os03t0793550-00
+chr03	irgsp1_rep	CDS	33001719	33001792	.	+	0	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33001719	33001792	.	+	0	Parent=Os03t0793500-02
+chr03	irgsp1_rep	CDS	33001882	33001951	.	+	1	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33001882	33001951	.	+	1	Parent=Os03t0793500-02
+chr03	irgsp1_rep	CDS	33002036	33002091	.	+	0	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33002036	33002091	.	+	0	Parent=Os03t0793500-02
+chr03	irgsp1_rep	three_prime_UTR	33002174	33002270	.	-	.	Parent=Os03t0793550-00
+chr03	irgsp1_rep	CDS	33002176	33002247	.	+	1	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33002176	33002247	.	+	1	Parent=Os03t0793500-02
+chr03	irgsp1_rep	CDS	33002359	33002453	.	+	1	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33002359	33002453	.	+	1	Parent=Os03t0793500-02
+chr03	irgsp1_rep	three_prime_UTR	33002382	33002515	.	-	.	Parent=Os03t0793550-00
+chr03	irgsp1_rep	CDS	33002610	33002676	.	+	2	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33002610	33002676	.	+	2	Parent=Os03t0793500-02
+chr03	irgsp1_rep	three_prime_UTR	33002764	33002789	.	-	.	Parent=Os03t0793550-00
+chr03	irgsp1_rep	CDS	33002773	33002902	.	+	1	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33002773	33002902	.	+	1	Parent=Os03t0793500-02
+chr03	irgsp1_rep	CDS	33002790	33002907	.	-	1	Parent=Os03t0793550-00
+chr03	irgsp1_rep	CDS	33002992	33003207	.	+	0	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33002992	33003207	.	+	0	Parent=Os03t0793500-02
+chr03	irgsp1_rep	CDS	33003001	33003104	.	-	0	Parent=Os03t0793550-00
+chr03	irgsp1_rep	five_prime_UTR	33003105	33003231	.	-	.	Parent=Os03t0793550-00
+chr03	irgsp1_rep	CDS	33003301	33003431	.	+	0	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33003301	33003431	.	+	0	Parent=Os03t0793500-02
+chr03	irgsp1_rep	five_prime_UTR	33003314	33003439	.	-	.	Parent=Os03t0793550-00
+chr03	irgsp1_rep	CDS	33004133	33004307	.	+	1	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33004133	33004307	.	+	1	Parent=Os03t0793500-02
+chr03	irgsp1_rep	five_prime_UTR	33004140	33004283	.	-	.	Parent=Os03t0793550-00
+chr03	irgsp1_rep	five_prime_UTR	33004366	33004482	.	-	.	Parent=Os03t0793550-00
+chr03	irgsp1_rep	CDS	33004391	33004481	.	+	0	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33004391	33004481	.	+	0	Parent=Os03t0793500-02
+chr03	irgsp1_rep	CDS	33005565	33005722	.	+	2	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33005565	33005722	.	+	2	Parent=Os03t0793500-02
+chr03	irgsp1_rep	CDS	33006177	33006365	.	+	0	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33006177	33006365	.	+	0	Parent=Os03t0793500-02
+chr03	irgsp1_rep	CDS	33006480	33006539	.	+	0	Parent=Os03t0793500-01
+chr03	irgsp1_rep	CDS	33006480	33006539	.	+	0	Parent=Os03t0793500-02
+chr03	irgsp1_rep	three_prime_UTR	33006540	33006651	.	+	.	Parent=Os03t0793500-02
+chr03	irgsp1_rep	three_prime_UTR	33006540	33006898	.	+	.	Parent=Os03t0793500-01
+chr03	irgsp1_rep	five_prime_UTR	33010944	33010954	.	+	.	Parent=Os03t0793600-00
+chr03	irgsp1_locus	gene	33010944	33011898	.	+	.	ID=Os03g0793600;Name=Os03g0793600;Note=Similar to type I inositol-1%2C4%2C5-trisphosphate 5-phosphatase CVP2. (Os03t0793600-00);Transcript variants=Os03t0793600-00
+chr03	irgsp1_rep	mRNA	33010944	33011898	.	+	.	ID=Os03t0793600-00;Name=Os03t0793600-00;Locus_id=Os03g0793600;Note=Similar to type I inositol-1%2C4%2C5-trisphosphate 5-phosphatase CVP2.;Transcript_evidence=BT085886;ORF_evidence=NP_001151627.1 (RefSeq);GO=Biological Process: phosphatidylinositol dephosphorylation (GO:0046856),Molecular Function: inositol-polyphosphate 5-phosphatase activity (GO:0004445),Molecular Function: phosphatase activity (GO:0016791);InterPro=Inositol polyphosphate-related phosphatase (IPR000300),Endonuclease/exonuclease/phosphatase superfamily (IPR036691),Inositol polyphosphate 5-phosphatase%2C plant (IPR045849)
+chr03	irgsp1_rep	CDS	33010955	33010984	.	+	0	Parent=Os03t0793600-00
+chr03	irgsp1_rep	CDS	33011096	33011183	.	+	0	Parent=Os03t0793600-00
+chr03	irgsp1_rep	CDS	33011798	33011875	.	+	2	Parent=Os03t0793600-00

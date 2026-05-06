@@ -1,0 +1,19 @@
+{
+  "gene_id": "Os09g0286600",
+  "chromosome": "chr09",
+  "strand": "-",
+  "gene_start": 6388158,
+  "gene_end": 6389789,
+  "region_start": 6383158,
+  "region_end": 6394789,
+  "region_length": 11632,
+  "upstream_bp": 5000,
+  "downstream_bp": 5000,
+  "offset": 6383157,
+  "coordinate_note": "To convert local coords to RAP-DB coords: local_pos + 6383157 = original_pos",
+  "fasta_header": ">Os09g0286600 chr09:6383158-6394789 strand=- length=11632",
+  "overlapping_genes": [
+    "Os09g0286400",
+    "Os09g0286501"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "gene_id": "Os07g0261200",
+  "chromosome": "chr07",
+  "strand": "-",
+  "gene_start": 9152377,
+  "gene_end": 9155030,
+  "region_start": 9147377,
+  "region_end": 9160030,
+  "region_length": 12654,
+  "upstream_bp": 5000,
+  "downstream_bp": 5000,
+  "offset": 9147376,
+  "coordinate_note": "To convert local coords to RAP-DB coords: local_pos + 9147376 = original_pos",
+  "fasta_header": ">Os07g0261200 chr07:9147377-9160030 strand=- length=12654"
+}

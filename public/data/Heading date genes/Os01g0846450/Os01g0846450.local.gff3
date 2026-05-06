@@ -1,0 +1,47 @@
+##gff-version 3
+##sequence-region Os01g0846450 1 15463
+Os01g0846450	irgsp1_rep	three_prime_UTR	1	538	.	+	.	Parent=Os01t0846400-01
+Os01g0846450	irgsp1_locus	gene	1	1474	.	+	.	ID=Os01g0846400;Name=Os01g0846400;Note=Conserved hypothetical protein. (Os01t0846400-01);Transcript variants=Os01t0846400-01
+Os01g0846450	irgsp1_rep	mRNA	1	1474	.	+	.	ID=Os01t0846400-01;Name=Os01t0846400-01;Locus_id=Os01g0846400;Note=Conserved hypothetical protein.;Transcript_evidence=AK119400;ORF_evidence=B8AC30 (UniProt)
+Os01g0846450	irgsp1_rep	three_prime_UTR	553	1474	.	+	.	Parent=Os01t0846400-01
+Os01g0846450	irgsp1_rep	five_prime_UTR	5001	5278	.	+	.	Parent=Os01t0846450-01
+Os01g0846450	irgsp1_rep	five_prime_UTR	5001	5278	.	+	.	Parent=Os01t0846450-02
+Os01g0846450	irgsp1_locus	gene	5001	10463	.	+	.	ID=Os01g0846450;Name=Os01g0846450;Note=Hypothetical conserved gene. (Os01t0846450-01)%3BHomolog of Arabidopsis thaliana HEN1 suppressor 1%2C Heading date (Os01t0846450-02);Transcript variants=Os01t0846450-01,Os01t0846450-02;RAP-DB Gene Symbol Synonym(s)=HESO1;RAP-DB Gene Name Synonym(s)=a homolog of Arabidopsis thaliana HEN1 suppressor 1;Oryzabase Gene Name Synonym(s)=a homolog of Arabidopsis thaliana HEN1 suppressor 1%2C HESO1 homolog
+Os01g0846450	irgsp1_rep	mRNA	5001	10463	.	+	.	ID=Os01t0846450-01;Name=Os01t0846450-01;Locus_id=Os01g0846450;Oryzabase Gene Name Synonym(s)=a homolog of Arabidopsis thaliana HEN1 suppressor 1%2C HESO1 homolog;Note=Hypothetical conserved gene.;Transcript_evidence=AK242908;ORF_evidence=B8AC31 (UniProt);InterPro=Nucleotidyltransferase superfamily (IPR043519),Poly(A) RNA polymerase%2C mitochondrial-like%2C central palm domain (IPR054708);Oryzabase=21339
+Os01g0846450	irgsp1_rep	mRNA	5001	10463	.	+	.	ID=Os01t0846450-02;Name=Os01t0846450-02;Locus_id=Os01g0846450;RAP-DB Gene Symbol Synonym(s)=HESO1;RAP-DB Gene Name Synonym(s)=a homolog of Arabidopsis thaliana HEN1 suppressor 1;Oryzabase Gene Name Synonym(s)=a homolog of Arabidopsis thaliana HEN1 suppressor 1%2C HESO1 homolog;Note=Homolog of Arabidopsis thaliana HEN1 suppressor 1%2C Heading date;Transcript_evidence=Inferred from literature;ORF_evidence=Inferred from literature;InterPro=Nucleotidyltransferase superfamily (IPR043519),Poly(A) RNA polymerase%2C mitochondrial-like%2C central palm domain (IPR054708);Manual Curation=August 30%2C 2017;Literature_PMID=27322545;Oryzabase=21339
+Os01g0846450	irgsp1_rep	five_prime_UTR	6403	6411	.	+	.	Parent=Os01t0846450-01
+Os01g0846450	irgsp1_rep	five_prime_UTR	6403	6411	.	+	.	Parent=Os01t0846450-02
+Os01g0846450	irgsp1_rep	CDS	6412	6559	.	+	0	Parent=Os01t0846450-01
+Os01g0846450	irgsp1_rep	CDS	6412	6559	.	+	0	Parent=Os01t0846450-02
+Os01g0846450	irgsp1_rep	CDS	7279	7434	.	+	2	Parent=Os01t0846450-01
+Os01g0846450	irgsp1_rep	CDS	7279	7434	.	+	2	Parent=Os01t0846450-02
+Os01g0846450	irgsp1_rep	CDS	7753	7931	.	+	2	Parent=Os01t0846450-01
+Os01g0846450	irgsp1_rep	CDS	7753	7931	.	+	2	Parent=Os01t0846450-02
+Os01g0846450	irgsp1_rep	CDS	8017	8112	.	+	0	Parent=Os01t0846450-02
+Os01g0846450	irgsp1_rep	CDS	8017	8154	.	+	0	Parent=Os01t0846450-01
+Os01g0846450	irgsp1_rep	three_prime_UTR	8155	8255	.	+	.	Parent=Os01t0846450-01
+Os01g0846450	irgsp1_rep	CDS	8195	8255	.	+	0	Parent=Os01t0846450-02
+Os01g0846450	irgsp1_rep	three_prime_UTR	8341	8471	.	+	.	Parent=Os01t0846450-01
+Os01g0846450	irgsp1_rep	CDS	8341	8471	.	+	2	Parent=Os01t0846450-02
+Os01g0846450	irgsp1_rep	three_prime_UTR	9122	9229	.	+	.	Parent=Os01t0846450-01
+Os01g0846450	irgsp1_rep	CDS	9122	9229	.	+	0	Parent=Os01t0846450-02
+Os01g0846450	irgsp1_rep	CDS	9324	9956	.	+	0	Parent=Os01t0846450-02
+Os01g0846450	irgsp1_rep	three_prime_UTR	9324	10463	.	+	.	Parent=Os01t0846450-01
+Os01g0846450	irgsp1_rep	three_prime_UTR	9957	10463	.	+	.	Parent=Os01t0846450-02
+Os01g0846450	irgsp1_rep	five_prime_UTR	11638	11832	.	+	.	Parent=Os01t0846500-01
+Os01g0846450	irgsp1_locus	gene	11638	15463	.	+	.	ID=Os01g0846500;Name=Os01g0846500;Note=Hypothetical conserved gene. (Os01t0846500-01)%3BPAP/25A core domain containing protein. (Os01t0846500-02);Transcript variants=Os01t0846500-01,Os01t0846500-02;CGSNL Gene Symbol=NTP3;CGSNL Gene Name=NUCLEOTIDYL TRANSFERASE PROTEIN 3;Oryzabase Gene Symbol Synonym(s)=OsNTP3;Oryzabase Gene Name Synonym(s)=nucleotidyl transferase protein 3
+Os01g0846450	irgsp1_rep	mRNA	11638	15463	.	+	.	ID=Os01t0846500-01;Name=Os01t0846500-01;Locus_id=Os01g0846500;CGSNL Gene Symbol=NTP3;CGSNL Gene Name=NUCLEOTIDYL TRANSFERASE PROTEIN 3;Oryzabase Gene Symbol Synonym(s)=OsNTP3;Oryzabase Gene Name Synonym(s)=nucleotidyl transferase protein 3;Note=Hypothetical conserved gene.;Transcript_evidence=AK073619;ORF_evidence=B8AC32 (UniProt);InterPro=Nucleotidyltransferase superfamily (IPR043519),Poly(A) RNA polymerase%2C mitochondrial-like%2C central palm domain (IPR054708);Oryzabase=21886
+Os01g0846450	irgsp1_rep	five_prime_UTR	11669	11832	.	+	.	Parent=Os01t0846500-02
+Os01g0846450	irgsp1_rep	mRNA	11669	15463	.	+	.	ID=Os01t0846500-02;Name=Os01t0846500-02;Locus_id=Os01g0846500;CGSNL Gene Symbol=NTP3;CGSNL Gene Name=NUCLEOTIDYL TRANSFERASE PROTEIN 3;Oryzabase Gene Symbol Synonym(s)=OsNTP3;Oryzabase Gene Name Synonym(s)=nucleotidyl transferase protein 3;Note=PAP/25A core domain containing protein.;Transcript_evidence=AK072322;ORF_evidence=B7EMF8 (UniProt);InterPro=Nucleotidyltransferase superfamily (IPR043519),Poly(A) RNA polymerase%2C mitochondrial-like%2C central palm domain (IPR054708);Oryzabase=21886
+Os01g0846450	irgsp1_rep	five_prime_UTR	13001	13009	.	+	.	Parent=Os01t0846500-01
+Os01g0846450	irgsp1_rep	five_prime_UTR	13001	13009	.	+	.	Parent=Os01t0846500-02
+Os01g0846450	irgsp1_rep	CDS	13010	13163	.	+	0	Parent=Os01t0846500-01
+Os01g0846450	irgsp1_rep	CDS	13010	13163	.	+	0	Parent=Os01t0846500-02
+Os01g0846450	irgsp1_rep	CDS	14451	14612	.	+	2	Parent=Os01t0846500-01
+Os01g0846450	irgsp1_rep	CDS	14451	14612	.	+	2	Parent=Os01t0846500-02
+Os01g0846450	irgsp1_rep	CDS	14949	15127	.	+	2	Parent=Os01t0846500-01
+Os01g0846450	irgsp1_rep	CDS	14949	15127	.	+	2	Parent=Os01t0846500-02
+Os01g0846450	irgsp1_rep	CDS	15202	15297	.	+	0	Parent=Os01t0846500-01
+Os01g0846450	irgsp1_rep	CDS	15202	15297	.	+	0	Parent=Os01t0846500-02
+Os01g0846450	irgsp1_rep	CDS	15389	15455	.	+	0	Parent=Os01t0846500-02
+Os01g0846450	irgsp1_rep	CDS	15389	15463	.	+	0	Parent=Os01t0846500-01

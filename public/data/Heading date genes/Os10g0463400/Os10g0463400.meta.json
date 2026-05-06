@@ -1,0 +1,19 @@
+{
+  "gene_id": "Os10g0463400",
+  "chromosome": "chr10",
+  "strand": "-",
+  "gene_start": 17076098,
+  "gene_end": 17081344,
+  "region_start": 17071098,
+  "region_end": 17086344,
+  "region_length": 15247,
+  "upstream_bp": 5000,
+  "downstream_bp": 5000,
+  "offset": 17071097,
+  "coordinate_note": "To convert local coords to RAP-DB coords: local_pos + 17071097 = original_pos",
+  "fasta_header": ">Os10g0463400 chr10:17071098-17086344 strand=- length=15247",
+  "overlapping_genes": [
+    "Os10g0463200",
+    "Os10g0463300"
+  ]
+}

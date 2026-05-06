@@ -1,0 +1,14 @@
+##gff-version 3
+chr06	irgsp1_rep	five_prime_UTR	2940004	2940155	.	+	.	Parent=Os06t0157700-01
+chr06	irgsp1_locus	gene	2940004	2942452	.	+	.	ID=Os06g0157700;Name=Os06g0157700;Note=Florigen%2C Heading date (Os06t0157700-01);Transcript variants=Os06t0157700-01;RAP-DB Gene Symbol Synonym(s)=HD3A%2C Hd3a%2C FT%2C qHD3(t)*%2C FT-L 2%2C OsFTL2%2C FT-L2%2C FTL2;RAP-DB Gene Name Synonym(s)=HEADING DATE 3A%2C heading date 3A%2C Heading date-3a%2C Heading date (QTL)-3(t)%2C Flowering locus T%2C FT-like gene 2;CGSNL Gene Symbol=HD3A;CGSNL Gene Name=HEADING DATE 3A;Oryzabase Gene Symbol Synonym(s)=Hd3a%2C FT%2C qHD3(t)*%2C FT-L 2%2C OsFTL2%2C FT-L2%2C FTL2%2C OsHd3a;Oryzabase Gene Name Synonym(s)=heading date 3A%2C Heading date-3a%2C Heading date (QTL)-3(t)%2C Flowering locus T%2C FT-like gene 2
+chr06	irgsp1_rep	mRNA	2940004	2942452	.	+	.	ID=Os06t0157700-01;Name=Os06t0157700-01;Locus_id=Os06g0157700;RAP-DB Gene Symbol Synonym(s)=HD3A%2C Hd3a%2C FT%2C qHD3(t)*%2C FT-L 2%2C OsFTL2%2C FT-L2%2C FTL2;RAP-DB Gene Name Synonym(s)=HEADING DATE 3A%2C heading date 3A%2C Heading date-3a%2C Heading date (QTL)-3(t)%2C Flowering locus T%2C FT-like gene 2;CGSNL Gene Symbol=HD3A;CGSNL Gene Name=HEADING DATE 3A;Oryzabase Gene Symbol Synonym(s)=Hd3a%2C FT%2C qHD3(t)*%2C FT-L 2%2C OsFTL2%2C FT-L2%2C FTL2%2C OsHd3a;Oryzabase Gene Name Synonym(s)=heading date 3A%2C Heading date-3a%2C Heading date (QTL)-3(t)%2C Flowering locus T%2C FT-like gene 2;Note=Florigen%2C Heading date;Transcript_evidence=AB052943 (Genbank),AB052944 (Genbank);ORF_evidence=Q93WM7 (UniProt),Q93WI9 (UniProt);InterPro=Phosphatidylethanolamine-binding%2C conserved site (IPR001858),Phosphatidylethanolamine-binding protein (IPR008914),Phosphatidylethanolamine-binding protein%2C eukaryotic (IPR035810),PEBP-like superfamily (IPR036610);Manual Curation=May 8%2C 2009;Literature_PMID=12407188,17446351,20543848;Oryzabase=7216
+chr06	irgsp1_rep	CDS	2940156	2940362	.	+	0	Parent=Os06t0157700-01
+chr06	irgsp1_rep	CDS	2940525	2940586	.	+	0	Parent=Os06t0157700-01
+chr06	irgsp1_rep	CDS	2940720	2940760	.	+	1	Parent=Os06t0157700-01
+chr06	irgsp1_rep	CDS	2942068	2942297	.	+	2	Parent=Os06t0157700-01
+chr06	irgsp1_rep	three_prime_UTR	2942298	2942452	.	+	.	Parent=Os06t0157700-01
+chr06	irgsp1_rep	five_prime_UTR	2945585	2945659	.	+	.	Parent=Os06t0157800-01
+chr06	irgsp1_locus	gene	2945585	2946273	.	+	.	ID=Os06g0157800;Name=Os06g0157800;Note=Similar to CG7224 (Fragment). (Os06t0157800-01);Transcript variants=Os06t0157800-01
+chr06	irgsp1_rep	mRNA	2945585	2946273	.	+	.	ID=Os06t0157800-01;Name=Os06t0157800-01;Locus_id=Os06g0157800;Note=Similar to CG7224 (Fragment).;Transcript_evidence=AK121504;ORF_evidence=NP_001143165.1 (RefSeq);InterPro=Succinate dehydrogenase assembly factor 4 (IPR012875)
+chr06	irgsp1_rep	CDS	2945660	2946028	.	+	0	Parent=Os06t0157800-01
+chr06	irgsp1_rep	three_prime_UTR	2946029	2946273	.	+	.	Parent=Os06t0157800-01

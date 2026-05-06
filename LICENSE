@@ -1,0 +1,76 @@
+HapBrowser — Academic Non-Commercial License
+=============================================
+
+Copyright (c) 2026 Hyunoh Lee, Plant Genome and Breeding Lab,
+Jeonbuk National University (JBNU).
+
+All rights reserved.
+
+Permission is hereby granted, free of charge, to any person or institution
+obtaining a copy of this software and associated documentation files
+(the "Software"), to use the Software for ACADEMIC, EDUCATIONAL, AND
+NON-COMMERCIAL RESEARCH PURPOSES ONLY, subject to the following conditions:
+
+1. ACADEMIC AND RESEARCH USE
+   The Software may be used freely by:
+     a. Universities and academic research institutions.
+     b. Government research institutes.
+     c. Non-profit research organizations.
+     d. Individual researchers for educational or scholarly purposes.
+   Use must be limited to non-commercial activities.
+
+2. CITATION REQUIREMENT
+   Any publication, presentation, dataset, or report that uses the
+   Software, in whole or in part, must cite the Software as follows:
+
+       Lee, H. (2026). HapBrowser: A Rice Haplotype Browser with Integrated
+       Marker Design. Plant Genome and Breeding Lab, Jeonbuk National
+       University. https://github.com/hyun52/hap-browser
+
+3. MODIFICATION AND REDISTRIBUTION
+   Modification of the Software is permitted for academic purposes.
+   Redistribution of original or modified versions is permitted only
+   under the same terms of this license, and only for academic use.
+   Redistributed versions must:
+     a. Retain this license file unchanged.
+     b. Include a clear notice of any modifications made.
+     c. Not be sold, sublicensed, or otherwise commercially distributed.
+
+4. COMMERCIAL USE PROHIBITED
+   Use of the Software for commercial purposes — including but not
+   limited to use by for-profit companies, sale of services or products
+   built on the Software, or inclusion in commercial software products —
+   is strictly prohibited without prior written permission from the
+   copyright holder.
+
+   For commercial licensing inquiries, please contact:
+       Hyunoh Lee
+       Plant Genome and Breeding Lab
+       Jeonbuk National University
+       [Contact via the GitHub repository]
+
+5. NO WARRANTY
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+   OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+   HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY,
+   WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING
+   FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+   OR OTHER DEALINGS IN THE SOFTWARE.
+
+6. THIRD-PARTY COMPONENTS
+   This Software depends on third-party libraries (React, Vite,
+   Snakemake, BWA-MEM2, samtools, Primer3, etc.), each of which is
+   distributed under its own license. Users are responsible for
+   complying with the licenses of these dependencies.
+
+7. DATA LICENSING
+   Demonstration data included with the Software (haplotype matrices,
+   precomputed indices) are derived from publicly available rice
+   genomic data (RAP-DB IRGSP-1.0 reference; IRRI 3K Rice Genomes
+   Project, where applicable) and are distributed for academic
+   reproducibility. Users redistributing data must comply with the
+   original data sources' licenses.
+
+By using this Software, you agree to the terms of this license.

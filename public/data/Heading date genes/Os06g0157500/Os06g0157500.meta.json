@@ -1,0 +1,15 @@
+{
+  "gene_id": "Os06g0157500",
+  "chromosome": "chr06",
+  "strand": "+",
+  "gene_start": 2926823,
+  "gene_end": 2928474,
+  "region_start": 2921823,
+  "region_end": 2933474,
+  "region_length": 11652,
+  "upstream_bp": 5000,
+  "downstream_bp": 5000,
+  "offset": 2921822,
+  "coordinate_note": "To convert local coords to RAP-DB coords: local_pos + 2921822 = original_pos",
+  "fasta_header": ">Os06g0157500 chr06:2921823-2933474 strand=+ length=11652"
+}

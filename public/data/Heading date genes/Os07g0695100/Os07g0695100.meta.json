@@ -1,0 +1,20 @@
+{
+  "gene_id": "Os07g0695100",
+  "chromosome": "chr07",
+  "strand": "+",
+  "gene_start": 29616705,
+  "gene_end": 29629215,
+  "region_start": 29611705,
+  "region_end": 29634215,
+  "region_length": 22511,
+  "upstream_bp": 5000,
+  "downstream_bp": 5000,
+  "offset": 29611704,
+  "coordinate_note": "To convert local coords to RAP-DB coords: local_pos + 29611704 = original_pos",
+  "fasta_header": ">Os07g0695100 chr07:29611705-29634215 strand=+ length=22511",
+  "overlapping_genes": [
+    "Os07g0695200",
+    "Os07g0695300",
+    "Os07g0695400"
+  ]
+}

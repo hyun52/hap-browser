@@ -1,0 +1,41 @@
+##gff-version 3
+chr03	irgsp1_rep	five_prime_UTR	31503813	31503829	.	+	.	Parent=Os03t0761900-01
+chr03	irgsp1_locus	gene	31503813	31507752	.	+	.	ID=Os03g0761900;Name=Os03g0761900;Note=Similar to Prolyl 4-hydroxylase. (Os03t0761900-01);Transcript variants=Os03t0761900-01
+chr03	irgsp1_rep	mRNA	31503813	31507752	.	+	.	ID=Os03t0761900-01;Name=Os03t0761900-01;Locus_id=Os03g0761900;Note=Similar to Prolyl 4-hydroxylase.;Transcript_evidence=AK109047;ORF_evidence=B6TKD8 (UniProt);GO=Molecular Function: L-ascorbic acid binding (GO:0031418),Molecular Function: iron ion binding (GO:0005506),Molecular Function: oxidoreductase activity%2C acting on paired donors%2C with incorporation or reduction of molecular oxygen (GO:0016705);InterPro=Oxoglutarate/iron-dependent dioxygenase domain (IPR005123),Prolyl 4-hydroxylase%2C alpha subunit (IPR006620),Prolyl 4-hydroxylase alpha subunit%2C Fe(2+) 2OG dioxygenase domain (IPR044862),Prolyl 4-hydroxylase (IPR045054)
+chr03	irgsp1_rep	CDS	31503830	31504009	.	+	0	Parent=Os03t0761900-01
+chr03	irgsp1_rep	CDS	31504126	31504248	.	+	0	Parent=Os03t0761900-01
+chr03	irgsp1_rep	CDS	31505177	31505334	.	+	0	Parent=Os03t0761900-01
+chr03	irgsp1_rep	CDS	31505801	31505903	.	+	1	Parent=Os03t0761900-01
+chr03	irgsp1_rep	CDS	31506483	31506578	.	+	0	Parent=Os03t0761900-01
+chr03	irgsp1_rep	CDS	31506773	31506838	.	+	0	Parent=Os03t0761900-01
+chr03	irgsp1_rep	CDS	31506906	31507025	.	+	0	Parent=Os03t0761900-01
+chr03	irgsp1_rep	CDS	31507311	31507397	.	+	0	Parent=Os03t0761900-01
+chr03	irgsp1_rep	three_prime_UTR	31507398	31507752	.	+	.	Parent=Os03t0761900-01
+chr03	irgsp1_rep	three_prime_UTR	31508813	31509060	.	-	.	Parent=Os03t0762000-02
+chr03	irgsp1_locus	gene	31508813	31514460	.	-	.	ID=Os03g0762000;Name=Os03g0762000;Note=Similar to Protein kinase CK2%2C alpha subunit. (Os03t0762000-01)%3BCasein kinase II alpha subunit%2C Heading date%2C Photoperiod sensitivity (Os03t0762000-02);Transcript variants=Os03t0762000-01,Os03t0762000-02;RAP-DB Gene Symbol Synonym(s)=HD6%2C Hd6%2C Hd6(t)*%2C OsCKA2%2C OSCKA2;RAP-DB Gene Name Synonym(s)=HEADING DATE 6%2C Heading date 6%2C Heading date (QTL)-6(t)%2C Heading date-6%2C casein kinase II alpha subunit;CGSNL Gene Symbol=HD6;CGSNL Gene Name=HEADING DATE 6;Oryzabase Gene Symbol Synonym(s)=Hd6(t)*%2C OSCKA2%2C OsCKA2%2C CKA2%2C OsCKA2-1%2C CKA2-1%2C Hd6/CK2alpha%2C CK2alpha;Oryzabase Gene Name Synonym(s)=Heading date (QTL)-6(t)%2C Heading date-6%2C Heading date6%2C casein kinase II alpha subunit%2C CK2alpha subunit 1%2C Casein Kinase 2alpha
+chr03	irgsp1_rep	mRNA	31508813	31514460	.	-	.	ID=Os03t0762000-02;Name=Os03t0762000-02;Locus_id=Os03g0762000;RAP-DB Gene Symbol Synonym(s)=HD6%2C Hd6%2C Hd6(t)*%2C OsCKA2%2C OSCKA2;RAP-DB Gene Name Synonym(s)=HEADING DATE 6%2C Heading date 6%2C Heading date (QTL)-6(t)%2C Heading date-6%2C casein kinase II alpha subunit;CGSNL Gene Symbol=HD6;CGSNL Gene Name=HEADING DATE 6;Oryzabase Gene Symbol Synonym(s)=Hd6(t)*%2C OSCKA2%2C OsCKA2%2C CKA2%2C OsCKA2-1%2C CKA2-1%2C Hd6/CK2alpha%2C CK2alpha;Oryzabase Gene Name Synonym(s)=Heading date (QTL)-6(t)%2C Heading date-6%2C Heading date6%2C casein kinase II alpha subunit%2C CK2alpha subunit 1%2C Casein Kinase 2alpha;Note=Casein kinase II alpha subunit%2C Heading date%2C Photoperiod sensitivity;Transcript_evidence=AB036785,AB036787;ORF_evidence=Q9AQU1 (UniProt);GO=Biological Process: protein phosphorylation (GO:0006468),Molecular Function: ATP binding (GO:0005524),Molecular Function: protein kinase activity (GO:0004672),Molecular Function: protein serine/threonine kinase activity (GO:0004674);InterPro=Protein kinase domain (IPR000719),Protein kinase-like domain superfamily (IPR011009),Protein kinase%2C ATP binding site (IPR017441),Casein Kinase 2%2C subunit alpha (IPR045216);Manual Curation=August 2%2C 2009;Literature_PMID=11743085,17406851,11416158,20007447;Oryzabase=529
+chr03	irgsp1_rep	three_prime_UTR	31509718	31509786	.	-	.	Parent=Os03t0762000-02
+chr03	irgsp1_rep	three_prime_UTR	31509864	31509927	.	-	.	Parent=Os03t0762000-02
+chr03	irgsp1_rep	three_prime_UTR	31510004	31510086	.	-	.	Parent=Os03t0762000-02
+chr03	irgsp1_rep	three_prime_UTR	31510649	31510714	.	-	.	Parent=Os03t0762000-02
+chr03	irgsp1_rep	three_prime_UTR	31510832	31510922	.	-	.	Parent=Os03t0762000-02
+chr03	irgsp1_rep	three_prime_UTR	31511496	31511653	.	-	.	Parent=Os03t0762000-02
+chr03	irgsp1_rep	three_prime_UTR	31511520	31511653	.	-	.	Parent=Os03t0762000-01
+chr03	irgsp1_rep	mRNA	31511520	31514398	.	-	.	ID=Os03t0762000-01;Name=Os03t0762000-01;Locus_id=Os03g0762000;CGSNL Gene Symbol=HD6;CGSNL Gene Name=HEADING DATE 6;Oryzabase Gene Symbol Synonym(s)=Hd6(t)*%2C OSCKA2%2C OsCKA2%2C CKA2%2C OsCKA2-1%2C CKA2-1%2C Hd6/CK2alpha%2C CK2alpha;Oryzabase Gene Name Synonym(s)=Heading date (QTL)-6(t)%2C Heading date-6%2C Heading date6%2C casein kinase II alpha subunit%2C CK2alpha subunit 1%2C Casein Kinase 2alpha;Note=Similar to Protein kinase CK2%2C alpha subunit.;Transcript_evidence=CT837832;ORF_evidence=Q9ST47 (UniProt);GO=Biological Process: protein phosphorylation (GO:0006468),Molecular Function: ATP binding (GO:0005524),Molecular Function: protein kinase activity (GO:0004672),Molecular Function: protein serine/threonine kinase activity (GO:0004674);InterPro=Protein kinase domain (IPR000719),Protein kinase-like domain superfamily (IPR011009),Protein kinase%2C ATP binding site (IPR017441),Casein Kinase 2%2C subunit alpha (IPR045216);Oryzabase=529;B5toI1=Exon-intron structures%2C exon and CDS sequences are different between Build 5 and IRGSP-1.0.
+chr03	irgsp1_rep	three_prime_UTR	31512320	31512457	.	-	.	Parent=Os03t0762000-01
+chr03	irgsp1_rep	three_prime_UTR	31512320	31512457	.	-	.	Parent=Os03t0762000-02
+chr03	irgsp1_rep	CDS	31512458	31512514	.	-	0	Parent=Os03t0762000-01
+chr03	irgsp1_rep	CDS	31512458	31512514	.	-	0	Parent=Os03t0762000-02
+chr03	irgsp1_rep	CDS	31512595	31512724	.	-	1	Parent=Os03t0762000-01
+chr03	irgsp1_rep	CDS	31512595	31512724	.	-	1	Parent=Os03t0762000-02
+chr03	irgsp1_rep	CDS	31514091	31514176	.	-	0	Parent=Os03t0762000-02
+chr03	irgsp1_rep	CDS	31514091	31514341	.	-	0	Parent=Os03t0762000-01
+chr03	irgsp1_rep	five_prime_UTR	31514177	31514460	.	-	.	Parent=Os03t0762000-02
+chr03	irgsp1_rep	five_prime_UTR	31514342	31514398	.	-	.	Parent=Os03t0762000-01
+chr03	irgsp1_rep	three_prime_UTR	31517358	31517558	.	-	.	Parent=Os03t0762100-01
+chr03	irgsp1_locus	gene	31517358	31518881	.	-	.	ID=Os03g0762100;Name=Os03g0762100;Note=Conserved hypothetical protein. (Os03t0762100-01);Transcript variants=Os03t0762100-01
+chr03	irgsp1_rep	mRNA	31517358	31518881	.	-	.	ID=Os03t0762100-01;Name=Os03t0762100-01;Locus_id=Os03g0762100;Note=Conserved hypothetical protein.;Transcript_evidence=AK108604;ORF_evidence=B8AK93 (UniProt)
+chr03	irgsp1_rep	CDS	31517559	31518158	.	-	0	Parent=Os03t0762100-01
+chr03	irgsp1_rep	CDS	31518250	31518342	.	-	0	Parent=Os03t0762100-01
+chr03	irgsp1_rep	five_prime_UTR	31518343	31518373	.	-	.	Parent=Os03t0762100-01
+chr03	irgsp1_rep	five_prime_UTR	31518812	31518881	.	-	.	Parent=Os03t0762100-01

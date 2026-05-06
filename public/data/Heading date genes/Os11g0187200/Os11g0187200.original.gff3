@@ -1,0 +1,18 @@
+##gff-version 3
+chr11	irgsp1_rep	CDS	4428082	4428644	.	-	2	Parent=Os11t0187100-00
+chr11	irgsp1_locus	gene	4428082	4431404	.	-	.	ID=Os11g0187100;Name=Os11g0187100;Note=WD40 repeat domain containing protein. (Os11t0187100-00);Transcript variants=Os11t0187100-00;Oryzabase Gene Symbol Synonym(s)=OsWD40-185%2C OsSTA253
+chr11	irgsp1_rep	mRNA	4428082	4431404	.	-	.	ID=Os11t0187100-00;Name=Os11t0187100-00;Locus_id=Os11g0187100;Oryzabase Gene Symbol Synonym(s)=OsWD40-185%2C OsSTA253;Note=WD40 repeat domain containing protein.;Transcript_evidence=AK369075;ORF_evidence=NP_001176393.1 (RefSeq);GO=Molecular Function: protein binding (GO:0005515);InterPro=WD40 repeat (IPR001680),WD40/YVTN repeat-like-containing domain superfamily (IPR015943),WD40 repeat%2C conserved site (IPR019775),G-protein beta WD-40 repeat (IPR020472),WD40-repeat-containing domain superfamily (IPR036322),WD repeat-containing protein WDR44/Dgr2 (IPR040324);Oryzabase=10866;B5toI1=Exon-intron structures%2C exon and CDS sequences are different between Build 5 and IRGSP-1.0.
+chr11	irgsp1_rep	CDS	4428779	4428872	.	-	0	Parent=Os11t0187100-00
+chr11	irgsp1_rep	CDS	4428946	4429083	.	-	0	Parent=Os11t0187100-00
+chr11	irgsp1_rep	CDS	4429172	4429329	.	-	2	Parent=Os11t0187100-00
+chr11	irgsp1_rep	CDS	4429428	4429518	.	-	0	Parent=Os11t0187100-00
+chr11	irgsp1_rep	CDS	4429605	4431404	.	-	0	Parent=Os11t0187100-00
+chr11	irgsp1_rep	CDS	4430512	4430840	.	+	0	Parent=Os11t0187150-00
+chr11	irgsp1_locus	gene	4430512	4432986	.	+	.	ID=Os11g0187150;Name=Os11g0187150;Note=Hypothetical protein. (Os11t0187150-00);Transcript variants=Os11t0187150-00
+chr11	irgsp1_rep	mRNA	4430512	4432986	.	+	.	ID=Os11t0187150-00;Name=Os11t0187150-00;Locus_id=Os11g0187150;Note=Hypothetical protein.;Transcript_evidence=BT061503;ORF_evidence=GeneMark
+chr11	irgsp1_rep	three_prime_UTR	4432745	4432775	.	-	.	Parent=Os11t0187200-01
+chr11	irgsp1_locus	gene	4432745	4434088	.	-	.	ID=Os11g0187200;Name=Os11g0187200;Note=GATA zinc finger family protein%2C Control of heading date%2C plant height and panicle length (Os11t0187200-01);Transcript variants=Os11t0187200-01;RAP-DB Gene Symbol Synonym(s)=OsGATA28;CGSNL Gene Symbol=GATA28;CGSNL Gene Name=GATA TRANSCRIPTION FACTOR 28;Oryzabase Gene Symbol Synonym(s)=OsGATA28;Oryzabase Gene Name Synonym(s)=GATA transcription factor 28%2C GATA factor 28
+chr11	irgsp1_rep	mRNA	4432745	4434088	.	-	.	ID=Os11t0187200-01;Name=Os11t0187200-01;Locus_id=Os11g0187200;RAP-DB Gene Symbol Synonym(s)=OsGATA28;CGSNL Gene Symbol=GATA28;CGSNL Gene Name=GATA TRANSCRIPTION FACTOR 28;Oryzabase Gene Symbol Synonym(s)=OsGATA28;Oryzabase Gene Name Synonym(s)=GATA transcription factor 28%2C GATA factor 28;Note=GATA zinc finger family protein%2C Control of heading date%2C plant height and panicle length;Transcript_evidence=EU972972;ORF_evidence=Q53P56;GO=Biological Process: regulation of DNA-templated transcription (GO:0006355),Molecular Function: sequence-specific DNA binding (GO:0043565),Molecular Function: zinc ion binding (GO:0008270);InterPro=Zinc finger%2C GATA-type (IPR000679),Zinc finger%2C NHR/GATA-type (IPR013088),Plant GATA Transcription Factor (IPR051140);Manual Curation=August 31%2C 2017;Literature_PMID=27322545,15084732;Oryzabase=20506
+chr11	irgsp1_rep	CDS	4432776	4434071	.	-	0	Parent=Os11t0187200-01
+chr11	irgsp1_rep	CDS	4432803	4432986	.	+	1	Parent=Os11t0187150-00
+chr11	irgsp1_rep	five_prime_UTR	4434072	4434088	.	-	.	Parent=Os11t0187200-01

@@ -1,0 +1,30 @@
+{
+  "name": "hap-browser",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Rice heading-date gene haplotype browser (Oryza sativa, RAP-DB Nipponbare)",
+  "scripts": {
+    "dev": "concurrently -n BACKEND,FRONTEND -c \"cyan,green\" \"python3 backend/server.py --data-dir public/data\" \"npx vite --host --port 8080\"",
+    "dev:frontend": "npx vite --host --port 8080",
+    "dev:blast": "python3 backend/server.py",
+    "build": "npx vite build",
+    "preview": "npx vite preview",
+    "merge": "python3 scripts/merge_pileup.py",
+    "serve": "npx vite build && npx serve dist -l 8080",
+    "start": "concurrently -n BACKEND,FRONTEND -c \"cyan,green\" \"python3 backend/server.py --data-dir public/data\" \"npx vite --host --port 8080\""
+  },
+  "dependencies": {
+    "ag-grid-community": "^35.2.1",
+    "ag-grid-react": "^35.2.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.2.1",
+    "vite": "^6.0.0"
+  }
+}

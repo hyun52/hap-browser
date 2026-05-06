@@ -1,0 +1,42 @@
+gene_id	group
+# HapBrowser gene registry
+# -------------------------
+# Each row registers one gene.
+#
+# Columns (tab-separated):
+#   gene_id       RAP-DB identifier (e.g., Os06g0275000)                      [required]
+#   group         Group folder name (e.g., "Heading date genes")              [required]
+#   symbol        Override display name (default: auto-extract from GFF Note) [optional]
+#   description   Override description (default: auto-extract from GFF Note)  [optional]
+#
+# Lines starting with '#' are ignored. Remove or keep this header block —
+# the parser skips it either way.
+#
+# Existing 23 genes (kept as registry):
+Os06g0275000	Heading date genes	Hd1
+Os07g0695100	Heading date genes	OsPRR37
+Os07g0261200	Heading date genes	Ghd7
+Os08g0174500	Heading date genes	DTH8
+Os03g0762000	Heading date genes	Hd6
+Os03g0793500	Heading date genes	Hd16
+Os06g0142600	Heading date genes	Hd17
+Os08g0143400	Heading date genes	Hd18
+Os06g0157500	Heading date genes	RFT1
+Os06g0157700	Heading date genes	Hd3a
+Os03g0129400	Heading date genes	MiR528
+Os10g0463400	Heading date genes	Ehd1
+Os08g0157600	Heading date genes	CCA1
+Os01g0846450	Heading date genes	HESO1
+Os01g0922800	Heading date genes	OsMADS51
+Os02g0610500	Heading date genes	OsCOL4
+Os02g0724000	Heading date genes	DTH2
+Os03g0112700	Heading date genes	Ehd4
+Os03g0122500	Heading date genes	Ef-cd
+Os03g0122600	Heading date genes	OsSOC1
+Os10g0536100	Heading date genes	OsMADS56
+Os11g0152500	Heading date genes	RCN1
+Os11g0187200	Heading date genes	GATA28
+# Add new genes below — 2 cols only (symbol auto-extracted from GFF):
+# Os07g0281400	Yield components
+# Os09g0439200	Nutrient tolerance
+Os09g0286600	Flood tolerance	Sub1A	Submergence tolerance 1A

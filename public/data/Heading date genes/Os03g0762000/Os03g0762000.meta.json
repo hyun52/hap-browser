@@ -1,0 +1,19 @@
+{
+  "gene_id": "Os03g0762000",
+  "chromosome": "chr03",
+  "strand": "-",
+  "gene_start": 31508813,
+  "gene_end": 31514460,
+  "region_start": 31503813,
+  "region_end": 31519460,
+  "region_length": 15648,
+  "upstream_bp": 5000,
+  "downstream_bp": 5000,
+  "offset": 31503812,
+  "coordinate_note": "To convert local coords to RAP-DB coords: local_pos + 31503812 = original_pos",
+  "fasta_header": ">Os03g0762000 chr03:31503813-31519460 strand=- length=15648",
+  "overlapping_genes": [
+    "Os03g0761900",
+    "Os03g0762100"
+  ]
+}

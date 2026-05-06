@@ -1,0 +1,19 @@
+{
+  "gene_id": "Os02g0610500",
+  "chromosome": "chr02",
+  "strand": "+",
+  "gene_start": 23989803,
+  "gene_end": 23991271,
+  "region_start": 23984803,
+  "region_end": 23996271,
+  "region_length": 11469,
+  "upstream_bp": 5000,
+  "downstream_bp": 5000,
+  "offset": 23984802,
+  "coordinate_note": "To convert local coords to RAP-DB coords: local_pos + 23984802 = original_pos",
+  "fasta_header": ">Os02g0610500 chr02:23984803-23996271 strand=+ length=11469",
+  "overlapping_genes": [
+    "Os02g0610400",
+    "Os02g0610600"
+  ]
+}

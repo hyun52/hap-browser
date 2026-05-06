@@ -1,0 +1,10 @@
+##gff-version 3
+##sequence-region Os06g0157500 1 6652
+Os06g0157500	irgsp1_rep	five_prime_UTR	5001	5257	.	+	.	Parent=Os06t0157500-01
+Os06g0157500	irgsp1_locus	gene	5001	6652	.	+	.	ID=Os06g0157500;Name=Os06g0157500;Note=Florigen%2C Flowering time%2C Long-day promotion (Os06t0157500-01);Transcript variants=Os06t0157500-01;RAP-DB Gene Symbol Synonym(s)=RFT1%2C FT-L 3%2C OsFTL3%2C FT-L3%2C RFT;RAP-DB Gene Name Synonym(s)=RICE FLOWERING-LOCUS T 1%2C Rice Flowering-locus T 1%2C RICE FLOWERING LOCUS T 1%2C FT-like gene 3;CGSNL Gene Symbol=RFT1;CGSNL Gene Name=RICE FLOWERING-LOCUS T 1;Oryzabase Gene Symbol Synonym(s)=FT-L 3%2C OsFTL3%2C FTL3%2C FT-L3%2C RFT%2C OsRFT1;Oryzabase Gene Name Synonym(s)=Rice Flowering-locus T 1%2C RICE FLOWERING LOCUS T 1%2C FT-like gene 3%2C RFT
+Os06g0157500	irgsp1_rep	mRNA	5001	6652	.	+	.	ID=Os06t0157500-01;Name=Os06t0157500-01;Locus_id=Os06g0157500;RAP-DB Gene Symbol Synonym(s)=RFT1%2C FT-L 3%2C OsFTL3%2C FT-L3%2C RFT;RAP-DB Gene Name Synonym(s)=RICE FLOWERING-LOCUS T 1%2C Rice Flowering-locus T 1%2C RICE FLOWERING LOCUS T 1%2C FT-like gene 3;CGSNL Gene Symbol=RFT1;CGSNL Gene Name=RICE FLOWERING-LOCUS T 1;Oryzabase Gene Symbol Synonym(s)=FT-L 3%2C OsFTL3%2C FTL3%2C FT-L3%2C RFT%2C OsRFT1;Oryzabase Gene Name Synonym(s)=Rice Flowering-locus T 1%2C RICE FLOWERING LOCUS T 1%2C FT-like gene 3%2C RFT;Note=Florigen%2C Flowering time%2C Long-day promotion;Transcript_evidence=AB062676;ORF_evidence=Q8VWH2;InterPro=Phosphatidylethanolamine-binding%2C conserved site (IPR001858),Phosphatidylethanolamine-binding protein (IPR008914),Phosphatidylethanolamine-binding protein%2C eukaryotic (IPR035810),PEBP-like superfamily (IPR036610);Manual Curation=October 1%2C 2014;Literature_PMID=24098411,12407188;Oryzabase=9620
+Os06g0157500	irgsp1_rep	CDS	5258	5461	.	+	0	Parent=Os06t0157500-01
+Os06g0157500	irgsp1_rep	CDS	5609	5670	.	+	0	Parent=Os06t0157500-01
+Os06g0157500	irgsp1_rep	CDS	5784	5824	.	+	1	Parent=Os06t0157500-01
+Os06g0157500	irgsp1_rep	CDS	6351	6580	.	+	2	Parent=Os06t0157500-01
+Os06g0157500	irgsp1_rep	three_prime_UTR	6581	6652	.	+	.	Parent=Os06t0157500-01

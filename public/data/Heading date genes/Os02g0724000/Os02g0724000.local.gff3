@@ -1,0 +1,25 @@
+##gff-version 3
+##sequence-region Os02g0724000 1 14773
+Os02g0724000	irgsp1_rep	five_prime_UTR	5001	5199	.	+	.	Parent=Os02t0724000-01
+Os02g0724000	irgsp1_locus	gene	5001	9773	.	+	.	ID=Os02g0724000;Name=Os02g0724000;Note=CONSTANS-like protein%2C Heading promotion under long-day condition (Os02t0724000-01);Transcript variants=Os02t0724000-01;RAP-DB Gene Symbol Synonym(s)=DTH2%2C OsCCT08%2C OsBBX7%2C OsN;RAP-DB Gene Name Synonym(s)=Days to heading on chromosome 2%2C CCT (CO%2C CO-LIKE and TOC1) domain protein 8%2C CCT domain protein 8%2C B-box-containing protein 7%2C CONSTANS-like gene N;CGSNL Gene Symbol=BBX7;Oryzabase Gene Symbol Synonym(s)=OsN%2C OsBBX7%2C OsCCT08%2C OsCCT8%2C OsDTH2%2C CCT08%2C CCT8%2C DTH2;Oryzabase Gene Name Synonym(s)=CONSTANS-like gene N%2C B-box-containing protein 7%2C CCT domain-containing gene 8%2C CCT (CO%2C CO-LIKE and TOC1) domain protein 8%2C CCT domain protein 8
+Os02g0724000	irgsp1_rep	mRNA	5001	9773	.	+	.	ID=Os02t0724000-01;Name=Os02t0724000-01;Locus_id=Os02g0724000;RAP-DB Gene Symbol Synonym(s)=DTH2%2C OsCCT08%2C OsBBX7%2C OsN;RAP-DB Gene Name Synonym(s)=Days to heading on chromosome 2%2C CCT (CO%2C CO-LIKE and TOC1) domain protein 8%2C CCT domain protein 8%2C B-box-containing protein 7%2C CONSTANS-like gene N;CGSNL Gene Symbol=BBX7;Oryzabase Gene Symbol Synonym(s)=OsN%2C OsBBX7%2C OsCCT08%2C OsCCT8%2C OsDTH2%2C CCT08%2C CCT8%2C DTH2;Oryzabase Gene Name Synonym(s)=CONSTANS-like gene N%2C B-box-containing protein 7%2C CCT domain-containing gene 8%2C CCT (CO%2C CO-LIKE and TOC1) domain protein 8%2C CCT domain protein 8;Note=CONSTANS-like protein%2C Heading promotion under long-day condition;Transcript_evidence=AK071630,JX202590 (Asominori);ORF_evidence=O82118;GO=Molecular Function: protein binding (GO:0005515),Molecular Function: zinc ion binding (GO:0008270);InterPro=B-box-type zinc finger (IPR000315),CCT domain (IPR010402),CONSTANS-like%2C B-box-type 1 zinc finger (IPR049808);Manual Curation=July 6%2C 2017;Literature_PMID=25563494,23388640;Oryzabase=10310
+Os02g0724000	irgsp1_rep	five_prime_UTR	6899	7006	.	+	.	Parent=Os02t0724000-01
+Os02g0724000	irgsp1_rep	CDS	7007	7594	.	+	0	Parent=Os02t0724000-01
+Os02g0724000	irgsp1_rep	CDS	8091	8291	.	+	0	Parent=Os02t0724000-01
+Os02g0724000	irgsp1_rep	CDS	8562	8866	.	+	0	Parent=Os02t0724000-01
+Os02g0724000	irgsp1_rep	CDS	9152	9281	.	+	1	Parent=Os02t0724000-01
+Os02g0724000	irgsp1_rep	three_prime_UTR	9282	9773	.	+	.	Parent=Os02t0724000-01
+Os02g0724000	irgsp1_rep	three_prime_UTR	9873	10013	.	-	.	Parent=Os02t0724100-01
+Os02g0724000	irgsp1_locus	gene	9873	10881	.	-	.	ID=Os02g0724100;Name=Os02g0724100;Note=Conserved hypothetical protein. (Os02t0724100-01);Transcript variants=Os02t0724100-01
+Os02g0724000	irgsp1_rep	mRNA	9873	10881	.	-	.	ID=Os02t0724100-01;Name=Os02t0724100-01;Locus_id=Os02g0724100;Note=Conserved hypothetical protein.;Transcript_evidence=AK107565;ORF_evidence=A3AAW3 (UniProt)
+Os02g0724000	irgsp1_rep	CDS	10014	10742	.	-	0	Parent=Os02t0724100-01
+Os02g0724000	irgsp1_rep	five_prime_UTR	10743	10881	.	-	.	Parent=Os02t0724100-01
+Os02g0724000	irgsp1_locus	gene	12746	13538	.	-	.	ID=Os02g0724300;Name=Os02g0724300;Note=Non-protein coding transcript. (Os02t0724300-01)%3BNon-protein coding transcript. (Os02t0724300-02);Transcript variants=Os02t0724300-01,Os02t0724300-02
+Os02g0724000	irgsp1_rep	mRNA	12746	13538	.	-	.	ID=Os02t0724300-01;Name=Os02t0724300-01;Locus_id=Os02g0724300;Note=Non-protein coding transcript.;Transcript_evidence=AK105206;ORF_evidence=NONE;B5toI1=CDS sequences are different between Build 5 and IRGSP-1.0.
+Os02g0724000	irgsp1_rep	exon	12746	13538	.	-	.	Parent=Os02t0724300-01
+Os02g0724000	irgsp1_rep	mRNA	12866	13495	.	-	.	ID=Os02t0724300-02;Name=Os02t0724300-02;Locus_id=Os02g0724300;Note=Non-protein coding transcript.;Transcript_evidence=AK119718;ORF_evidence=NONE;B5toI1=CDS sequences are different between Build 5 and IRGSP-1.0.
+Os02g0724000	irgsp1_rep	exon	12866	13495	.	-	.	Parent=Os02t0724300-02
+Os02g0724000	irgsp1_rep	five_prime_UTR	14496	14496	.	+	.	Parent=Os02t0724450-00
+Os02g0724000	irgsp1_locus	gene	14496	14773	.	+	.	ID=Os02g0724450;Name=Os02g0724450;Note=Hypothetical protein. (Os02t0724450-00);Transcript variants=Os02t0724450-00
+Os02g0724000	irgsp1_rep	mRNA	14496	14773	.	+	.	ID=Os02t0724450-00;Name=Os02t0724450-00;Locus_id=Os02g0724450;Note=Hypothetical protein.;Transcript_evidence=AK364776;ORF_evidence=longestORF
+Os02g0724000	irgsp1_rep	CDS	14497	14773	.	+	0	Parent=Os02t0724450-00

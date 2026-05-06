@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+title: "HapBrowser: A Rice Haplotype Browser with Integrated Marker Design"
+message: "If you use HapBrowser in your research, please cite it as below."
+type: software
+version: "1.0.0"
+date-released: "2026-04-22"
+
+authors:
+  - family-names: Lee
+    given-names: Hyunoh
+    affiliation: "Plant Genome and Breeding Lab, Jeonbuk National University"
+    # orcid: "https://orcid.org/0000-0000-0000-0000"  # add when available
+
+repository-code: "https://github.com/hyun52/hap-browser"
+url: "https://github.com/hyun52/hap-browser"
+
+abstract: >-
+  HapBrowser is an interactive rice haplotype browser that visualizes
+  per-gene haplotype patterns across 200+ IRRI rice accessions, with
+  integrated KASP and InDel marker design featuring Primer3-based
+  thermodynamic validation. The accompanying Snakemake pipeline automates
+  the full workflow from FASTQ reads to interactive browser display,
+  enabling reproducible addition of new genes with a single command.
+
+keywords:
+  - rice
+  - Oryza sativa
+  - haplotype browser
+  - pangenome
+  - KASP marker
+  - genome visualization
+  - bioinformatics
+  - RAP-DB
+  - Snakemake
+
+license: "Other"  # Custom academic-only license
+license-url: "https://github.com/hyun52/hap-browser/blob/main/LICENSE"
+
+# preferred-citation:
+#   type: article
+#   authors:
+#     - family-names: Lee
+#       given-names: Hyunoh
+#   title: "HapBrowser: ..."
+#   journal: "..."
+#   year: 2026
+#   doi: "10.xxxx/xxxxx"

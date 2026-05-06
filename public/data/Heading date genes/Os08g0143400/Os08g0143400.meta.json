@@ -1,0 +1,19 @@
+{
+  "gene_id": "Os08g0143400",
+  "chromosome": "chr08",
+  "strand": "-",
+  "gene_start": 2385537,
+  "gene_end": 2389276,
+  "region_start": 2380537,
+  "region_end": 2394276,
+  "region_length": 13740,
+  "upstream_bp": 5000,
+  "downstream_bp": 5000,
+  "offset": 2380536,
+  "coordinate_note": "To convert local coords to RAP-DB coords: local_pos + 2380536 = original_pos",
+  "fasta_header": ">Os08g0143400 chr08:2380537-2394276 strand=- length=13740",
+  "overlapping_genes": [
+    "Os08g0143300",
+    "Os08g0143500"
+  ]
+}

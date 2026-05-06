@@ -1,0 +1,25 @@
+##gff-version 3
+chr08	irgsp1_rep	five_prime_UTR	3360865	3361206	.	+	.	Parent=Os08t0157600-01
+chr08	irgsp1_locus	gene	3360865	3373384	.	+	.	ID=Os08g0157600;Name=Os08g0157600;Note=MYB transcription factor%2C Circadian clock%2C Tolerance to salinity%2C osmotic%2C and drought stresses (Os08t0157600-01)%3BSimilar to LHY protein. (Os08t0157600-02);Transcript variants=Os08t0157600-01,Os08t0157600-02;RAP-DB Gene Symbol Synonym(s)=CCA1%2C OsCCA1%2C OsLHY%2C LHY-like_chr.8%2C COC1;RAP-DB Gene Name Synonym(s)=CIRCADIAN CLOCK ASSOCIATED 1%2C LATE ELONGATED HYPOCOTYL;CGSNL Gene Symbol=CCA1;CGSNL Gene Name=CIRCADIAN CLOCK ASSOCIATED 1;Oryzabase Gene Symbol Synonym(s)=OsCCA1%2C OsLHY%2C LHY%2C LHY-like_chr.8%2C COC1%2C DLN203%2C OsDLN203%2C LEM1%2C OsLEM1%2C Nhd1%2C OsNhd1;Oryzabase Gene Name Synonym(s)=LATE ELONGATED HYPOCOTYL%2C DLN repressor 203%2C DLN motif protein 203%2C lvp1 enhancer mutant 1%2C N-mediated heading date1
+chr08	irgsp1_rep	mRNA	3360865	3373384	.	+	.	ID=Os08t0157600-01;Name=Os08t0157600-01;Locus_id=Os08g0157600;RAP-DB Gene Symbol Synonym(s)=CCA1%2C OsCCA1%2C OsLHY%2C LHY-like_chr.8%2C COC1;RAP-DB Gene Name Synonym(s)=CIRCADIAN CLOCK ASSOCIATED 1%2C LATE ELONGATED HYPOCOTYL;CGSNL Gene Symbol=CCA1;CGSNL Gene Name=CIRCADIAN CLOCK ASSOCIATED 1;Oryzabase Gene Symbol Synonym(s)=OsCCA1%2C OsLHY%2C LHY%2C LHY-like_chr.8%2C COC1%2C DLN203%2C OsDLN203%2C LEM1%2C OsLEM1%2C Nhd1%2C OsNhd1;Oryzabase Gene Name Synonym(s)=LATE ELONGATED HYPOCOTYL%2C DLN repressor 203%2C DLN motif protein 203%2C lvp1 enhancer mutant 1%2C N-mediated heading date1;Note=MYB transcription factor%2C Circadian clock%2C Tolerance to salinity%2C osmotic%2C and drought stresses;Transcript_evidence=AK111893 (Genbank);ORF_evidence=Q0J7W9 (UniProt);GO=Molecular Function: DNA binding (GO:0003677);InterPro=SANT/Myb domain (IPR001005),Myb domain%2C plants (IPR006447),Homedomain-like superfamily (IPR009057),SANT domain (IPR017884),Myb domain (IPR017930);Manual Curation=May 6%2C 2022;Literature_PMID=35512208,20007447,17132630;Oryzabase=7275;Subcellular location=nucleus (GO:0005634)
+chr08	irgsp1_rep	five_prime_UTR	3361296	3361373	.	+	.	Parent=Os08t0157600-01
+chr08	irgsp1_rep	five_prime_UTR	3361644	3361699	.	+	.	Parent=Os08t0157600-01
+chr08	irgsp1_rep	five_prime_UTR	3365752	3365780	.	+	.	Parent=Os08t0157600-01
+chr08	irgsp1_rep	five_prime_UTR	3365888	3365999	.	+	.	Parent=Os08t0157600-01
+chr08	irgsp1_rep	five_prime_UTR	3366207	3366235	.	+	.	Parent=Os08t0157600-01
+chr08	irgsp1_rep	five_prime_UTR	3366397	3366558	.	+	.	Parent=Os08t0157600-01
+chr08	irgsp1_rep	CDS	3366559	3366597	.	+	0	Parent=Os08t0157600-01
+chr08	irgsp1_rep	CDS	3366670	3366781	.	+	0	Parent=Os08t0157600-01
+chr08	irgsp1_rep	CDS	3366965	3367026	.	+	2	Parent=Os08t0157600-01
+chr08	irgsp1_rep	CDS	3370973	3371191	.	+	0	Parent=Os08t0157600-01
+chr08	irgsp1_rep	CDS	3371299	3372678	.	+	0	Parent=Os08t0157600-01
+chr08	irgsp1_rep	five_prime_UTR	3372020	3372021	.	+	.	Parent=Os08t0157600-02
+chr08	irgsp1_rep	mRNA	3372020	3373384	.	+	.	ID=Os08t0157600-02;Name=Os08t0157600-02;Locus_id=Os08g0157600;CGSNL Gene Symbol=CCA1;CGSNL Gene Name=CIRCADIAN CLOCK ASSOCIATED 1;Oryzabase Gene Symbol Synonym(s)=OsCCA1%2C OsLHY%2C LHY%2C LHY-like_chr.8%2C COC1%2C DLN203%2C OsDLN203%2C LEM1%2C OsLEM1%2C Nhd1%2C OsNhd1;Oryzabase Gene Name Synonym(s)=LATE ELONGATED HYPOCOTYL%2C DLN repressor 203%2C DLN motif protein 203%2C lvp1 enhancer mutant 1%2C N-mediated heading date1;Note=Similar to LHY protein.;Transcript_evidence=AK104073;ORF_evidence=NP_001131529.2 (RefSeq);Oryzabase=7275
+chr08	irgsp1_rep	CDS	3372022	3372678	.	+	0	Parent=Os08t0157600-02
+chr08	irgsp1_rep	CDS	3372769	3373116	.	+	0	Parent=Os08t0157600-01
+chr08	irgsp1_rep	CDS	3372769	3373116	.	+	0	Parent=Os08t0157600-02
+chr08	irgsp1_rep	three_prime_UTR	3373117	3373384	.	+	.	Parent=Os08t0157600-01
+chr08	irgsp1_rep	three_prime_UTR	3373117	3373384	.	+	.	Parent=Os08t0157600-02
+chr08	irgsp1_locus	gene	3377469	3378332	.	+	.	ID=Os08g0157700;Name=Os08g0157700;Note=Similar to NGA1 (NGATHA1)%3B transcription factor. (Os08t0157700-00);Transcript variants=Os08t0157700-00;CGSNL Gene Symbol=NGA4;CGSNL Gene Name=NGATHA 4;Oryzabase Gene Symbol Synonym(s)=OsNGA4;Oryzabase Gene Name Synonym(s)=NGATHA Transcription Factor 4
+chr08	irgsp1_rep	mRNA	3377469	3378332	.	+	.	ID=Os08t0157700-00;Name=Os08t0157700-00;Locus_id=Os08g0157700;CGSNL Gene Symbol=NGA4;CGSNL Gene Name=NGATHA 4;Oryzabase Gene Symbol Synonym(s)=OsNGA4;Oryzabase Gene Name Synonym(s)=NGATHA Transcription Factor 4;Note=Similar to NGA1 (NGATHA1)%3B transcription factor.;Transcript_evidence=Q7EZD5 (UniProt);ORF_evidence=Q7EZD5 (UniProt);GO=Molecular Function: DNA binding (GO:0003677),Molecular Function: DNA-binding transcription factor activity (GO:0003700);InterPro=B3 DNA binding domain (IPR003340),DNA-binding pseudobarrel domain superfamily (IPR015300),B3 domain-containing transcription factor LEC2-like (IPR044800);Oryzabase=22355
+chr08	irgsp1_rep	CDS	3377469	3378332	.	+	0	Parent=Os08t0157700-00

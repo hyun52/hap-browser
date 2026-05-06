@@ -1,0 +1,46 @@
+##gff-version 3
+chr01	irgsp1_rep	three_prime_UTR	36348072	36348609	.	+	.	Parent=Os01t0846400-01
+chr01	irgsp1_locus	gene	36348072	36349545	.	+	.	ID=Os01g0846400;Name=Os01g0846400;Note=Conserved hypothetical protein. (Os01t0846400-01);Transcript variants=Os01t0846400-01
+chr01	irgsp1_rep	mRNA	36348072	36349545	.	+	.	ID=Os01t0846400-01;Name=Os01t0846400-01;Locus_id=Os01g0846400;Note=Conserved hypothetical protein.;Transcript_evidence=AK119400;ORF_evidence=B8AC30 (UniProt)
+chr01	irgsp1_rep	three_prime_UTR	36348624	36349545	.	+	.	Parent=Os01t0846400-01
+chr01	irgsp1_rep	five_prime_UTR	36353072	36353349	.	+	.	Parent=Os01t0846450-01
+chr01	irgsp1_rep	five_prime_UTR	36353072	36353349	.	+	.	Parent=Os01t0846450-02
+chr01	irgsp1_locus	gene	36353072	36358534	.	+	.	ID=Os01g0846450;Name=Os01g0846450;Note=Hypothetical conserved gene. (Os01t0846450-01)%3BHomolog of Arabidopsis thaliana HEN1 suppressor 1%2C Heading date (Os01t0846450-02);Transcript variants=Os01t0846450-01,Os01t0846450-02;RAP-DB Gene Symbol Synonym(s)=HESO1;RAP-DB Gene Name Synonym(s)=a homolog of Arabidopsis thaliana HEN1 suppressor 1;Oryzabase Gene Name Synonym(s)=a homolog of Arabidopsis thaliana HEN1 suppressor 1%2C HESO1 homolog
+chr01	irgsp1_rep	mRNA	36353072	36358534	.	+	.	ID=Os01t0846450-01;Name=Os01t0846450-01;Locus_id=Os01g0846450;Oryzabase Gene Name Synonym(s)=a homolog of Arabidopsis thaliana HEN1 suppressor 1%2C HESO1 homolog;Note=Hypothetical conserved gene.;Transcript_evidence=AK242908;ORF_evidence=B8AC31 (UniProt);InterPro=Nucleotidyltransferase superfamily (IPR043519),Poly(A) RNA polymerase%2C mitochondrial-like%2C central palm domain (IPR054708);Oryzabase=21339
+chr01	irgsp1_rep	mRNA	36353072	36358534	.	+	.	ID=Os01t0846450-02;Name=Os01t0846450-02;Locus_id=Os01g0846450;RAP-DB Gene Symbol Synonym(s)=HESO1;RAP-DB Gene Name Synonym(s)=a homolog of Arabidopsis thaliana HEN1 suppressor 1;Oryzabase Gene Name Synonym(s)=a homolog of Arabidopsis thaliana HEN1 suppressor 1%2C HESO1 homolog;Note=Homolog of Arabidopsis thaliana HEN1 suppressor 1%2C Heading date;Transcript_evidence=Inferred from literature;ORF_evidence=Inferred from literature;InterPro=Nucleotidyltransferase superfamily (IPR043519),Poly(A) RNA polymerase%2C mitochondrial-like%2C central palm domain (IPR054708);Manual Curation=August 30%2C 2017;Literature_PMID=27322545;Oryzabase=21339
+chr01	irgsp1_rep	five_prime_UTR	36354474	36354482	.	+	.	Parent=Os01t0846450-01
+chr01	irgsp1_rep	five_prime_UTR	36354474	36354482	.	+	.	Parent=Os01t0846450-02
+chr01	irgsp1_rep	CDS	36354483	36354630	.	+	0	Parent=Os01t0846450-01
+chr01	irgsp1_rep	CDS	36354483	36354630	.	+	0	Parent=Os01t0846450-02
+chr01	irgsp1_rep	CDS	36355350	36355505	.	+	2	Parent=Os01t0846450-01
+chr01	irgsp1_rep	CDS	36355350	36355505	.	+	2	Parent=Os01t0846450-02
+chr01	irgsp1_rep	CDS	36355824	36356002	.	+	2	Parent=Os01t0846450-01
+chr01	irgsp1_rep	CDS	36355824	36356002	.	+	2	Parent=Os01t0846450-02
+chr01	irgsp1_rep	CDS	36356088	36356183	.	+	0	Parent=Os01t0846450-02
+chr01	irgsp1_rep	CDS	36356088	36356225	.	+	0	Parent=Os01t0846450-01
+chr01	irgsp1_rep	three_prime_UTR	36356226	36356326	.	+	.	Parent=Os01t0846450-01
+chr01	irgsp1_rep	CDS	36356266	36356326	.	+	0	Parent=Os01t0846450-02
+chr01	irgsp1_rep	three_prime_UTR	36356412	36356542	.	+	.	Parent=Os01t0846450-01
+chr01	irgsp1_rep	CDS	36356412	36356542	.	+	2	Parent=Os01t0846450-02
+chr01	irgsp1_rep	three_prime_UTR	36357193	36357300	.	+	.	Parent=Os01t0846450-01
+chr01	irgsp1_rep	CDS	36357193	36357300	.	+	0	Parent=Os01t0846450-02
+chr01	irgsp1_rep	CDS	36357395	36358027	.	+	0	Parent=Os01t0846450-02
+chr01	irgsp1_rep	three_prime_UTR	36357395	36358534	.	+	.	Parent=Os01t0846450-01
+chr01	irgsp1_rep	three_prime_UTR	36358028	36358534	.	+	.	Parent=Os01t0846450-02
+chr01	irgsp1_rep	five_prime_UTR	36359709	36359903	.	+	.	Parent=Os01t0846500-01
+chr01	irgsp1_locus	gene	36359709	36363534	.	+	.	ID=Os01g0846500;Name=Os01g0846500;Note=Hypothetical conserved gene. (Os01t0846500-01)%3BPAP/25A core domain containing protein. (Os01t0846500-02);Transcript variants=Os01t0846500-01,Os01t0846500-02;CGSNL Gene Symbol=NTP3;CGSNL Gene Name=NUCLEOTIDYL TRANSFERASE PROTEIN 3;Oryzabase Gene Symbol Synonym(s)=OsNTP3;Oryzabase Gene Name Synonym(s)=nucleotidyl transferase protein 3
+chr01	irgsp1_rep	mRNA	36359709	36363534	.	+	.	ID=Os01t0846500-01;Name=Os01t0846500-01;Locus_id=Os01g0846500;CGSNL Gene Symbol=NTP3;CGSNL Gene Name=NUCLEOTIDYL TRANSFERASE PROTEIN 3;Oryzabase Gene Symbol Synonym(s)=OsNTP3;Oryzabase Gene Name Synonym(s)=nucleotidyl transferase protein 3;Note=Hypothetical conserved gene.;Transcript_evidence=AK073619;ORF_evidence=B8AC32 (UniProt);InterPro=Nucleotidyltransferase superfamily (IPR043519),Poly(A) RNA polymerase%2C mitochondrial-like%2C central palm domain (IPR054708);Oryzabase=21886
+chr01	irgsp1_rep	five_prime_UTR	36359740	36359903	.	+	.	Parent=Os01t0846500-02
+chr01	irgsp1_rep	mRNA	36359740	36363534	.	+	.	ID=Os01t0846500-02;Name=Os01t0846500-02;Locus_id=Os01g0846500;CGSNL Gene Symbol=NTP3;CGSNL Gene Name=NUCLEOTIDYL TRANSFERASE PROTEIN 3;Oryzabase Gene Symbol Synonym(s)=OsNTP3;Oryzabase Gene Name Synonym(s)=nucleotidyl transferase protein 3;Note=PAP/25A core domain containing protein.;Transcript_evidence=AK072322;ORF_evidence=B7EMF8 (UniProt);InterPro=Nucleotidyltransferase superfamily (IPR043519),Poly(A) RNA polymerase%2C mitochondrial-like%2C central palm domain (IPR054708);Oryzabase=21886
+chr01	irgsp1_rep	five_prime_UTR	36361072	36361080	.	+	.	Parent=Os01t0846500-01
+chr01	irgsp1_rep	five_prime_UTR	36361072	36361080	.	+	.	Parent=Os01t0846500-02
+chr01	irgsp1_rep	CDS	36361081	36361234	.	+	0	Parent=Os01t0846500-01
+chr01	irgsp1_rep	CDS	36361081	36361234	.	+	0	Parent=Os01t0846500-02
+chr01	irgsp1_rep	CDS	36362522	36362683	.	+	2	Parent=Os01t0846500-01
+chr01	irgsp1_rep	CDS	36362522	36362683	.	+	2	Parent=Os01t0846500-02
+chr01	irgsp1_rep	CDS	36363020	36363198	.	+	2	Parent=Os01t0846500-01
+chr01	irgsp1_rep	CDS	36363020	36363198	.	+	2	Parent=Os01t0846500-02
+chr01	irgsp1_rep	CDS	36363273	36363368	.	+	0	Parent=Os01t0846500-01
+chr01	irgsp1_rep	CDS	36363273	36363368	.	+	0	Parent=Os01t0846500-02
+chr01	irgsp1_rep	CDS	36363460	36363526	.	+	0	Parent=Os01t0846500-02
+chr01	irgsp1_rep	CDS	36363460	36363534	.	+	0	Parent=Os01t0846500-01

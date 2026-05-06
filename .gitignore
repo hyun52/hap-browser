@@ -1,0 +1,83 @@
+# ─── Node / npm ─────────────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json.bak
+
+# ─── Vite build output ──────────────────────────────────────────────────────
+dist/
+dist-ssr/
+*.local
+
+# ─── Python ─────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.venv/
+venv/
+env/
+ENV/
+
+# ─── Snakemake ──────────────────────────────────────────────────────────────
+.snakemake/
+
+# ─── Logs ───────────────────────────────────────────────────────────────────
+logs/
+*.log
+
+# ─── Large data files (use Git LFS or release artifacts instead) ────────────
+# BAM files are too large for git
+public/data/bam/
+
+# Per-sample pileup (only `all.json` is small enough)
+public/data/pileup/*/[!a]*.json
+public/data/pileup/*/a[!l]*.json
+
+# Per-gene precomputed Excel files (regeneratable)
+public/data/excel/
+
+# BLAST database (regeneratable; ~100 MB)
+public/data/blast_db/
+
+# FASTQ files (never commit)
+*.fastq.gz
+*.fastq
+*.fq.gz
+*.fq
+
+# ─── IDE / Editor ───────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ─── OS ─────────────────────────────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ─── Local config ───────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+config.local.json
+
+# ─── Backup files ───────────────────────────────────────────────────────────
+*.bak
+*.orig
+*.rej
+*~
+
+# ─── Temporary / experimental ───────────────────────────────────────────────
+tmp/
+temp/
+scratch/
+
+# Pileup data (4.7 GB total) — distributed via GitHub Release
+public/data/pileup/

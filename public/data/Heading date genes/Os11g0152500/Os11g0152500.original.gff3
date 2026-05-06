@@ -1,0 +1,34 @@
+##gff-version 3
+chr11	irgsp1_rep	five_prime_UTR	2448169	2448178	.	+	.	Parent=Os11t0152025-00
+chr11	irgsp1_locus	gene	2448169	2448619	.	+	.	ID=Os11g0152025;Name=Os11g0152025;Note=Conserved hypothetical protein. (Os11t0152025-00);Transcript variants=Os11t0152025-00
+chr11	irgsp1_rep	mRNA	2448169	2448619	.	+	.	ID=Os11t0152025-00;Name=Os11t0152025-00;Locus_id=Os11g0152025;Note=Conserved hypothetical protein.;Transcript_evidence=EU958374;ORF_evidence=Q53Q65 (UniProt)
+chr11	irgsp1_rep	CDS	2448179	2448619	.	+	0	Parent=Os11t0152025-00
+chr11	irgsp1_rep	five_prime_UTR	2451942	2452139	.	+	.	Parent=Os11t0152400-01
+chr11	irgsp1_locus	gene	2451942	2457567	.	+	.	ID=Os11g0152400;Name=Os11g0152400;Note=Hypothetical conserved gene. (Os11t0152400-01)%3BHypothetical conserved gene. (Os11t0152400-02);Transcript variants=Os11t0152400-01,Os11t0152400-02
+chr11	irgsp1_rep	mRNA	2451942	2457567	.	+	.	ID=Os11t0152400-01;Name=Os11t0152400-01;Locus_id=Os11g0152400;Note=Hypothetical conserved gene.;Transcript_evidence=AK111412;ORF_evidence=NP_001066171.1 (RefSeq)
+chr11	irgsp1_rep	five_prime_UTR	2451959	2452139	.	+	.	Parent=Os11t0152400-02
+chr11	irgsp1_rep	mRNA	2451959	2455673	.	+	.	ID=Os11t0152400-02;Name=Os11t0152400-02;Locus_id=Os11g0152400;Note=Hypothetical conserved gene.;Transcript_evidence=AK103278;ORF_evidence=NP_001066171.1 (RefSeq)
+chr11	irgsp1_rep	three_prime_UTR	2452773	2453107	.	-	.	Parent=Os11t0152500-01
+chr11	irgsp1_locus	gene	2452773	2454103	.	-	.	ID=Os11g0152500;Name=Os11g0152500;Note=Putative phosphatidylethanolamine-binding protein%2C Rice TFL1/CEN homolog%2C Control of inflorescence architecture%2C Repression of  flowering%2C Regulation of seed germination speed%2C Salt tolerance (Os11t0152500-01);Transcript variants=Os11t0152500-01;RAP-DB Gene Symbol Synonym(s)=RCN1%2C FDR2%2C OsCEN2;RAP-DB Gene Name Synonym(s)=rice TERMINAL FLOWER 1/CENTRORADIALIS homolog 1%2C Cen-like protein FDR2%2C CENTRORADIALIS 2;CGSNL Gene Symbol=RCN1;CGSNL Gene Name=RICE TERMINAL FLOWER 1/CENTRORADIALIS HOMOLOG 1;Oryzabase Gene Symbol Synonym(s)=Rcn1%2C FDR2%2C Fdr2%2C RCN1/FDR2%2C OsRCN1;Oryzabase Gene Name Synonym(s)=Cen-like protein FDR2%2C RICE CENTRORADIALIS 1
+chr11	irgsp1_rep	mRNA	2452773	2454103	.	-	.	ID=Os11t0152500-01;Name=Os11t0152500-01;Locus_id=Os11g0152500;RAP-DB Gene Symbol Synonym(s)=RCN1%2C FDR2%2C OsCEN2;RAP-DB Gene Name Synonym(s)=rice TERMINAL FLOWER 1/CENTRORADIALIS homolog 1%2C Cen-like protein FDR2%2C CENTRORADIALIS 2;CGSNL Gene Symbol=RCN1;CGSNL Gene Name=RICE TERMINAL FLOWER 1/CENTRORADIALIS HOMOLOG 1;Oryzabase Gene Symbol Synonym(s)=Rcn1%2C FDR2%2C Fdr2%2C RCN1/FDR2%2C OsRCN1;Oryzabase Gene Name Synonym(s)=Cen-like protein FDR2%2C RICE CENTRORADIALIS 1;Note=Putative phosphatidylethanolamine-binding protein%2C Rice TFL1/CEN homolog%2C Control of inflorescence architecture%2C Repression of  flowering%2C Regulation of seed germination speed%2C Salt tolerance;Transcript_evidence=AF159882 (Guang Lu Ai 4%2C indica);ORF_evidence=Q53Q71,Q9XGS5;InterPro=Phosphatidylethanolamine-binding%2C conserved site (IPR001858),Phosphatidylethanolamine-binding protein (IPR008914),Phosphatidylethanolamine-binding protein%2C eukaryotic (IPR035810),PEBP-like superfamily (IPR036610);Manual Curation=October 3%2C 2022;Literature_PMID=36181524,12148532,DOI:10.1016/j.plantsci.2004.10.022;Oryzabase=6602
+chr11	irgsp1_rep	five_prime_UTR	2452997	2453065	.	+	.	Parent=Os11t0152400-01
+chr11	irgsp1_rep	five_prime_UTR	2452997	2453065	.	+	.	Parent=Os11t0152400-02
+chr11	irgsp1_rep	CDS	2453066	2453380	.	+	0	Parent=Os11t0152400-01
+chr11	irgsp1_rep	CDS	2453066	2453380	.	+	0	Parent=Os11t0152400-02
+chr11	irgsp1_rep	CDS	2453108	2453325	.	-	2	Parent=Os11t0152500-01
+chr11	irgsp1_rep	three_prime_UTR	2453381	2453478	.	+	.	Parent=Os11t0152400-01
+chr11	irgsp1_rep	three_prime_UTR	2453381	2453478	.	+	.	Parent=Os11t0152400-02
+chr11	irgsp1_rep	CDS	2453422	2453462	.	-	1	Parent=Os11t0152500-01
+chr11	irgsp1_rep	CDS	2453676	2453737	.	-	0	Parent=Os11t0152500-01
+chr11	irgsp1_rep	CDS	2453810	2454010	.	-	0	Parent=Os11t0152500-01
+chr11	irgsp1_rep	five_prime_UTR	2454011	2454103	.	-	.	Parent=Os11t0152500-01
+chr11	irgsp1_rep	three_prime_UTR	2455135	2455212	.	+	.	Parent=Os11t0152400-01
+chr11	irgsp1_rep	three_prime_UTR	2455138	2455673	.	+	.	Parent=Os11t0152400-02
+chr11	irgsp1_rep	three_prime_UTR	2456892	2457567	.	+	.	Parent=Os11t0152400-01
+chr11	irgsp1_rep	exon	2457886	2458368	.	-	.	Parent=Os11t0152600-02
+chr11	irgsp1_rep	mRNA	2457886	2458803	.	-	.	ID=Os11t0152600-02;Name=Os11t0152600-02;Locus_id=Os11g0152600;Note=Non-protein coding transcript.;Transcript_evidence=AK063047;ORF_evidence=NONE
+chr11	irgsp1_locus	gene	2457886	2459103	.	-	.	ID=Os11g0152600;Name=Os11g0152600;Note=Conserved hypothetical protein. (Os11t0152600-01)%3BNon-protein coding transcript. (Os11t0152600-02);Transcript variants=Os11t0152600-01,Os11t0152600-02
+chr11	irgsp1_rep	three_prime_UTR	2458108	2458368	.	-	.	Parent=Os11t0152600-01
+chr11	irgsp1_rep	mRNA	2458108	2459103	.	-	.	ID=Os11t0152600-01;Name=Os11t0152600-01;Locus_id=Os11g0152600;Note=Conserved hypothetical protein.;Transcript_evidence=AK066868;ORF_evidence=NP_001066177.1 (RefSeq);B5toI1=CDS sequences are different between Build 5 and IRGSP-1.0.
+chr11	irgsp1_rep	exon	2458448	2458803	.	-	.	Parent=Os11t0152600-02
+chr11	irgsp1_rep	three_prime_UTR	2458448	2459103	.	-	.	Parent=Os11t0152600-01

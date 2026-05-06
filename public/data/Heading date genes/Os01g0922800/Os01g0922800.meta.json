@@ -1,0 +1,15 @@
+{
+  "gene_id": "Os01g0922800",
+  "chromosome": "chr01",
+  "strand": "+",
+  "gene_start": 40344374,
+  "gene_end": 40364362,
+  "region_start": 40339374,
+  "region_end": 40369362,
+  "region_length": 29989,
+  "upstream_bp": 5000,
+  "downstream_bp": 5000,
+  "offset": 40339373,
+  "coordinate_note": "To convert local coords to RAP-DB coords: local_pos + 40339373 = original_pos",
+  "fasta_header": ">Os01g0922800 chr01:40339374-40369362 strand=+ length=29989"
+}

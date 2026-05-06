@@ -1,0 +1,37 @@
+##gff-version 3
+##sequence-region Os03g0129400 1 10652
+Os03g0129400	irgsp1_rep	five_prime_UTR	59	112	.	+	.	Parent=Os03t0129300-01
+Os03g0129400	irgsp1_locus	gene	59	3244	.	+	.	ID=Os03g0129300;Name=Os03g0129300;Note=&beta%3B subunit of glyceraldehyde-3-phosphate dehydrogenase%2C Tolerance to low light stress%2C Contribution to the aroma phenotype (Os03t0129300-01)%3BSimilar to cDNA clone:J013118G18%2C full insert sequence. (Os03t0129300-02);Transcript variants=Os03t0129300-01,Os03t0129300-02;RAP-DB Gene Symbol Synonym(s)=OsGAPB%2C OsGAPDHB;RAP-DB Gene Name Synonym(s)=&beta%3B subunit of glyceraldehyde-3-phosphate dehydrogenase%2C chloroplastic glyceraldehyde-3-phosphate dehydrogenase B;Oryzabase Gene Symbol Synonym(s)=GADPH%2C OsGAPDHB%2C GAPDHB%2C OsGAPB%2C GAPB;Oryzabase Gene Name Synonym(s)=glyceraldehyde-3-phosphate dehydrogenase%2C chloroplastic glyceraldehyde-3-phosphate dehydrogenase B%2C chloroplastic GAPDH B subunit%2C beta subunit of glyceraldehyde-3-phosphate dehydrogenase%2C beta subunit of GAPDH
+Os03g0129400	irgsp1_rep	mRNA	59	3244	.	+	.	ID=Os03t0129300-01;Name=Os03t0129300-01;Locus_id=Os03g0129300;RAP-DB Gene Symbol Synonym(s)=OsGAPB%2C OsGAPDHB;RAP-DB Gene Name Synonym(s)=&beta%3B subunit of glyceraldehyde-3-phosphate dehydrogenase%2C chloroplastic glyceraldehyde-3-phosphate dehydrogenase B;Oryzabase Gene Symbol Synonym(s)=GADPH%2C OsGAPDHB%2C GAPDHB%2C OsGAPB%2C GAPB;Oryzabase Gene Name Synonym(s)=glyceraldehyde-3-phosphate dehydrogenase%2C chloroplastic glyceraldehyde-3-phosphate dehydrogenase B%2C chloroplastic GAPDH B subunit%2C beta subunit of glyceraldehyde-3-phosphate dehydrogenase%2C beta subunit of GAPDH;Note=&beta%3B subunit of glyceraldehyde-3-phosphate dehydrogenase%2C Tolerance to low light stress%2C Contribution to the aroma phenotype;Transcript_evidence=AK067755;ORF_evidence=Q9SNK3;GO=Biological Process: glucose metabolic process (GO:0006006),Molecular Function: NAD binding (GO:0051287),Molecular Function: NADP binding (GO:0050661),Molecular Function: oxidoreductase activity%2C acting on the aldehyde or oxo group of donors%2C NAD or NADP as acceptor (GO:0016620);InterPro=Glyceraldehyde-3-phosphate dehydrogenase%2C type I (IPR006424),Glyceraldehyde 3-phosphate dehydrogenase%2C NAD(P) binding domain (IPR020828),Glyceraldehyde 3-phosphate dehydrogenase%2C catalytic domain (IPR020829),Glyceraldehyde 3-phosphate dehydrogenase%2C active site (IPR020830),Glyceraldehyde/Erythrose phosphate dehydrogenase family (IPR020831),NAD(P)-binding domain superfamily (IPR036291);Manual Curation=June 4%2C 2020;Literature_PMID=32488648,24268160;Oryzabase=9711
+Os03g0129400	irgsp1_rep	CDS	113	190	.	+	0	Parent=Os03t0129300-01
+Os03g0129400	irgsp1_rep	CDS	272	382	.	+	0	Parent=Os03t0129300-01
+Os03g0129400	irgsp1_rep	CDS	1229	1390	.	+	0	Parent=Os03t0129300-01
+Os03g0129400	irgsp1_rep	CDS	1505	1672	.	+	0	Parent=Os03t0129300-01
+Os03g0129400	irgsp1_rep	CDS	1755	1915	.	+	0	Parent=Os03t0129300-01
+Os03g0129400	irgsp1_rep	five_prime_UTR	1999	1999	.	+	.	Parent=Os03t0129300-02
+Os03g0129400	irgsp1_rep	mRNA	1999	3199	.	+	.	ID=Os03t0129300-02;Name=Os03t0129300-02;Locus_id=Os03g0129300;Oryzabase Gene Symbol Synonym(s)=GADPH%2C OsGAPDHB%2C GAPDHB%2C OsGAPB%2C GAPB;Oryzabase Gene Name Synonym(s)=glyceraldehyde-3-phosphate dehydrogenase%2C chloroplastic glyceraldehyde-3-phosphate dehydrogenase B%2C chloroplastic GAPDH B subunit%2C beta subunit of glyceraldehyde-3-phosphate dehydrogenase%2C beta subunit of GAPDH;Note=Similar to cDNA clone:J013118G18%2C full insert sequence.;Transcript_evidence=AK059014;ORF_evidence=B4F8L7 (UniProt);GO=Molecular Function: oxidoreductase activity%2C acting on the aldehyde or oxo group of donors%2C NAD or NADP as acceptor (GO:0016620);InterPro=Glyceraldehyde 3-phosphate dehydrogenase%2C catalytic domain (IPR020829),Glyceraldehyde 3-phosphate dehydrogenase%2C active site (IPR020830),Glyceraldehyde/Erythrose phosphate dehydrogenase family (IPR020831);Oryzabase=9711
+Os03g0129400	irgsp1_rep	CDS	2000	2063	.	+	0	Parent=Os03t0129300-02
+Os03g0129400	irgsp1_rep	CDS	2002	2063	.	+	1	Parent=Os03t0129300-01
+Os03g0129400	irgsp1_rep	CDS	2150	2199	.	+	2	Parent=Os03t0129300-01
+Os03g0129400	irgsp1_rep	CDS	2150	2199	.	+	2	Parent=Os03t0129300-02
+Os03g0129400	irgsp1_rep	CDS	2319	2725	.	+	0	Parent=Os03t0129300-01
+Os03g0129400	irgsp1_rep	CDS	2319	2725	.	+	0	Parent=Os03t0129300-02
+Os03g0129400	irgsp1_rep	CDS	2832	2967	.	+	1	Parent=Os03t0129300-01
+Os03g0129400	irgsp1_rep	CDS	2832	2967	.	+	1	Parent=Os03t0129300-02
+Os03g0129400	irgsp1_rep	three_prime_UTR	2968	3199	.	+	.	Parent=Os03t0129300-02
+Os03g0129400	irgsp1_rep	three_prime_UTR	2968	3244	.	+	.	Parent=Os03t0129300-01
+Os03g0129400	irgsp1_rep	five_prime_UTR	5001	5120	.	+	.	Parent=Os03t0129400-01
+Os03g0129400	irgsp1_rep	five_prime_UTR	5001	5314	.	+	.	Parent=Os03t0129400-02
+Os03g0129400	irgsp1_rep	mRNA	5001	5549	.	+	.	ID=Os03t0129400-02;Name=Os03t0129400-02;Locus_id=Os03g0129400;Note=Similar to EST AU078206(E20111) corresponds to a region of the predicted gene.;Transcript_evidence=AK099390,AK073820;ORF_evidence=Q9SNK2 (UniProt)
+Os03g0129400	irgsp1_locus	gene	5001	5652	.	+	.	ID=Os03g0129400;Name=Os03g0129400;Note=Conserved hypothetical protein. (Os03t0129400-01)%3BSimilar to EST AU078206(E20111) corresponds to a region of the predicted gene. (Os03t0129400-02);Transcript variants=Os03t0129400-01,Os03t0129400-02
+Os03g0129400	irgsp1_rep	mRNA	5001	5652	.	+	.	ID=Os03t0129400-01;Name=Os03t0129400-01;Locus_id=Os03g0129400;Note=Conserved hypothetical protein.;Transcript_evidence=AK063857;ORF_evidence=Q9SNK2 (UniProt)
+Os03g0129400	irgsp1_rep	CDS	5121	5248	.	+	0	Parent=Os03t0129400-01
+Os03g0129400	irgsp1_rep	CDS	5315	5506	.	+	0	Parent=Os03t0129400-02
+Os03g0129400	irgsp1_rep	CDS	5347	5506	.	+	1	Parent=Os03t0129400-01
+Os03g0129400	irgsp1_rep	three_prime_UTR	5507	5549	.	+	.	Parent=Os03t0129400-02
+Os03g0129400	irgsp1_rep	three_prime_UTR	5507	5652	.	+	.	Parent=Os03t0129400-01
+Os03g0129400	irgsp1_rep	CDS	5954	6433	.	-	0	Parent=Os03t0129800-00
+Os03g0129400	irgsp1_locus	gene	5954	10652	.	-	.	ID=Os03g0129800;Name=Os03g0129800;Note=Similar to Putataive InsB from Escherichia coli. (Os03t0129800-00);Transcript variants=Os03t0129800-00;Oryzabase Gene Name Synonym(s)=OsMPH1 homologue
+Os03g0129400	irgsp1_rep	mRNA	5954	10652	.	-	.	ID=Os03t0129800-00;Name=Os03t0129800-00;Locus_id=Os03g0129800;Oryzabase Gene Name Synonym(s)=OsMPH1 homologue;Note=Similar to Putataive InsB from Escherichia coli.;Transcript_evidence=BT037421;ORF_evidence=Q8H883 (UniProt);InterPro=Nucleotide-diphospho-sugar transferase (IPR005069),Nucleotide-diphospho-sugar transferases (IPR029044),Putative nucleotide-diphospho-sugar transferase At1g28695/At4g15970-like (IPR044821);Oryzabase=21923
+Os03g0129400	irgsp1_rep	CDS	6698	7066	.	-	0	Parent=Os03t0129800-00
+Os03g0129400	irgsp1_rep	CDS	8976	9136	.	-	2	Parent=Os03t0129800-00

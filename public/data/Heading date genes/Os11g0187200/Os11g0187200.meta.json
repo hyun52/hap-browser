@@ -1,0 +1,19 @@
+{
+  "gene_id": "Os11g0187200",
+  "chromosome": "chr11",
+  "strand": "-",
+  "gene_start": 4432745,
+  "gene_end": 4434088,
+  "region_start": 4427745,
+  "region_end": 4439088,
+  "region_length": 11344,
+  "upstream_bp": 5000,
+  "downstream_bp": 5000,
+  "offset": 4427744,
+  "coordinate_note": "To convert local coords to RAP-DB coords: local_pos + 4427744 = original_pos",
+  "fasta_header": ">Os11g0187200 chr11:4427745-4439088 strand=- length=11344",
+  "overlapping_genes": [
+    "Os11g0187100",
+    "Os11g0187150"
+  ]
+}

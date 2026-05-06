@@ -1,0 +1,36 @@
+##gff-version 3
+chr03	irgsp1_locus	gene	713808	714995	.	+	.	ID=Os03g0112600;Name=Os03g0112600;Note=Similar to Plus-3 domain containing protein%2C expressed. (Os03t0112600-00);Transcript variants=Os03t0112600-00
+chr03	irgsp1_rep	mRNA	713808	714995	.	+	.	ID=Os03t0112600-00;Name=Os03t0112600-00;Locus_id=Os03g0112600;Note=Similar to Plus-3 domain containing protein%2C expressed.;Transcript_evidence=EU942983;ORF_evidence=Q7XCX5 (UniProt);GO=Molecular Function: DNA binding (GO:0003677);InterPro=SWIB/MDM2 domain (IPR003121),Plus-3 domain (IPR004343),SWIB domain (IPR019835),Plus3-like superfamily (IPR036128),SWIB/MDM2 domain superfamily (IPR036885)
+chr03	irgsp1_rep	CDS	713808	714995	.	+	0	Parent=Os03t0112600-00
+chr03	irgsp1_rep	five_prime_UTR	717447	717498	.	+	.	Parent=Os03t0112700-02
+chr03	irgsp1_locus	gene	717447	720837	.	+	.	ID=Os03g0112700;Name=Os03g0112700;Note=Zinc finger CCCH domain-containing protein (Os03t0112700-01)%3BCCCH-type zinc finger protein%2C Photoperiodic control of flowering time (Os03t0112700-02);Transcript variants=Os03t0112700-01,Os03t0112700-02;RAP-DB Gene Symbol Synonym(s)=EHD4%2C OsC3H20%2C C3H20%2C Ehd4;RAP-DB Gene Name Synonym(s)=EARLY HEADING DATE 4%2C Zinc finger CCCH domain-containing protein 20%2C Early heading date 4;CGSNL Gene Symbol=EHD4;CGSNL Gene Name=EARLY HEADING DATE 4;Oryzabase Gene Symbol Synonym(s)=OsC3H20%2C C3H20%2C Ehd4%2C DLN73%2C DLN73a%2C DLN73b%2C OsDLN73%2C OsDLN73a%2C OsDLN73b;Oryzabase Gene Name Synonym(s)=Zinc finger CCCH domain-containing protein 20%2C Early heading date 4%2C DLN repressor 73%2C DLN motif protein 73
+chr03	irgsp1_rep	mRNA	717447	720837	.	+	.	ID=Os03t0112700-02;Name=Os03t0112700-02;Locus_id=Os03g0112700;RAP-DB Gene Symbol Synonym(s)=EHD4%2C OsC3H20%2C C3H20%2C Ehd4;RAP-DB Gene Name Synonym(s)=EARLY HEADING DATE 4%2C Zinc finger CCCH domain-containing protein 20%2C Early heading date 4;CGSNL Gene Symbol=EHD4;CGSNL Gene Name=EARLY HEADING DATE 4;Oryzabase Gene Symbol Synonym(s)=OsC3H20%2C C3H20%2C Ehd4%2C DLN73%2C DLN73a%2C DLN73b%2C OsDLN73%2C OsDLN73a%2C OsDLN73b;Oryzabase Gene Name Synonym(s)=Zinc finger CCCH domain-containing protein 20%2C Early heading date 4%2C DLN repressor 73%2C DLN motif protein 73;Note=CCCH-type zinc finger protein%2C Photoperiodic control of flowering time;Transcript_evidence=JQ828863 (Kita-ake);ORF_evidence=J9R5R9;GO=Molecular Function: metal ion binding (GO:0046872);InterPro=Zinc finger%2C CCCH-type (IPR000571),Zinc finger%2C CCCH-type superfamily (IPR036855);Manual Curation=November 18%2C 2015;Literature_PMID=23437005,18221561;Oryzabase=8584
+chr03	irgsp1_rep	CDS	717499	719362	.	+	0	Parent=Os03t0112700-02
+chr03	irgsp1_rep	five_prime_UTR	717839	717870	.	+	.	Parent=Os03t0112700-01
+chr03	irgsp1_rep	mRNA	717839	720374	.	+	.	ID=Os03t0112700-01;Name=Os03t0112700-01;Locus_id=Os03g0112700;CGSNL Gene Symbol=EHD4;CGSNL Gene Name=EARLY HEADING DATE 4;Oryzabase Gene Symbol Synonym(s)=OsC3H20%2C C3H20%2C Ehd4%2C DLN73%2C DLN73a%2C DLN73b%2C OsDLN73%2C OsDLN73a%2C OsDLN73b;Oryzabase Gene Name Synonym(s)=Zinc finger CCCH domain-containing protein 20%2C Early heading date 4%2C DLN repressor 73%2C DLN motif protein 73;Note=Zinc finger CCCH domain-containing protein;Transcript_evidence=AK112095;ORF_evidence=Q0DVU4;GO=Molecular Function: metal ion binding (GO:0046872);InterPro=Zinc finger%2C CCCH-type (IPR000571),Zinc finger%2C CCCH-type superfamily (IPR036855);Manual Curation=November 18%2C 2015;Literature_PMID=18221561;Oryzabase=8584
+chr03	irgsp1_rep	CDS	717871	719362	.	+	0	Parent=Os03t0112700-01
+chr03	irgsp1_rep	CDS	719462	719598	.	+	2	Parent=Os03t0112700-02
+chr03	irgsp1_rep	CDS	719465	719598	.	+	2	Parent=Os03t0112700-01
+chr03	irgsp1_rep	CDS	719684	720181	.	+	0	Parent=Os03t0112700-01
+chr03	irgsp1_rep	CDS	719684	720181	.	+	0	Parent=Os03t0112700-02
+chr03	irgsp1_rep	three_prime_UTR	720182	720374	.	+	.	Parent=Os03t0112700-01
+chr03	irgsp1_rep	three_prime_UTR	720182	720837	.	+	.	Parent=Os03t0112700-02
+chr03	irgsp1_rep	three_prime_UTR	721115	721271	.	-	.	Parent=Os03t0112800-01
+chr03	irgsp1_locus	gene	721115	725224	.	-	.	ID=Os03g0112800;Name=Os03g0112800;Note=DUF726-containing protein%2C Anther lipid biosynthesis%2C Required for tapetal PCD and pollen wall formation%2C Male fertility (Os03t0112800-01);Transcript variants=Os03t0112800-01;RAP-DB Gene Symbol Synonym(s)=STS1;RAP-DB Gene Name Synonym(s)=SWOLLEN TAPETUM AND STERILITY 1;CGSNL Gene Symbol=STS1;CGSNL Gene Name=SWOLLEN TAPETUM AND STERILITY 1;Oryzabase Gene Symbol Synonym(s)=OsSTS1
+chr03	irgsp1_rep	mRNA	721115	725224	.	-	.	ID=Os03t0112800-01;Name=Os03t0112800-01;Locus_id=Os03g0112800;RAP-DB Gene Symbol Synonym(s)=STS1;RAP-DB Gene Name Synonym(s)=SWOLLEN TAPETUM AND STERILITY 1;CGSNL Gene Symbol=STS1;CGSNL Gene Name=SWOLLEN TAPETUM AND STERILITY 1;Oryzabase Gene Symbol Synonym(s)=OsSTS1;Note=DUF726-containing protein%2C Anther lipid biosynthesis%2C Required for tapetal PCD and pollen wall formation%2C Male fertility;Transcript_evidence=AK100572;ORF_evidence=Q10SS2;InterPro=Protein of unknown function DUF726 (IPR007941),Alpha/Beta hydrolase fold (IPR029058);Manual Curation=June 28%2C 2022;Literature_PMID=35748750;Oryzabase=24965;Subcellular location=endoplasmic reticulum (GO:0005783)
+chr03	irgsp1_rep	CDS	721272	721421	.	-	0	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	721506	721563	.	-	1	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	721653	721723	.	-	0	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	721865	721941	.	-	2	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	722039	722121	.	-	1	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	722200	722259	.	-	1	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	722503	722638	.	-	2	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	722711	722781	.	-	1	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	722903	722994	.	-	0	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	723109	723206	.	-	2	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	723546	723698	.	-	2	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	723801	723966	.	-	0	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	724112	724540	.	-	0	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	724731	724812	.	-	1	Parent=Os03t0112800-01
+chr03	irgsp1_rep	CDS	724900	725159	.	-	0	Parent=Os03t0112800-01
+chr03	irgsp1_rep	five_prime_UTR	725160	725224	.	-	.	Parent=Os03t0112800-01

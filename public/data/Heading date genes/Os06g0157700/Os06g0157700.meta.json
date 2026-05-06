@@ -1,0 +1,18 @@
+{
+  "gene_id": "Os06g0157700",
+  "chromosome": "chr06",
+  "strand": "+",
+  "gene_start": 2940004,
+  "gene_end": 2942452,
+  "region_start": 2935004,
+  "region_end": 2947452,
+  "region_length": 12449,
+  "upstream_bp": 5000,
+  "downstream_bp": 5000,
+  "offset": 2935003,
+  "coordinate_note": "To convert local coords to RAP-DB coords: local_pos + 2935003 = original_pos",
+  "fasta_header": ">Os06g0157700 chr06:2935004-2947452 strand=+ length=12449",
+  "overlapping_genes": [
+    "Os06g0157800"
+  ]
+}
