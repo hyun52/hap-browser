@@ -142,7 +142,7 @@ Then follow [`USER_GUIDE_ADD_GENES.md`](USER_GUIDE_ADD_GENES.md).
 
 ### Tech stack
 
-- **Pipeline**: [Snakemake](https://snakemake.github.io/) 9, [BWA-MEM2](https://github.com/bwa-mem2/bwa-mem2), [samtools](https://www.htslib.org/), [pysam](https://pysam.readthedocs.io/)
+- **Pipeline**: [Snakemake 9](https://snakemake.github.io/), [BWA-MEM2](https://github.com/bwa-mem2/bwa-mem2), [samtools](https://www.htslib.org/), [pysam](https://pysam.readthedocs.io/)
 - **Frontend**: React 18, Vite 5, Canvas (no Konva/etc.), OffscreenCanvas + Web Workers for performance
 - **Backend**: FastAPI, [primer3-py](https://libnano.github.io/primer3-py/), Uvicorn
 - **Marker design**: Custom KASP algorithm + Primer3 validation (SantaLucia 1998 nearest-neighbor Tm, [Mg²⁺] / [dNTP] correction)
