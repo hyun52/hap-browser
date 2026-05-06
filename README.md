@@ -1,4 +1,4 @@
-# 🌾 HapBrowser
+# HapBrowser
 
 > **Rice haplotype browser with integrated marker design**
 >
@@ -17,17 +17,17 @@
 
 ---
 
-## ✨ Features
+## Features
 
-- **🧬 Per-gene haplotype matrix** — Sample × variant grid for any RAP-DB gene, with SNP / InDel / Gap clustering
-- **⚡ Canvas-based rendering** — 60fps interaction with 200 samples × 10,000+ variant positions via virtual scrolling
-- **🔬 KASP & InDel marker design** — Allele-specific primers with Primer3-validated Tm / hairpin / dimer
-- **🚫 Variant-aware primer design** — Optionally avoid neighboring SNP/InDel sites in primer regions
-- **📊 Phenotype overlay** — Upload phenotype CSV → automatic haplotype-level box plots
-- **📤 Publication-ready export** — CSV matrices, Excel sheets, SVG box plots
-- **🔁 Reproducible pipeline** — Snakemake workflow: FASTQ → BAM → pileup → haplotype → browser, in one command
+- ** Per-gene haplotype matrix** — Sample × variant grid for any RAP-DB gene, with SNP / InDel / Gap clustering
+- ** Canvas-based rendering** — 60fps interaction with 200 samples × 10,000+ variant positions via virtual scrolling
+- ** KASP & InDel marker design** — Allele-specific primers with Primer3-validated Tm / hairpin / dimer
+- ** Variant-aware primer design** — Optionally avoid neighboring SNP/InDel sites in primer regions
+- ** Phenotype overlay** — Upload phenotype CSV → automatic haplotype-level box plots
+- ** Publication-ready export** — CSV matrices, Excel sheets, SVG box plots
+- ** Reproducible pipeline** — Snakemake workflow: FASTQ → BAM → pileup → haplotype → browser, in one command
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Run the browser (with included demo data)
 
@@ -68,11 +68,11 @@ echo -e "Os07g0281400\tYield components\tDRO1" >> genes.tsv
 
 ≈ 30–45 min per new gene (200 samples, 72-core workstation).
 
-📖 **See [`USER_GUIDE_ADD_GENES.md`](USER_GUIDE_ADD_GENES.md) for a full walkthrough.**
+**See [`USER_GUIDE_ADD_GENES.md`](USER_GUIDE_ADD_GENES.md) for a full walkthrough.**
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 <table>
 <tr>
@@ -101,7 +101,7 @@ echo -e "Os07g0281400\tYield components\tDRO1" >> genes.tsv
 
 ---
 
-## 🛠 Architecture
+## Architecture
 
 ```
 ┌─────────────────┐  Snakemake   ┌────────────────┐
@@ -132,7 +132,7 @@ echo -e "Os07g0281400\tYield components\tDRO1" >> genes.tsv
 - **Backend**: FastAPI, [primer3-py](https://libnano.github.io/primer3-py/), Uvicorn
 - **Marker design**: Custom KASP algorithm + Primer3 validation (SantaLucia 1998 nearest-neighbor Tm, [Mg²⁺] / [dNTP] correction)
 
-## 📋 Requirements
+## Requirements
 
 | Component | Version |
 |-----------|---------|
@@ -150,13 +150,13 @@ conda create -n hapbrowser -c bioconda -c conda-forge \
 conda activate hapbrowser
 ```
 
-## 📖 Documentation
+## Documentation
 
 - [`USER_GUIDE_ADD_GENES.md`](USER_GUIDE_ADD_GENES.md) — Step-by-step gene addition
 - [`README_pipeline.md`](README_pipeline.md) — Full pipeline reference
 - [`CHANGELOG_pipeline.md`](CHANGELOG_pipeline.md) — Version history
 
-## 🎯 Demo Data
+## Demo Data
 
 The included demo data covers:
 - **23 rice heading-date genes** (Hd1, Ghd7, Ehd1, RFT1, OsMADS51, etc.)
@@ -165,15 +165,15 @@ The included demo data covers:
 
 Note: BAM files are not included in the repository (~17 GB total). The browser still functions fully with the precomputed haplotype data. To regenerate BAMs, run the pipeline with your own copy of the FASTQ files.
 
-## 🤝 Contributing
+## Contributing
 
 This is an academic project under active development. Issues and pull requests are welcome:
 
-- 🐛 **Bug reports**: open an [issue](https://github.com/hyun52/hap-browser/issues) with the version and steps to reproduce
-- 💡 **Feature requests**: open an issue describing the use case
-- 🔧 **Pull requests**: small, focused PRs preferred; please include a brief description
+- **Bug reports**: open an [issue](https://github.com/hyun52/hap-browser/issues) with the version and steps to reproduce
+- **Feature requests**: open an issue describing the use case
+- **Pull requests**: small, focused PRs preferred; please include a brief description
 
-## 📜 License
+## License
 
 This project is licensed under an **Academic Non-Commercial License**. See [`LICENSE`](LICENSE) for full terms.
 
@@ -184,7 +184,7 @@ This project is licensed under an **Academic Non-Commercial License**. See [`LIC
 
 For commercial licensing inquiries, contact via GitHub.
 
-## 📚 Citation
+## Citation
 
 If you use HapBrowser in your research, please cite:
 
@@ -205,7 +205,7 @@ Please also cite the underlying tools:
 - **samtools / BCFtools**: Danecek P. et al. (2021). *GigaScience* 10(2).
 - **Primer3**: Untergasser A. et al. (2012). *Nucleic Acids Res.* 40(15):e115.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Reference data**: [RAP-DB](https://rapdb.dna.affrc.go.jp/) IRGSP-1.0
 - **Sample data**: [IRRI 3K Rice Genomes Project](http://snp-seek.irri.org/)
