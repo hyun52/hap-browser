@@ -29,11 +29,16 @@
 
 ## Quick Start
 
-### Run the browser (with included demo data)
+### Run the browser
 
 ```bash
+# Clone the repository
 git clone https://github.com/hyun52/hap-browser.git
 cd hap-browser
+
+# Download pileup data (~773 MB) from the v1.0.0 release
+wget https://github.com/hyun52/hap-browser/releases/download/v1.0.0/hap-browser-pileup-data-v1.0.0.tar.gz
+tar xzf hap-browser-pileup-data-v1.0.0.tar.gz -C public/data/
 
 # Install JS dependencies
 npm install
