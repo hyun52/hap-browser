@@ -115,7 +115,6 @@ echo -e "Os07g0281400\tYield components\tDRO1" >> genes.tsv
   <img src="docs/screenshots/hapmatrix.png" width="700"><br>
   <sub><b>HapMatrix</b> — multi-gene position table with phenotype upload and box-plot analysis</sub>
 </p>
----
 
 ## Architecture
 
