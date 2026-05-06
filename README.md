@@ -1,6 +1,6 @@
 # HapBrowser
 
-> **Rice haplotype browser with integrated marker design**
+> **haplotype browser with integrated marker design**
 >
 > Visualize gene-level haplotype patterns across 200+ rice accessions, design KASP / InDel markers in-browser, and add new genes via a one-command Snakemake pipeline.
 
@@ -209,10 +209,9 @@ Please also cite the underlying tools:
 
 - **Reference data**: [RAP-DB](https://rapdb.dna.affrc.go.jp/) IRGSP-1.0
 - **Sample data**: [IRRI 3K Rice Genomes Project](http://snp-seek.irri.org/)
-- **PI**: Plant Genome and Breeding Lab, Jeonbuk National University
 
 ---
 
 <p align="center">
-  <sub>Built with 🌾 at PGBL Lab, JBNU</sub>
+  <sub>Built with at PGBL Lab, JBNU</sub>
 </p>
