@@ -1,6 +1,6 @@
-# HapBrowser
+# Hap-Browser
 
-> **haplotype browser with integrated marker design**
+> **Haplotype browser with integrated marker design**
 >
 > Visualize gene-level haplotype patterns across 200+ rice accessions, design KASP / InDel markers in-browser, and add new genes via a one-command Snakemake pipeline.
 
@@ -177,10 +177,10 @@ This is an academic project under active development. Issues and pull requests a
 
 This project is licensed under an **Academic Non-Commercial License**. See [`LICENSE`](LICENSE) for full terms.
 
-- ✅ Free for academic and educational research
-- ✅ Modification and redistribution allowed for academic use
-- ❌ Commercial use prohibited without prior permission
-- 📚 **Citation required** in publications
+- Free for academic and educational research
+- Modification and redistribution allowed for academic use
+- Commercial use prohibited without prior permission
+- **Citation required** in publications
 
 For commercial licensing inquiries, contact via GitHub.
 
