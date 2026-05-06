@@ -56,7 +56,7 @@ bash start.sh
 # → Backend:  http://localhost:8081
 ```
 
-The demo dataset includes 23 rice heading-date genes plus Sub1A across 200 IRRI accessions.
+The demo dataset includes 23 rice heading-date genes + Sub1A across 200 IRRI accessions.
 
 ## Adding new genes (advanced)
 
