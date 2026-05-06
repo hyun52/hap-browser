@@ -58,8 +58,6 @@ bash start.sh
 
 The demo dataset includes 23 rice heading-date genes plus Sub1A across 200 IRRI accessions.
 
-> Don't have conda? Install [Miniconda](https://docs.conda.io/en/latest/miniconda.html) first (one script, no sudo).
-
 ## Adding new genes (advanced)
 
 The Quick Start above is enough to use the included demo data. To add **new genes** from your own FASTQ files, install the pipeline tools:
