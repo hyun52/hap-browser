@@ -36,7 +36,7 @@ The top bar contains the current gene info and primary action buttons.
 - **`RAP-DB pos`** input + **`Go`**: jump to a specific genomic coordinate within the gene
 - **Action buttons** (right side):
   - **`HapMatrix`** — multi-position haplotype analysis with phenotype overlay
-  - **`Export`** — download CSV / Excel / SVG
+  - **`Export`** — download CSV (Excel)
   - **`Protein`** — toggle codon-level (AA) overlay in the Genome View
   - **`BLAST`** — search a sequence against the haplotype database
 
