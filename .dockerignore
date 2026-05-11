@@ -1,8 +1,0 @@
-node_modules
-dist
-*.sif
-*.tar
-.git
-public/data/bam
-public/data/pileup
-public/data/blast_db
