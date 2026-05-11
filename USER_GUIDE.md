@@ -308,7 +308,7 @@ target in the genome view. The column highlights and a toast notification at the
 bottom shows the selected coordinate range. Releasing the Shift key opens the
 Marker Design modal.
 
-![Selecting a SNP with Shift+Click to open Marker Design](docs/images/kasp_select_snp.png)
+![Selecting a SNP with Shift+Click to open Marker Design](docs/screenshots/kasp_select_snp.png)
 
 In the example above, the target SNP is `9,338,330 G→A` (RAP-DB coordinate) in the
 *Hd1* CDS. The toast at the bottom confirms the selection:
@@ -333,7 +333,7 @@ The modal starts in a collapsed state showing only the SNP position. Clicking
 the SNP Position badge activates it, revealing FAM/HEX allele assignments and
 the per-haplotype distribution.
 
-![KASP Marker Design modal — initial state (left) and after SNP activation (right)](docs/images/kasp_modal_overview.png)
+![KASP Marker Design modal — initial state (left) and after SNP activation (right)](docs/screenshots/kasp_modal_overview.png)
 
 **Modal anatomy:**
 
@@ -386,7 +386,7 @@ Click **Design Options ▼** to expand the parameter panel. All KASP design
 parameters are tunable, but the defaults are calibrated for standard rice KASP
 assays under typical reaction conditions.
 
-![Design Options panel — all tunable parameters expanded](docs/images/kasp_options.png)
+![Design Options panel — all tunable parameters expanded](docs/screenshots/kasp_options.png)
 
 **Top-level toggles:**
 
@@ -432,7 +432,7 @@ three sections: the primer table, the Primer3 validation panel, and the
 expected sample groups. An **Export** button (top-right) downloads a
 plain-text summary suitable for ordering and record-keeping.
 
-![KASP design result — primer table (left, top), Primer3 validation (left, middle), Expected Sample Groups (left, bottom), and exported text file (right)](docs/images/kasp_result.png)
+![KASP design result — primer table (left, top), Primer3 validation (left, middle), Expected Sample Groups (left, bottom), and exported text file (right)](docs/screenshots/kasp_result.png)
 
 #### Primer table
 
@@ -543,7 +543,7 @@ SNP/InDel position within the candidate primer-binding region. If no candidate
 can avoid all nearby variants, the design fails with a detailed error message
 explaining what blocked it.
 
-![Failed KASP design with Avoid neighboring variants ON — error message and blocking variant visualization](docs/images/kasp_blocking.png)
+![Failed KASP design with Avoid neighboring variants ON — error message and blocking variant visualization](docs/screenshots/kasp_blocking.png)
 
 **Error anatomy:**
 
@@ -610,3 +610,4 @@ The tip line at the bottom of the error gives the key heuristic:
 > germplasm before proceeding.
 
 ---
+
