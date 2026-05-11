@@ -1694,3 +1694,186 @@ populated with the human-readable name for each sample.
 > the full carrier list.
 
 ---
+
+## 11. Exporting Data
+
+HapBrowser provides multiple export paths, each tailored to a specific
+workflow. This section is a cross-reference table for all export
+features, plus details on the main Genome View export that is not
+covered elsewhere.
+
+---
+
+### 11.1 Export reference
+
+| Where | Output | Format | Covered in |
+|-------|--------|--------|------------|
+| Top Bar — `⬇ Export` | Per-sample variant matrix for the current gene | CSV | Section 11.2 (below) |
+| Top Bar — `⬇ Export` (Protein ON) | Same matrix + AA annotation rows | CSV | Section 10.4 |
+| Marker Design modal (KASP) — `⬇ Export` | KASP primer set with universal tails and sample groups | Plain text | Section 5.4 |
+| Marker Design modal (InDel) — `⬇ Export` | Forward/Reverse primers + band pattern | Plain text | Section 6.4 |
+| HapMatrix — `⬇ Download CSV` | One row per sample with cross-gene haplotype assignments | CSV | Section 7.3 |
+| HapMatrix box plot — `⬇ SVG` / `⬇ PNG` | Per-trait box plot, one figure per trait | SVG (vector) or PNG (raster) | Section 7.4 |
+| BLAST results — `⬇ Download TSV` | Full BLAST hit table | TSV | Section 8.4 |
+| Protein codon popover — `✕ Copy & Close` | Per-sample codon table for one codon | Clipboard (TSV) | Section 10.3 |
+
+All exports run client-side or against the local HapBrowser instance —
+nothing is sent to external services. File names default to a
+gene-and-feature pattern (e.g., `Hd1_haplotype_matrix.csv`) so multiple
+exports can coexist without renaming.
+
+---
+
+### 11.2 Genome View export (Top Bar)
+
+The Top Bar **`⬇ Export`** button produces a per-sample variant matrix
+for the currently loaded gene. The dialog reports the export scope and
+offers one or two download options depending on whether Protein View is
+active.
+
+**Export modal:**
+
+```
+⬇ Export
+Export based on current view settings.
+200 samples × 1215 columns (Identical + SNP + InDel + Gap)
+
+[ Cancel ]   [ ⬇ Download CSV ]   [ ⬇ Non-syn only ]
+```
+
+The line "200 samples × 1215 columns" is informational — it shows the
+exact size of the CSV that will be produced under the current Control
+Panel settings.
+
+**What "current view settings" means:**
+
+The exported matrix reflects the live Control Panel state (Section 4):
+
+- **Range** (Gene / CDS / Custom) — which positions define the haplotype
+  classification used to label rows.
+- **Mode** (SNP / InDel / Gap) — which variant types are included as
+  columns.
+- **View** (All / Gene / CDS) — which region's columns are exported.
+- **Show** (Identical / SNP / InDel / Gap) — which sample rows are
+  included.
+- **Sample Filter** (Select All / Deselect All / Representatives) —
+  which samples are exported. Use **Representatives** to export one
+  sample per haplotype, useful for publication tables.
+- **Sample varieties mapping** (Section 9) — if applied, the `Variety`
+  column is populated with human-readable names.
+
+To export a different scope, close the modal, adjust the Control Panel,
+and click `⬇ Export` again — the dialog re-opens with the new sample
+and column counts.
+
+**Two download options:**
+
+| Button | Available when | Output |
+|--------|----------------|--------|
+| `⬇ Download CSV` | Always | Full matrix under current view settings |
+| `⬇ Non-syn only` | Only when Protein View is ON | Subset of columns where at least one sample carries a non-synonymous variant |
+
+When Protein View is OFF, the `Non-syn only` button is hidden — AA
+annotations are not computed, so there is no basis for the filter.
+
+**CSV structure:**
+
+The exported file is a wide table with one column per genomic position
+and one row per sample, prefixed by several annotation rows:
+
+```
+Haplotype  Annotation                Variety        CDS       CDS       ...
+                                                    9336535   9336536   ...
+           RAP-DB position                          9336535   9336536   ...
+           Reference nucleotide                     A         T         ...
+           Alt nucleotide                           -         -         ...
+           Alt sample                               12        13        ...
+Hap1       ERS469118                  IRIS 313-...  A         T         ...
+Hap1       ERS469194                  IRIS 313-...  A         T         ...
+Hap2       ERS468427                  IRIS 313-...  A         T         ...
+...
+```
+
+When Protein View is ON, six additional annotation rows are inserted
+between `Alt sample` and the first sample row:
+
+```
+           AA position                              1         1         ...
+           Ref AA                                   M         M         ...
+           Alt AA                                   I         I         ...
+           Synonymous                               0         0         ...
+           Non-syn                                  1         1         ...
+           Frameshift                               13        13        ...
+```
+
+See Section 10.4 for a full screenshot of this layout.
+
+> **Tip:** For publication tables, the recommended workflow is:
+> (1) apply variety names (Section 9), (2) set **Sample Filter** to
+> **Representatives**, (3) set **Range** and **View** to **CDS**, and
+> (4) export. This produces a compact one-sample-per-haplotype CSV
+> labeled with both ERS IDs and cultivar names, suitable for direct
+> use as supplementary material.
+
+> **Note:** Excel may misinterpret the leading annotation rows if you
+> open the CSV directly. To preserve the header structure, open the
+> file in Excel via **Data → From Text/CSV** rather than double-clicking,
+> or read it in R/Python with explicit `skip` / `header` arguments.
+
+---
+
+## 12. Keyboard Shortcuts
+
+A quick reference for the keyboard and mouse shortcuts used throughout
+HapBrowser. All shortcuts are documented in their respective sections;
+this table is a one-page recap.
+
+---
+
+### Genome View
+
+| Action | Shortcut |
+|--------|----------|
+| Scroll vertically (samples) | Mouse wheel |
+| Scroll horizontally (positions) | Horizontal mouse wheel / Shift + wheel |
+| Navigate cell by cell | Arrow keys (`↑` `↓` `←` `→`) |
+| Select a single SNP (open KASP Marker Design) | **Shift + Click** on a column header |
+| Select a range (open InDel Marker Design) | **Shift + Drag** across column headers |
+| View haplotype details | Click a haplotype header |
+
+See Section 1 ④ for the Genome View overview, Section 5.1 for KASP
+selection, and Section 6.1 for InDel range selection.
+
+---
+
+### Top Bar
+
+| Action | Shortcut |
+|--------|----------|
+| Jump to a RAP-DB position | Type the coordinate, press **Enter** (or click `Go`) |
+
+See Section 2.B.
+
+---
+
+### BLAST view
+
+| Action | Shortcut |
+|--------|----------|
+| Submit a BLAST query | **Ctrl + Enter** (`Cmd + Enter` on macOS) |
+
+See Section 8.2.
+
+---
+
+### Protein view
+
+| Action | Shortcut |
+|--------|----------|
+| Show inline codon details | **Hover** any codon cell |
+| Open codon detail popover | **Click** the codon cell |
+| Close popover and copy to clipboard | Click outside the popover, or click **`✕ Copy & Close`** |
+
+See Section 10.3.
+
+---
