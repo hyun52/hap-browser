@@ -611,3 +611,275 @@ The tip line at the bottom of the error gives the key heuristic:
 
 ---
 
+## 6. InDel Marker Design
+
+InDel (Insertion/Deletion) markers are a low-cost alternative to KASP for
+distinguishing haplotypes that differ by insertion or deletion polymorphisms.
+Genotyping requires only standard PCR plus gel electrophoresis — no
+fluorescence reader or universal-tail primers needed. HapBrowser's InDel
+marker designer takes any genomic range, identifies all InDel/Gap variants
+within it, and produces Forward/Reverse primers along with the expected
+band pattern for each haplotype.
+
+This section walks through the InDel design workflow using a 37 bp range in
+*Hd1* (`9,337,032 - 9,337,068`) that contains multiple InDel polymorphisms.
+
+---
+
+### 6.1 Selecting a target range
+
+Unlike KASP (which targets a single SNP), InDel marker design uses a
+**range**. Hold **Shift** and **drag** across the column headers in the
+genome view to select multiple consecutive positions. The selected columns
+are highlighted in light blue, and the toast at the bottom shows the range
+and its length.
+
+![Selecting a multi-column range with Shift+drag for InDel design](docs/screenshots/indel_select_range.png)
+
+In the example above, the selected range is `9,337,032 - 9,337,068` (37 bp)
+in the *Hd1* CDS. The toast confirms:
+
+```
+⇔ 9,337,032 - 9,337,068  release → Marker Design
+```
+
+> **Tip:** To focus on regions with InDels, toggle the **MODE** filter in
+> the Control panel — enabling only `InDel` and `Gap` (and disabling `SNP`)
+> hides SNP columns and makes InDel-rich regions easier to spot. The
+> sidebar in the example shows all three modes enabled to provide full
+> context.
+
+> **Note:** A range as short as 1 bp is technically allowed (the designer
+> will fall back to flanking the position), but a range of at least
+> ~20–50 bp containing one or more InDels is the typical use case. Wider
+> ranges give the designer more flexibility to place primers in
+> variant-free flanking regions.
+
+---
+
+### 6.2 Marker Design modal overview
+
+When the modal opens, the **InDel Marker** tab is selected automatically
+(based on the range width). The top section summarizes the variant
+composition within the selected range, and the **Expected Band Pattern**
+panel previews how samples will cluster on a gel.
+
+![InDel Marker Design modal — target range info and expected band pattern preview](docs/screenshots/indel_modal_overview.png)
+
+**Modal anatomy:**
+
+- **Tabs (top)** — `KASP (SNP)` / `InDel Marker`. The InDel tab is active here.
+- **Range badge (top-right)** — Selected genomic range, e.g. `9,337,032 - 9,337,068`.
+- **TARGET RANGE** — Range coordinates and length (`37bp`).
+- **Variant counts** — `INS ×1 DEL ×2 GAP ×3` summarizes how many variants
+  of each type fall within the range.
+- **EXPECTED BAND PATTERN** — Lists the distinct bands you should see on
+  a gel, grouped by net amplicon size offset relative to the reference.
+
+**Reading the Expected Band Pattern:**
+
+Each band group is one row of haplotypes that will produce the same
+amplicon size. In this example, four distinct bands are predicted:
+
+| Band | Size offset | Samples | Composition |
+|------|-------------|---------|-------------|
+| 🟢 Ref band | 0 (reference) | 142 | No variant in range |
+| 🟠 Alt band | +4 bp | 54 | `INS(+4bp)@9,337,032` |
+| 🟠 Alt band | +3 bp | 3 | `INS(+4bp)@9,337,032, DEL(-1bp)@9,337,068` |
+| 🟠 Alt band | −3 bp | 1 | `GAP(-1bp)@9,337,053, GAP(-1bp)@9,337,054, GAP(-1bp)@9,337,055` |
+
+This preview is computed before primer design begins, so you can decide
+whether the band-size differences will actually be resolvable on your gel
+of choice (see Section 6.5).
+
+> **Note:** "Net offset" is the sum of all InDel sizes within the range.
+> A `+4bp` insertion and a `-1bp` deletion in the same haplotype yield a
+> `+3bp` net offset and therefore co-migrate as a single band on a gel.
+> The sample composition column shows which exact variants make up each
+> band — useful for predicting which germplasm subset falls into each
+> cluster.
+
+---
+
+### 6.3 Design Options
+
+Scroll down past the Expected Band Pattern to find the **Design Options**
+panel. Most parameters are shared with the KASP designer, but the option
+set is simpler because InDel primers do not need FAM/HEX universal tails
+or allele-specific 3' ends.
+
+![Design Options panel for InDel marker design, with additional Alt bands and PAGE warning visible above](docs/screenshots/indel_options.png)
+
+Before the options panel, note the additional band-pattern entries and a
+warning callout:
+
+```
+⚠ Small InDel detected — PAGE electrophoresis recommended
+```
+
+This appears whenever any predicted band differs from another by less than
+~10 bp. Polyacrylamide gel electrophoresis (PAGE) resolves small size
+differences far better than standard agarose; see Section 6.5 for gel
+selection guidance.
+
+**Tunable parameters:**
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| Amplicon (bp) | 100–300 | Total PCR product length |
+| Primer length (nt) | 18–25 | Forward and Reverse primer length |
+| Tm (°C) | 55–65 | Melting temperature window |
+| GC (%) | 40–60 | GC content window |
+| F/R Tm diff max (°C) | 2 | Maximum Tm difference between Forward and Reverse |
+| Hairpin min stem (bp) | 4 | Minimum stem length to flag as a hairpin |
+| Dimer min overlap (bp) | 4 | Minimum overlap to flag as a dimer |
+
+**Auto-adjust params** — Same as in the KASP designer; expands Tm/GC
+windows automatically if no candidate is found under the current
+constraints.
+
+> **Tip:** For small InDels (≤5 bp), reduce **Amplicon max** to ~150 bp.
+> Shorter amplicons make a few-bp size difference proportionally larger,
+> which is much easier to score on a gel. For large InDels (>20 bp), the
+> default 100–300 bp range works on standard 2% agarose.
+
+> **Note:** Unlike KASP, the InDel designer has no **Avoid neighboring
+> variants** option — variants *inside* the amplicon are expected (they're
+> the whole point of the assay). Primers are still placed in variant-free
+> flanking regions wherever possible.
+
+---
+
+### 6.4 Successful design result
+
+Click **Design Marker** to run the design. The result panel shows the
+primer pair, Primer3 thermodynamic validation, and an Export button. The
+exported text file includes the full band pattern with per-haplotype
+sample IDs.
+
+![InDel design result (left) and the exported text file (right) showing primers, validation, and band pattern](docs/screenshots/indel_result.png)
+
+#### Primer table
+
+InDel primers are standard Forward/Reverse PCR primers — no universal
+tails, no allele-specific 3' ends:
+
+| Primer | Sequence (5'→3') | Tm | GC% | Length |
+|--------|------------------|----|----|--------|
+| `Forward` | `AAGGACGAGGAGGTGGACT` | 62.8 °C | 58% | 19 nt |
+| `Reverse` | `TAACCACTATGCTGCTGCTCAC` | 63 °C | 50% | 22 nt |
+
+A header line shows the amplicon length (`InDel — 328bp amplicon`) and,
+when applicable, the small-InDel warning:
+
+```
+⚠ InDel size ~bp — PAGE electrophoresis recommended, keep amplicon ≤ 150bp
+```
+
+In this example the designer used a 328 bp amplicon because the default
+Amplicon max was 300 (auto-adjusted slightly upward to find a valid
+primer pair). For routine small-InDel scoring you would tighten the
+amplicon max first (see Section 6.3 tip).
+
+QC chips below the table summarize structural validation:
+
+- ✓ **Hairpin** / ✓ **Self-dimer** / ✓ **Cross-dimer**
+- `Tm diff: 0.2°C` — Forward and Reverse are well-matched
+
+#### Primer3 validation
+
+The same Primer3 v2.3.0 cross-check as in KASP, under standard PCR buffer
+conditions:
+
+| Primer | Tm (P3) | Tm (built-in) | Δ | Hairpin ΔG | Self-dimer ΔG |
+|--------|---------|---------------|---|------------|---------------|
+| Forward (19 nt) | 62.7 °C | 62.8 °C | −0.1 | none | −3.8 kcal/mol |
+| Reverse (22 nt) | 63.4 °C | 63 °C | +0.4 | −0.3 kcal/mol (Tm 41 °C) | −6.5 kcal/mol |
+
+**Cross-dimer ΔG:** `Forward×Reverse: −5.0 kcal/mol` (green — safe).
+
+The color-coding thresholds match those used for KASP (see Section 5.4).
+
+#### Exported text file
+
+Clicking **Export** downloads a plain-text summary that combines primer
+info with the full Band Pattern listing:
+
+```
+=== InDel Marker Design ===
+Gene: Hd1 (Os06g0275000)
+Range: 9,337,032 - 9,337,068 (RAP-DB)
+Ref Amplicon: 328bp
+
+[Forward Primer]
+  5'-AAGGACGAGGAGGTGGACT-3'
+  Tm: 62.8°C  GC: 58%  Len: 19nt
+[Reverse Primer]
+  5'-TAACCACTATGCTGCTGCTCAC-3'
+  Tm: 63°C  GC: 50%  Len: 22nt
+△ PAGE recommended (small InDel)
+Note: Ref amplicon: 328bp | Tm diff: 0.2°C
+
+--- Band Pattern ---
+Ref band (328bp): 142 samples
+  Haplotype 1      ERS469118
+  Haplotype 1      ERS469194
+  Haplotype 2      ERS468427
+  ...
+```
+
+The Band Pattern section lists every sample under its predicted band size,
+which is the exact format you'll want when scoring a gel image — read off
+the band size for each lane, then look up the haplotype assignment in this
+file.
+
+> **Tip:** Save the exported file alongside your gel images for traceable
+> genotyping records. The combination of (PCR conditions, expected band
+> sizes, expected sample-to-haplotype mapping) is enough to reconstruct
+> the assay months later.
+
+---
+
+### 6.5 InDel size and gel resolution
+
+The single most important InDel marker design decision is **whether your
+gel can resolve the predicted band sizes**. Use this guide:
+
+| InDel size | Recommended amplicon | Recommended gel | Resolution |
+|------------|---------------------|-----------------|------------|
+| 1–5 bp | ≤ 150 bp | PAGE (6–10%) or capillary | Required for reliable scoring |
+| 5–20 bp | 100–300 bp | 3–4% agarose (high-resolution) | Generally OK; PAGE for ambiguous cases |
+| 20–50 bp | 200–500 bp | 2–3% agarose | Easy on standard gels |
+| > 50 bp | 300 bp – 1 kb | 1.5–2% agarose | Trivial; standard conditions |
+
+**Why amplicon size matters:**
+
+A 4 bp size difference is ~1.2% of a 328 bp amplicon but ~3.6% of a
+~110 bp amplicon. Smaller amplicons make the same absolute size
+difference proportionally larger on a gel, which translates directly to
+band separation. The Small-InDel warning in HapBrowser uses this
+principle — if you accept its tip to tighten the amplicon max, the gel
+result becomes far more interpretable.
+
+**Multiple Alt bands:**
+
+In the running example, three distinct Alt bands are predicted (+4 bp,
++3 bp, −3 bp). This means a single PCR can resolve up to four haplotype
+groups in one lane — provided the gel can separate them. If your panel
+of interest only carries the +4 bp variant (the major Alt allele with
+54 samples), the assay simplifies to a 2-band score (Ref vs +4 bp).
+Always cross-check the sample composition of each predicted band against
+your target germplasm before assuming all bands will be scoreable.
+
+> **Tip:** When designing for a diverse panel with multiple Alt bands,
+> include a heterozygous control (a sample known to carry both Ref and
+> the major Alt allele) on every gel. Heterozygotes display both bands
+> and serve as a positional reference for scoring homozygous lanes.
+
+> **Warning:** If two predicted bands differ by ≤ 2 bp, even PAGE may
+> struggle to resolve them reliably. In that case, consider switching to
+> a KASP marker designed on a SNP that linkage-segregates with the InDel,
+> or use capillary fragment analysis (e.g., Applied Biosystems 3500) for
+> single-base resolution.
+
+---
