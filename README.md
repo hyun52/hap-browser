@@ -6,6 +6,7 @@
 
 [![License: Academic](https://img.shields.io/badge/license-Academic%20Non--Commercial-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](CHANGELOG_pipeline.md)
+[![User Guide](https://img.shields.io/badge/📘_User_Guide-USER__GUIDE.md-028090.svg)](USER_GUIDE.md)
 [![React](https://img.shields.io/badge/React-18-61DAFB.svg)](https://react.dev/)
 [![Snakemake](https://img.shields.io/badge/Snakemake-9-039475.svg)](https://snakemake.github.io/)
 
@@ -14,6 +15,10 @@
   <br>
   <em>Haplotype matrix for Hd1 across 200 IRRI accessions</em>
 </p>
+
+---
+
+> 📘 **New here?** See [`USER_GUIDE.md`](USER_GUIDE.md) for a full feature walkthrough with screenshots — haplotype matrix, KASP/InDel marker design, HapMatrix, BLAST, and Protein View.
 
 ---
 
