@@ -1483,3 +1483,214 @@ The bottom row of the modal provides four actions:
 > label (line name, registration code, breeding code) works.
 
 ---
+
+## 10. Protein View
+
+Protein View overlays codon-level annotations on top of the Genome View,
+making it easy to spot non-synonymous SNPs, frameshift-causing indels, and
+their carrier samples without leaving the haplotype matrix. The overlay is
+a toggle — turn it on for AA-aware analysis, turn it off to return to pure
+nucleotide view.
+
+Because amino-acid coordinates only make sense within the coding sequence,
+turning on Protein View also automatically switches the **View** filter
+(Control Panel, see Section 4) to **CDS** — UTR and intron columns are
+hidden while the overlay is active.
+
+---
+
+### 10.1 Toggling Protein view
+
+Click the **`🧬 Protein`** button in the Top Bar to toggle the overlay.
+The button turns blue when active.
+
+![Top bar showing the Protein button OFF (top) and ON (bottom, highlighted blue)](docs/screenshots/protein_toggle.png)
+
+Behavior on toggle:
+
+- **ON** — Protein annotation rows appear above the haplotype matrix; the
+  View filter automatically switches to **CDS** so that codons align
+  cleanly with three nucleotide columns each.
+- **OFF** — Protein rows disappear; View returns to whatever it was set
+  to before (All / Gene / CDS).
+
+> **Note:** Protein View is a display layer. It does not change how
+> samples are classified into haplotypes (that is controlled by Range and
+> Mode in the Control Panel — see Section 4). It also does not affect
+> KASP / InDel marker design or BLAST.
+
+---
+
+### 10.2 Reading the protein annotation
+
+When Protein View is on, five additional rows appear between the
+Reference row and the haplotype matrix. Each codon occupies three
+adjacent nucleotide columns.
+
+![Genome View with Protein OFF (top) and Protein ON (bottom) — five additional annotation rows appear: AA position, Ref AA, Alt AA, Synonymous, Non-syn, Frameshift](docs/screenshots/protein_off_and_on.png)
+
+**The five protein annotation rows:**
+
+| Row | Meaning |
+|-----|---------|
+| **AA position** | 1-based amino acid coordinate within the protein (one number every 3 nt) |
+| **Ref AA** | Reference amino acid (1-letter code), shown in green |
+| **Alt AA** | Alternative amino acid carried by any sample at this codon — `·` if all alternatives are synonymous; a letter (e.g., `I`, `V`) if at least one sample carries a non-synonymous change. Non-synonymous letters are colored red |
+| **Synonymous** | Count of samples carrying any synonymous variant at this codon |
+| **Non-syn** | Count of samples carrying any non-synonymous variant at this codon |
+| **Frameshift** | Count of samples in which the reading frame is shifted at this codon (typically due to an upstream InDel or Gap) |
+
+In the example above, the very first codon (position 1) shows `M → I`
+with `Non-syn: 1` — exactly one sample carries an `A→T` SNP at position
+9,336,535 that changes the start codon `ATG` (Met) to `ATA` (Ile).
+Codon 11 shows `D → V` with `Non-syn: 1` — another rare non-synonymous
+substitution. The Frameshift row stays in the 13–31 range across this
+window, indicating dozens of samples carry upstream InDels that disrupt
+the reading frame at this codon.
+
+**Color coding:**
+
+- **Green** (Ref AA) — Reference amino acid, identical across all samples.
+- **Red** (Alt AA letter, Non-syn count) — Non-synonymous change present.
+- **Gray dot `·`** (Alt AA) — All variants at this codon are synonymous
+  or absent.
+- **Orange** (Frameshift count) — Reading frame disrupted; the displayed
+  Alt AA does not reflect the true downstream protein for those samples.
+
+> **Note:** Frameshift counts are per-codon, not cumulative. A sample
+> with a 1 bp insertion at codon 5 is counted in the Frameshift row of
+> codon 5 and every codon downstream — because the reading frame stays
+> shifted until restored by a compensating indel or a stop codon.
+> Practically, this means the Frameshift row should be read as
+> "how many samples have a disrupted frame **at this codon**", not
+> "how many samples acquired a new frameshift here".
+
+> **Tip:** A high Frameshift count (e.g., 30 out of 200 samples) at
+> codons in the middle of a gene almost always indicates the same
+> upstream InDel inherited across a haplotype group — not 30
+> independent frameshift events. Switch off Protein View and inspect
+> the InDel positions upstream to find the causal variant.
+
+---
+
+### 10.3 Inspecting a codon
+
+Hover any codon in the Alt AA row to see a quick overlay; click the
+codon cell to open a detail popover that lists every sample with a
+variant at that codon, grouped by Type.
+
+![Codon 11 popover (left) listing the one non-synonymous carrier (ERS468516, GTC, V) and 30 frameshift carriers with their disrupted codon sequences; on the right, the same information after Copy & Close pasted into a spreadsheet](docs/screenshots/protein_aa_change.png)
+
+**Popover anatomy:**
+
+- **Header** — `Codon N · Alt amino acids` with a **`✕ Copy & Close`**
+  button.
+- **Ref AA: X** — Reference amino acid at this codon.
+- **Non-synonymous (n)** — Section listing every sample with a
+  non-synonymous variant, showing the alt codon (e.g., `GTC`) and the
+  resulting amino acid (e.g., `V`). Sample IDs are listed line by line.
+- **Frameshift (n)** — Section listing every sample whose frame is
+  disrupted at this codon, showing the partial/broken codon sequence
+  (e.g., `---`, `--C`, `G--`) where `-` indicates a deleted base.
+- **Footer tip** — `Click outside to close & copy to clipboard`.
+
+**Copy & Close:**
+
+Clicking **`✕ Copy & Close`** (or clicking outside the popover) copies
+the full content as a tab-separated table to your clipboard. The right
+side of the screenshot shows the result pasted into a spreadsheet:
+
+| Sample | Ref AA position | Ref Codon | Alt Codon | Ref AA | Alt AA | Type |
+|--------|-----------------|-----------|-----------|--------|--------|------|
+| ERS467797 | 11 | GAC | `---` | D | `-` | frameshift |
+| ERS467845 | 11 | GAC | `---` | D | `-` | frameshift |
+| ERS468316 | 11 | GAC | `--C` | D | `-` | frameshift |
+| ... | ... | ... | ... | ... | ... | ... |
+| ERS468516 | 11 | GAC | GTC | D | V | nonsynonymous |
+| ... | ... | ... | ... | ... | ... | ... |
+
+This is the fastest way to extract a clean list of variant carriers at a
+specific codon — useful for cross-referencing with phenotype data,
+publications, or downstream sequencing validation.
+
+> **Tip:** Hovering shows just the codon coordinates and Ref AA inline;
+> clicking is what opens the full popover. If you only need a quick
+> read-out, hover is enough and avoids the clipboard write.
+
+---
+
+### 10.4 Exporting protein data
+
+To save the full protein-aware variant table for a gene, click the
+**`Export`** button in the Top Bar while Protein View is on. The Export
+modal opens with two CSV options.
+
+![Export modal opened with Protein View active, showing Download CSV and Non-syn only options (left); the resulting CSV viewed in a spreadsheet with AA position, Ref AA, Alt AA, Synonymous, Non-syn, and Frameshift rows alongside the standard nucleotide rows (right)](docs/screenshots/protein_export.png)
+
+**Export modal:**
+
+```
+⬇ Export
+Export based on current view settings.
+200 samples × 1215 columns (Identical + SNP + InDel + Gap)
+
+[ Cancel ]   [ ⬇ Download CSV ]   [ ⬇ Non-syn only ]
+```
+
+The "1215 columns" reflects every position in the current CDS view
+(matching the Control Panel's Range and Mode settings). With Protein
+View active, the export adds the AA-level annotation rows so each column
+carries both nucleotide and codon information.
+
+**Two export modes:**
+
+| Button | Output |
+|--------|--------|
+| **Download CSV** | Full table — all 1215 columns, every sample, plus AA annotation rows |
+| **Non-syn only** | Filtered table — only columns where at least one sample carries a non-synonymous variant |
+
+**Non-syn only** is particularly useful for AA-impact analyses: it
+strips out the synonymous noise and leaves you with a compact table of
+all functionally interesting codons across the gene. Typical row sizes
+drop from > 1000 columns to a few dozen.
+
+**CSV structure (Download CSV):**
+
+The exported file is a wide table with columns named by RAP-DB position.
+The first ~11 rows are annotation rows (one per Control Panel + Protein
+annotation), followed by one row per sample:
+
+```
+Haplotype  Annotation             Variety        CDS       CDS       CDS       ...
+           RAP-DB position                       9336535   9336536   9336537   ...
+           Reference nucleotide                  A         T         G         ...
+           Alt nucleotide                        -         -         -         ...
+           Alt sample                            12        13        14        ...
+           AA position                           1         1         1         ...
+           Ref AA                                M         M         M         ...
+           Alt AA                                I         I         I         ...
+           Synonymous                            0         0         0         ...
+           Non-syn                               1         1         1         ...
+           Frameshift                            13        13        13        ...
+Hap1       ERS469118                             A         T         G         ...
+Hap1       ERS469194                             A         T         G         ...
+Hap2       ERS468427                             A         T         G         ...
+...
+```
+
+If you applied a variety mapping (Section 9), the `Variety` column is
+populated with the human-readable name for each sample.
+
+> **Note:** The Export modal and CSV format are shared between Protein
+> View and nucleotide-only mode. When Protein View is OFF, the same
+> Export button produces a CSV without the AA position / Ref AA / Alt
+> AA / Synonymous / Non-syn / Frameshift rows. See Section 11 for the
+> complete Export reference, including export from BLAST and HapMatrix.
+
+> **Tip:** For codon-level AA-change analysis across many samples, the
+> **Non-syn only** export combined with the per-codon clipboard copy
+> (Section 10.3) covers most workflows: use **Non-syn only** to find
+> interesting codons, then click each one in the genome view to copy
+> the full carrier list.
+
+---
