@@ -883,3 +883,288 @@ your target germplasm before assuming all bands will be scoreable.
 > single-base resolution.
 
 ---
+
+## 7. Multi-position Analysis (HapMatrix)
+
+HapMatrix is a cross-gene haplotype analysis view that lets you combine
+positions from **multiple different genes** into a single composite haplotype
+table — something the standard per-gene Genome View cannot do. Optionally,
+you can upload a phenotype TSV and HapMatrix will automatically generate
+per-haplotype summary statistics and box plots for every numeric trait.
+
+Typical use cases:
+
+- Combining lead SNPs from a GWAS across several genes (e.g.,
+  *Hd1* + *Ghd7* + *Hd18*) and asking how the **combinatorial haplotype**
+  associates with a trait.
+- Building a one-figure summary that connects multi-locus genotype to
+  phenotype — suitable for publication or grant figures.
+- Quickly checking how many samples carry each cross-gene allele combination
+  before designing a downstream assay.
+
+This section walks through the full workflow using the example data
+(Hd1 + Ghd7 + Hd18, 200 IRRI accessions, three traits).
+
+---
+
+### 7.1 Opening HapMatrix
+
+HapMatrix is reached from the **`HapMatrix`** button in the Top Bar (see
+Section 1 ①).
+
+![Top bar showing the HapMatrix button next to Export, Protein, and BLAST](docs/screenshots/hapmatrix_entry.png)
+
+Click **`HapMatrix`** to switch the main view to the HapMatrix interface.
+The current gene's settings remain loaded in the background — clicking the
+**back arrow** (`←`) in the top-left of HapMatrix returns you to the
+Genome View exactly where you left off.
+
+> **Note:** HapMatrix is not a separate page — it is a view within the same
+> single-page application. Your gene selection, Control Panel state, and
+> any HapMatrix entries you have built up are all preserved as you navigate
+> back and forth. Only **Full Reset** (Section 7.5) clears HapMatrix state.
+
+---
+
+### 7.2 HapMatrix interface overview
+
+When you first open HapMatrix with no prior entries, the interface shows
+two stacked sections: **GENE POSITIONS** (required) at the top and
+**PHENOTYPE DATA** (optional) below.
+
+![Empty HapMatrix interface with one Gene Positions row and the Phenotype Data input below](docs/screenshots/hapmatrix_view.png)
+
+**Interface elements:**
+
+- **Header** — `HapMatrix · Cross-gene haplotype analysis` with a `←` back
+  arrow to return to the Genome View.
+- **GENE POSITIONS** — Build one row per position you want to include in
+  the composite haplotype. Each row has:
+  * **Gene dropdown** — Pick from any registered gene (same list as the
+    Genome View sidebar).
+  * **RAP-DB pos** input — The genomic coordinate within that gene.
+  * **end (optional)** — For range-based haplotyping; leave empty for a
+    single position.
+  * **`×`** button — Remove this row.
+- **`+ Add`** — Append another position row (no fixed maximum).
+- **`Example`** — Fill in three demo positions (Hd1 + Ghd7 + Hd18) plus a
+  three-trait phenotype TSV — useful for a first run.
+- **`Full Reset`** — Clear all positions and phenotype data (with
+  confirmation).
+- **`Compute Haplotypes`** — Run the analysis with current inputs.
+- **PHENOTYPE DATA (optional)** — TSV input area with three sub-options:
+  * **`Upload TSV`** — Choose a `.tsv` file from disk.
+  * **`Generate Example`** — Fill in a demo TSV with 200 samples × 3 traits.
+  * **`Clear`** — Empty the TSV area.
+  * **Paste box** — Paste TSV text directly.
+
+> **Tip:** The fastest way to explore HapMatrix on first use is to click
+> **`Example`** in the Gene Positions section followed by
+> **`Compute Haplotypes`**. This loads three real GWAS-relevant positions
+> and a synthetic phenotype TSV, so you can see the full pipeline output
+> in one click.
+
+---
+
+### 7.3 Defining gene positions and computing haplotypes
+
+Click **`Example`** (or build your own list with `+ Add`) to populate the
+Gene Positions section, then click **`Compute Haplotypes`** to generate
+the composite haplotype table.
+
+![HapMatrix with three Example positions filled in and the resulting haplotype table below](docs/screenshots/hapmatrix_example.png)
+
+In the example above, three positions are combined:
+
+| # | Gene | RAP-DB position | End |
+|---|------|-----------------|-----|
+| 1 | Hd1 | 9,338,068 | — |
+| 2 | Ghd7 | 9,152,456 | — |
+| 3 | Hd18 | 2,388,372 | — |
+
+After clicking **`Compute Haplotypes`**, the results appear below as
+**HAPLOTYPES — 5 TYPES · 200 SAMPLES**.
+
+**Reading the haplotype table:**
+
+Each row is one **composite haplotype** — a unique combination of alleles
+across all selected positions. Columns:
+
+- **Haplotype** — Rank-numbered (Haplotype 1 = most samples).
+- **n** — Sample count (clickable blue number — see tip below).
+- **One column per selected position** — Each labeled with gene name,
+  RAP-DB coordinate, and reference allele (e.g., `Hd1 / 9,338,068 / ref:A`).
+- **Samples** — Sample ID list, truncated with `+N more` when there are
+  too many to display.
+
+| Haplotype | n | Hd1 (ref:A) | Ghd7 (ref:C) | Hd18 (ref:T) | Sample IDs |
+|-----------|---|-------------|--------------|--------------|------------|
+| Haplotype 1 | 117 | C | C | T | ERS467761, ERS467798, ERS467800 `+114 more` |
+| Haplotype 2 | 74 | A | C | T | ERS467797, ERS467809, ERS467845 `+71 more` |
+| Haplotype 3 | 5 | A | C | C | ERS468317, ERS469194, ERS469954 `+2 more` |
+| Haplotype 4 | 3 | C | C | C | ERS469192, ERS470615, ERS470618 |
+| Haplotype 5 | 1 | C | C | T | ERS470376 |
+
+**Allele color coding:**
+
+- 🔴 **Red** — Reference allele (matches the `ref:` column header).
+- 🟢 **Green** — Alternative allele (non-reference).
+
+This makes the haplotype structure scannable at a glance: a row that is
+all green carries the alternative allele at every position, all red is the
+reference haplotype, and mixed rows are recombinant combinations.
+
+> **Tip:** Click the blue **n** number in any haplotype row to see the
+> full sample list for that haplotype (the table only previews the first
+> three IDs plus a `+N more` chip).
+
+> **Note:** Haplotype numbering reflects sample frequency at compute time.
+> Adding or removing a position and clicking **`Compute Haplotypes`**
+> again may renumber the haplotypes — `Haplotype 1` always refers to the
+> most common combination under the current set of positions.
+
+**Download CSV:**
+
+Click **`⬇ Download CSV`** (top-right of the table) to export a
+comma-separated file with one row per sample, including all selected
+positions and the assigned haplotype number. This is the format you want
+for downstream R or Python analysis.
+
+---
+
+### 7.4 Phenotype integration and box plots
+
+Adding phenotype data turns HapMatrix from a genotype tabulator into a
+mini phenotype-association tool. Upload a TSV (or paste one) with sample
+IDs and one or more numeric trait columns, and HapMatrix automatically
+matches samples to haplotypes and renders per-trait summary statistics
+plus a box plot.
+
+![HapMatrix phenotype panel — TSV input at top with 200 samples · 3 traits parsed, summary statistics table, and DTH_2021 box plot at bottom](docs/screenshots/hapmatrix_boxplot_example.png)
+
+**TSV format:**
+
+The phenotype TSV must be **tab-separated** with the following structure:
+
+```
+SampleID    DTH_2021    DTH_2022    PH_2021
+ERS467761   87.1        84.9        96.9
+ERS467797   97.7        97.0        109.8
+ERS467798   108.2       107.5       94.6
+ERS467800   102.2       103.8       105.7
+...
+```
+
+Rules:
+
+- The first column must be **`SampleID`** (matching the IDs used by the
+  Genome View, e.g., ERS-prefixed IRRI accession IDs).
+- Each subsequent column is one numeric trait. Column names become the
+  trait labels in the output (e.g., `DTH_2021`, `PH_2021`).
+- Any number of traits is supported — each will produce its own statistics
+  table and box plot.
+- Missing values can be left blank or marked `NA`; those samples are
+  simply excluded from that trait's box plot.
+
+After pasting or uploading, the parser confirms:
+
+```
+✓ 200 samples · 3 traits: DTH_2021, DTH_2022, PH_2021
+```
+
+**Generating example data:**
+
+Click **`🪄 Generate Example`** to fill the TSV box with a synthetic
+200-sample, 3-trait dataset (DTH_2021, DTH_2022, PH_2021). This is the
+fastest way to see what HapMatrix produces end-to-end without preparing
+your own phenotype file.
+
+**Per-trait summary statistics:**
+
+For each trait, HapMatrix computes:
+
+| Column | Meaning |
+|--------|---------|
+| Haplotype | Composite haplotype assignment (rank-numbered as in Section 7.3) |
+| n | Number of samples in this haplotype with a non-missing trait value |
+| Min | Minimum trait value |
+| Max | Maximum trait value |
+| Mean | Arithmetic mean |
+| Median | Median |
+| SD | Standard deviation (0.00 when n=1) |
+
+**Box plot:**
+
+Below each statistics table, a box plot displays the trait distribution
+per haplotype:
+
+- One **box** per haplotype, color-matched to the genotype table.
+- **Whiskers** = 1.5 × IQR, with outliers shown as open circles.
+- **Inside line** = median.
+- **n labels** below each box show the sample count.
+- **Y-axis** is auto-scaled and labeled with the trait name (and unit if
+  inferable, e.g., `(days)` for DTH traits).
+
+> **Tip:** The example data shows a clear pattern in `DTH_2021`: Haplotype 4
+> (n=3, all `C-C-C`) has the earliest heading at ~80 days, while
+> Haplotype 3 (n=5, `A-C-C`) is the latest at ~96 days. This is the
+> kind of combinatorial signal that is invisible from any single locus
+> analyzed alone — it requires the cross-gene view that HapMatrix provides.
+
+> **Note:** HapMatrix box plots are an exploratory visualization, not a
+> statistical test. For confirmatory analysis (ANOVA, Kruskal–Wallis,
+> mixed-effects modeling with environment as a random factor), export
+> the CSV (Section 7.3) and use R or Python.
+
+**Exporting box plots:**
+
+Each box plot has two download buttons in its top-right corner:
+
+- **`⬇ SVG`** — Vector format, scalable and editable in Illustrator or
+  Inkscape. Recommended for publication figures.
+- **`⬇ PNG`** — Raster format, suitable for slides, reports, and quick
+  sharing.
+
+---
+
+### 7.5 State persistence and resetting
+
+HapMatrix preserves your work as you move around the application. This
+section explains exactly what persists, when it is cleared, and how to
+share or reproduce an analysis.
+
+**What persists across navigation:**
+
+- All Gene Positions rows (gene, RAP-DB pos, optional end).
+- Pasted or uploaded phenotype TSV content.
+- Computed haplotype table and box plots (until `Compute Haplotypes` is
+  re-run or **`Full Reset`** is clicked).
+
+You can freely switch between the Genome View and HapMatrix, load
+different genes, and return to find HapMatrix exactly as you left it.
+This makes it natural to build up an analysis incrementally:
+
+1. Open the Genome View for gene A, identify a lead SNP.
+2. Go to HapMatrix, add gene A and that SNP coordinate as position #1.
+3. Go back to gene B in the Genome View, find another lead SNP.
+4. Add gene B as position #2 in HapMatrix.
+5. Continue for as many positions as you need.
+6. Click **`Compute Haplotypes`** when ready.
+
+**What clears state:**
+
+- **`Full Reset`** (red button) — Clears every Gene Positions row and the
+  phenotype TSV after a confirmation prompt. There is no undo.
+- **Page reload** (browser refresh) — Clears in-memory HapMatrix state.
+
+> **Warning:** **`Full Reset`** is destructive and not reversible.
+> Before clicking it, if you want to keep the current analysis, download
+> the haplotype CSV (Section 7.3) and any box plots (Section 7.4) first.
+
+> **Tip:** To share a HapMatrix analysis with a collaborator, send them
+> the list of positions (gene + RAP-DB coordinate) plus the phenotype TSV.
+> They can reproduce the exact analysis by entering the same positions
+> and pasting the TSV — the output is deterministic given identical
+> inputs.
+
+---
