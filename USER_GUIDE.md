@@ -148,4 +148,77 @@ Click the **`☰ Genes`** button in the top bar to collapse or expand the sideba
 
 ---
 
-(Sections 3–12 will be added incrementally.)
+## 3. Reading the Genome View
+
+The Genome View packs multiple layers of information. This section explains how to read each one.
+
+### Header and legends
+
+<p align="center">
+  <img src="docs/screenshots/annotation.png" width="900">
+</p>
+
+The top of the Genome View shows:
+
+- **Gene info bar** (left): symbol, RAP-DB ID, group, and the primary transcript ID — e.g., `Hd1 · Os06g0275000 · Heading date (Os06t0275000-01)`
+- **Coordinate range** (right): `chr06:9,331,376–9,343,569 (+) · 12.2 kb` shows chromosome, genomic span, strand, and total length
+- **Mode summary**: `CDS · IDENTICAL+SNP+INDEL+GAP · 1,188 bp` — current classification range, variant types in use, and the number of bp in this region
+- **REGION legend**: color codes for `CDS`, `5'UTR`, `3'UTR`, `Intron`, `Upstream`, `Downstream`
+- **BASE legend**: color codes for variant displays — `A` (blue), `T` (green), `G` (orange), `C` (red), `Gap`, `Ins col` (inserted column), `Density` (variant density bar)
+
+### Variant density bar
+
+The thin red/orange band at the top is a **variant density heatmap** across the entire region. Darker (red) = more variants in that window; lighter = fewer. Use this to quickly spot variant hotspots before zooming in.
+
+### Gene track
+
+Below the density bar, the gene track shows:
+
+- **Boxes** = exons (CDS in dark green, UTRs in lighter colors)
+- **Lines** = introns
+- **Strand arrows** = direction (`→` for + strand, `←` for − strand)
+- **Multiple tracks** = overlapping genes / antisense transcripts (e.g., `Os06g0274950 ←` runs antisense to Hd1)
+
+### Annotation rows
+
+Just above the haplotype matrix:
+
+- **Transcription**: 5'→3' direction marker
+- **RAP-DB position**: genomic coordinates of each visible column
+  - Click **`→ Local`** to toggle between genomic and gene-relative (1-based from gene start) coordinates
+- **Reference**: the reference base (A / T / G / C) at each position, colored as in the BASE legend
+- **Alt sample**: number of samples carrying any non-reference allele
+- **Alt read**: average % of reads supporting the alt call across alt samples
+
+### Haplotype matrix
+
+The main grid:
+
+- **Rows** = samples (or sample groups with identical haplotypes)
+- **Columns** = variant positions (positions identical to reference across all samples are skipped to save space)
+- **Cells**:
+  - `·` = identical to reference
+  - **Colored letter** = alternative allele (A blue, T green, G orange, C red)
+  - **Light-colored letter** = lower-confidence call (heterozygous or low read support)
+  - `-` = deletion
+  - **Light orange background** (`Ins col`) = insertion relative to reference
+
+### Haplotype groups
+
+Samples sharing identical patterns are grouped under colored headers:
+
+- **`Haplotype 1, 2, 3...`** — ranked by sample count (most common first)
+- Each haplotype's color matches the entry in the right-panel Haplotype list
+- The number next to each haplotype in the right panel (e.g., `2 1s`) is the sample count
+
+### Switching the visible region
+
+In the Control Panel:
+
+- **View → All**: full extracted region (gene ± 5 kb flanking, including Upstream / Downstream)
+- **View → Gene**: gene body only (UTRs + introns + CDS)
+- **View → CDS**: coding sequence only
+
+> **Tip**: Use `CDS` view together with the Protein toggle to see amino acid changes — see [Section 10: Protein View](#10-protein-view).
+
+---
