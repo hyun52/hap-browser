@@ -2,7 +2,7 @@
 
 > **Haplotype browser with integrated marker design**
 >
-> Visualize gene-level haplotype patterns across 200+ rice accessions, design KASP / InDel markers in-browser, and add new genes via a one-command Snakemake pipeline.
+> Visualize gene-level haplotype patterns across 200 rice accessions, design KASP and InDel markers in-browser, and add new genes with a Snakemake pipeline.
 
 [![License: Academic](https://img.shields.io/badge/license-Academic%20Non--Commercial-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](CHANGELOG_pipeline.md)
@@ -12,55 +12,53 @@
 <p align="center">
   <img src="docs/screenshots/main_view.png" alt="HapBrowser main view" width="900">
   <br>
-  <em>Haplotype matrix view with 200 IRRI accessions across the Hd1 locus</em>
+  <em>Haplotype matrix for Hd1 across 200 IRRI accessions</em>
 </p>
 
 ---
 
 ## Features
 
-- **Per-gene haplotype matrix** — Sample × variant grid for any RAP-DB gene, with SNP / InDel / Gap clustering
-- **Canvas-based rendering** — 60fps interaction with 200 samples × 10,000+ variant positions via virtual scrolling
-- **KASP & InDel marker design** — Allele-specific primers with Primer3-validated Tm / hairpin / dimer
-- **Variant-aware primer design** — Optionally avoid neighboring SNP/InDel sites in primer regions
-- **Phenotype overlay** — Upload phenotype CSV → automatic haplotype-level box plots
-- **Publication-ready export** — CSV matrices, Excel sheets, SVG box plots
-- **Reproducible pipeline** — Snakemake workflow: FASTQ → BAM → pileup → haplotype → browser, in one command
+- Per-gene haplotype matrix — sample × variant grid with SNP / InDel / Gap clustering
+- KASP and InDel marker design with Primer3 validation
+- Cross-gene haplotype analysis (HapMatrix) with phenotype overlay and box plots
+- BLAST against per-sample consensus sequences
+- Codon-level Protein View with AA-change detection
+- CSV / TSV / SVG exports
+- Snakemake pipeline to add new genes from FASTQ
 
 ## Quick Start
 
 > **Prerequisite**: [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installed. No sudo required.
 
 ```bash
-# 0. Setup conda environment (Python + Node.js + BLAST+)
+# 1. Setup conda environment
 conda create -n hapbrowser -c conda-forge -c bioconda python=3.11 nodejs blast -y
 conda activate hapbrowser
 
-# 1. Clone the repository
+# 2. Clone
 git clone https://github.com/hyun52/hap-browser.git
 cd hap-browser
 
-# 2. Download pileup data (~773 MB) from the v1.0.0 release
+# 3. Download pileup data (~773 MB) from the v1.0.0 release
 wget https://github.com/hyun52/hap-browser/releases/download/v1.0.0/hap-browser-pileup-data-v1.0.0.tar.gz
 tar xzf hap-browser-pileup-data-v1.0.0.tar.gz -C public/data/
 
-# 3. Install JS dependencies
+# 4. Install dependencies
 npm install
-
-# 4. Install Python backend libraries
 pip install -r backend/requirements.txt
 
-# 5. Start frontend + backend
+# 5. Start
 bash start.sh
 # → Frontend: http://localhost:8080
 # → Backend:  http://localhost:8081
 ```
 
-The demo dataset includes 23 rice heading-date genes + Sub1A across 200 IRRI accessions.
+The demo dataset includes 23 rice heading-date genes plus Sub1A across 200 IRRI accessions. See [`USER_GUIDE.md`](USER_GUIDE.md) for step-by-step usage.
 
-## Adding new genes (advanced)
+## Adding new genes
 
-The Quick Start above is enough to use the included demo data. To add **new genes** from your own FASTQ files, install the pipeline tools:
+The Quick Start above is enough for the demo data. To add new genes from your own FASTQ files, install the pipeline tools:
 
 ```bash
 conda activate hapbrowser
@@ -73,7 +71,7 @@ Then follow [`USER_GUIDE_ADD_GENES.md`](USER_GUIDE_ADD_GENES.md).
 |---------------|---------|
 | Snakemake | 9.x |
 | BWA-MEM2  | 2.2.1+ |
-| samtools  | 1.10+ | 
+| samtools  | 1.10+ |
 
 ## Screenshots
 
@@ -83,11 +81,11 @@ Then follow [`USER_GUIDE_ADD_GENES.md`](USER_GUIDE_ADD_GENES.md).
 <tr>
 <td align="center" width="50%">
   <img src="docs/screenshots/genome_view.png" width="450"><br>
-  <sub><b>Genome view</b><br>JBrowse-style Canvas with zoom, pan, gene diagram</sub>
+  <sub><b>Genome view</b><br>Canvas matrix with zoom, pan, gene diagram</sub>
 </td>
 <td align="center" width="50%">
   <img src="docs/screenshots/protein_view.png" width="450"><br>
-  <sub><b>Protein view</b><br>Codon-level visualization with auto AA-change detection</sub>
+  <sub><b>Protein view</b><br>Codon-level overlay with AA-change detection</sub>
 </td>
 </tr>
 </table>
@@ -111,79 +109,66 @@ Then follow [`USER_GUIDE_ADD_GENES.md`](USER_GUIDE_ADD_GENES.md).
 
 <p align="center">
   <img src="docs/screenshots/hapmatrix.png" width="700"><br>
-  <sub><b>HapMatrix</b> — multi-gene position table with phenotype upload and box-plot analysis</sub>
+  <sub><b>HapMatrix</b> — multi-gene position table with phenotype upload</sub>
 </p>
 
 ## Architecture
 
+FASTQ files go through the Snakemake pipeline to produce per-gene BAMs and pileup JSON. The React + Canvas frontend (GenomeView, HapMatrix, MarkerPanel) reads the JSON directly. A FastAPI backend handles Primer3 validation and BLAST.
+
 ```
-┌─────────────────┐  Snakemake   ┌────────────────┐
-│  FASTQ files    │ ───────────> │  per-gene BAM  │
-│  (200 samples)  │  add_genes.sh│  pileup, JSON  │
-└─────────────────┘              └────────┬───────┘
-                                          │
-                                          v
-                  ┌────────────────────────────────────────┐
-                  │ React + Canvas Frontend (Vite)         │
-                  │ - GenomeView (Canvas + virtual scroll) │
-                  │ - HapMatrix (custom position view)     │
-                  │ - MarkerPanel (KASP / InDel design)    │
-                  └─────────┬──────────────────────────────┘
-                            │
-                            v
-                  ┌────────────────────────┐
-                  │ FastAPI Backend        │
-                  │ - /api/primer3/validate│
-                  │ - /api/blast           │
-                  └────────────────────────┘
+FASTQ files  ──Snakemake──>  per-gene BAM, pileup JSON
+                                        │
+                                        v
+                React + Canvas frontend (Vite)
+                                        │
+                                        v
+                FastAPI backend (Primer3, BLAST)
 ```
 
 ### Tech stack
 
 - **Pipeline**: [Snakemake 9](https://snakemake.github.io/), [BWA-MEM2](https://github.com/bwa-mem2/bwa-mem2), [samtools](https://www.htslib.org/), [pysam](https://pysam.readthedocs.io/)
-- **Frontend**: React 18, Vite 5, Canvas (no Konva/etc.), OffscreenCanvas + Web Workers for performance
+- **Frontend**: React 18, Vite 5, Canvas, Web Workers
 - **Backend**: FastAPI, [primer3-py](https://libnano.github.io/primer3-py/), Uvicorn
-- **Marker design**: Custom KASP algorithm + Primer3 validation (SantaLucia 1998 nearest-neighbor Tm, [Mg²⁺] / [dNTP] correction)
 
 ## Documentation
 
-- [`USER_GUIDE_ADD_GENES.md`](USER_GUIDE_ADD_GENES.md) — Step-by-step gene addition
-- [`README_pipeline.md`](README_pipeline.md) — Full pipeline reference
+- [`USER_GUIDE.md`](USER_GUIDE.md) — Full feature walkthrough
+- [`USER_GUIDE_ADD_GENES.md`](USER_GUIDE_ADD_GENES.md) — Adding new genes
+- [`README_pipeline.md`](README_pipeline.md) — Pipeline reference
 - [`CHANGELOG_pipeline.md`](CHANGELOG_pipeline.md) — Version history
 
 ## Demo Data
 
-The included demo data covers:
-- **23 rice heading-date genes** (Hd1, Ghd7, Ehd1, RFT1, OsMADS51, etc.)
-- **1 flood-tolerance gene** (Sub1A)
-- **200 IRRI accessions** from the 3K Rice Genomes Project
+- 23 rice heading-date genes (Hd1, Ghd7, Ehd1, RFT1, OsMADS51, etc.)
+- 1 flood-tolerance gene (Sub1A)
+- 200 IRRI accessions from the 3K Rice Genomes Project
 
-Note: BAM files are not included in the repository (~17 GB total). The browser still functions fully with the precomputed haplotype data. To regenerate BAMs, run the pipeline with your own copy of the FASTQ files.
+BAM files are not in the repository (~17 GB). The browser works fully with the precomputed haplotype data. To regenerate BAMs, run the pipeline with your own copy of the FASTQ files.
 
 ## Contributing
 
-This is an academic project under active development. Issues and pull requests are welcome:
+Issues and pull requests welcome.
 
 - **Bug reports**: open an [issue](https://github.com/hyun52/hap-browser/issues) with the version and steps to reproduce
 - **Feature requests**: open an issue describing the use case
-- **Pull requests**: small, focused PRs preferred; please include a brief description
+- **Pull requests**: small, focused PRs preferred
 
 ## License
 
-This project is licensed under an **Academic Non-Commercial License**. See [`LICENSE`](LICENSE) for full terms.
+Licensed under an **Academic Non-Commercial License**. See [`LICENSE`](LICENSE) for full terms.
 
 - Free for academic and educational research
 - Modification and redistribution allowed for academic use
 - Commercial use prohibited without prior permission
-- **Citation required** in publications
+- Citation required in publications
 
-For commercial licensing inquiries, contact via GitHub.
+For commercial licensing, contact via GitHub.
 
 ## Citation
 
-> **Note**: A peer-reviewed publication is in preparation. Until it is published, please cite this repository directly.
-
-If you use HapBrowser in your research, please cite:
+> A peer-reviewed publication is in preparation. Until it is published, please cite this repository.
 
 ```bibtex
 @software{hapbrowser2026,
@@ -196,21 +181,16 @@ If you use HapBrowser in your research, please cite:
 }
 ```
 
-Once the manuscript is published, please cite the published article instead. This page will be updated with the journal reference and DOI.
-
-Please also cite the underlying tools:
-- **Snakemake**: Köster J. & Rahmann S. (2012). *Bioinformatics* 28(19):2520–2522.
-- **BWA-MEM2**: Vasimuddin M. et al. (2019). *IPDPS* 314–324.
-- **samtools / BCFtools**: Danecek P. et al. (2021). *GigaScience* 10(2).
-- **Primer3**: Untergasser A. et al. (2012). *Nucleic Acids Res.* 40(15):e115.
+This page will be updated with the journal reference and DOI once published.
 
 ## Acknowledgments
 
-- **Reference data**: [RAP-DB](https://rapdb.dna.affrc.go.jp/) IRGSP-1.0
-- **Sample data**: [IRRI 3K Rice Genomes Project](http://snp-seek.irri.org/)
+- Reference data: [RAP-DB](https://rapdb.dna.affrc.go.jp/) IRGSP-1.0
+- Sample data: [IRRI 3K Rice Genomes Project](http://snp-seek.irri.org/)
+- Built on Snakemake, BWA-MEM2, samtools, and Primer3
 
 ---
 
 <p align="center">
-  <sub>Built with at PGBL Lab, JBNU</sub>
+  <sub>PGBL Lab, JBNU</sub>
 </p>
