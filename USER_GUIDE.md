@@ -287,3 +287,326 @@ Color-coded list of all current haplotypes with their sample counts (shown as `n
 - The summary line above (e.g., `185 haplotypes · 438 variants`) reflects current Range + Mode settings
 
 ---
+
+## 5. KASP Marker Design
+
+KASP (Kompetitive Allele Specific PCR) is a fluorescence-based SNP genotyping assay
+widely used for marker-assisted selection in plant breeding. HapBrowser includes a
+built-in KASP marker designer that takes any SNP from the genome view and produces
+ready-to-order primer sets, complete with Primer3-based thermodynamic validation
+and expected FAM/HEX sample clustering.
+
+This section walks through the full KASP design workflow using a SNP in *Hd1*
+(`Os06g0275000`) at position `9,338,330` as a running example.
+
+---
+
+### 5.1 Selecting a target SNP
+
+To start a KASP design, **Shift+Click** the column header of the SNP you want to
+target in the genome view. The column highlights and a toast notification at the
+bottom shows the selected coordinate range. Releasing the Shift key opens the
+Marker Design modal.
+
+![Selecting a SNP with Shift+Click to open Marker Design](docs/images/kasp_select_snp.png)
+
+In the example above, the target SNP is `9,338,330 G→A` (RAP-DB coordinate) in the
+*Hd1* CDS. The toast at the bottom confirms the selection:
+
+```
+⇔ 9,338,330 - 9,338,330  release → Marker Design
+```
+
+> **Tip:** You can also Shift+Click multiple columns to select a range. For KASP
+> designs, only single-position selections are used — the SNP at the 3' end of the
+> ASP defines the allele-specific discrimination. Multi-position ranges are
+> intended for InDel marker design (see Section 6) or HapMatrix analysis
+> (see Section 7).
+
+---
+
+### 5.2 Marker Design modal overview
+
+Once the modal opens, you see two tabs at the top — **KASP (SNP)** and
+**InDel Marker** — and the selected coordinate range in the top-right badge.
+The modal starts in a collapsed state showing only the SNP position. Clicking
+the SNP Position badge activates it, revealing FAM/HEX allele assignments and
+the per-haplotype distribution.
+
+![KASP Marker Design modal — initial state (left) and after SNP activation (right)](docs/images/kasp_modal_overview.png)
+
+**Modal anatomy:**
+
+- **Tabs (top)** — Switch between `KASP (SNP)` and `InDel Marker` design modes.
+- **Range badge (top-right)** — The selected genomic range, e.g. `9,338,330 - 9,338,330`.
+- **SNP POSITION** — Lists all SNPs in the selected range. Click a position to
+  activate it (badge turns blue).
+- **FAM / HEX allele badges** — After activation, alleles are auto-assigned to
+  the two KASP fluorescence channels.
+- **Haplotype list** — Each haplotype's allele (`G`/`A` badge) and sample count
+  (`n=`).
+- **Design Options** (collapsible) — Tunable parameters for primer design
+  (covered in Section 5.3).
+- **Design Marker** (blue button) — Runs the design with current settings.
+
+**FAM/HEX assignment convention:**
+
+By default, HapBrowser assigns the **alternative allele to FAM** and the
+**reference allele to HEX**:
+
+- `FAM — Allele 1: A (Alt)` — the Alt allele (A) goes to the FAM channel.
+- `HEX — Allele 2: G (Ref)` — the Ref allele (G) goes to the HEX channel.
+
+This convention follows common breeding practice where the trait-associated or
+rarer allele is reported on the FAM channel for easier downstream cluster
+interpretation. You can manually swap the assignment in the exported primer
+sequences if your KASP plate layout requires a different convention.
+
+**Reading the haplotype distribution:**
+
+Each row in the haplotype list shows which allele is carried by that haplotype,
+along with the sample count. For example:
+
+| Haplotype | Allele | n |
+|-----------|--------|---|
+| Haplotype 1 | G | 2 |
+| Haplotype 2 | G | 1 |
+| Haplotype 3 | A | 3 |
+| Haplotype 4 | A | 1 |
+| Haplotype 5 | A | 3 |
+| ... | ... | ... |
+
+This lets you preview the expected sample clustering before running the design.
+
+---
+
+### 5.3 Design Options
+
+Click **Design Options ▼** to expand the parameter panel. All KASP design
+parameters are tunable, but the defaults are calibrated for standard rice KASP
+assays under typical reaction conditions.
+
+![Design Options panel — all tunable parameters expanded](docs/images/kasp_options.png)
+
+**Top-level toggles:**
+
+- **Auto-adjust params** — If no primer satisfies the current Tm/GC constraints,
+  the designer automatically expands the search window. Useful for difficult
+  regions; turn off for strict reproducibility.
+- **Avoid neighboring variants** — Masks all other SNP/InDel sites in the primer
+  binding region; primers cannot span any variant. Stricter (fewer candidates,
+  higher specificity). This option is critical when designing markers for
+  diverse panels — see Section 5.5 for troubleshooting.
+
+**Length and composition:**
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| Amplicon (bp) | 50–150 | Total PCR product length |
+| ASP length (bp) | 21–25 | Allele-specific primer length |
+| CP length (bp) | 20–30 | Common primer length |
+| Tm (°C) | 62–65 | Melting temperature window |
+| GC (%) | 40–60 | GC content window |
+
+**Differential and structural constraints:**
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| ASP Tm diff max (°C) | 0.5 | Maximum Tm difference between the two ASPs (FAM vs HEX) |
+| ASP/CP Tm diff max (°C) | 3 | Maximum Tm difference between ASPs and Common Primer |
+| Hairpin min stem (bp) | 4 | Minimum stem length to flag as a hairpin |
+| Dimer min overlap (bp) | 4 | Minimum overlap to flag as a dimer |
+
+> **Note:** The Tm targets here refer to the **built-in nearest-neighbor
+> calculation** used during candidate generation. Primer3 validation
+> (see Section 5.4) re-computes Tm under explicit reaction conditions
+> (50 mM Na⁺, 1.5 mM Mg²⁺, 0.2 mM dNTP, 250 nM oligo) and may report values
+> ~0.3°C higher. This difference is expected and harmless.
+
+---
+
+### 5.4 Successful design result
+
+Click **Design Marker** to run the design. A successful result expands into
+three sections: the primer table, the Primer3 validation panel, and the
+expected sample groups. An **Export** button (top-right) downloads a
+plain-text summary suitable for ordering and record-keeping.
+
+![KASP design result — primer table (left, top), Primer3 validation (left, middle), Expected Sample Groups (left, bottom), and exported text file (right)](docs/images/kasp_result.png)
+
+#### Primer table
+
+The primer table shows the three primers required for a KASP assay:
+
+| Primer | Sequence (5'→3') | Tm | GC% | Length |
+|--------|------------------|----|----|--------|
+| `FAM ASP1 (A)` | `GAAGGTGACCAAGTTCATGCT-TCCACTGCAGCTCTATCTGACA` | 63.4 °C | 50% | 22 nt |
+| `HEX ASP2 (G)` | `GAAGGTCGGAGTCAACGGATT-CCACTGCAGCTCTATCTGACG` | 63.1 °C | 57% | 21 nt |
+| `CP (Common)` | `ACTACTCCCACTGGATCGATGT` | 63 °C | 50% | 22 nt |
+
+The **gray prefix** on each ASP is the universal tail required for KASP
+chemistry — `GAAGGTGACCAAGTTCATGCT` for FAM and `GAAGGTCGGAGTCAACGGATT` for HEX.
+The **blue, bolded segment** is the allele-specific portion. The 3' terminal
+base discriminates the SNP (A vs G in this example).
+
+The chip row below the table summarizes structural QC:
+
+- ✓ **Hairpin** — No internal secondary structure above threshold.
+- ✓ **Self-dimer** — No problematic self-pairing.
+- ✓ **Cross-dimer** — No primer-pair interaction above threshold.
+- `ASP Tm diff: 0.3°C` — The two ASPs are well-matched in Tm.
+
+#### Primer3 validation
+
+The Primer3 validation panel re-computes thermodynamics using **Primer3
+v2.3.0** under explicit KASP-like buffer conditions (50 mM Na⁺, 1.5 mM Mg²⁺,
+0.2 mM dNTP, 250 nM oligo). This serves as an independent cross-check on the
+built-in calculation.
+
+| Primer | Tm (P3) | Tm (built-in) | Δ | Hairpin ΔG | Self-dimer ΔG |
+|--------|---------|---------------|---|------------|---------------|
+| ASP1 (22 nt) | 63.7 °C | 63.4 °C | +0.3 | 0.0 kcal/mol (Tm 37 °C) | −7.1 kcal/mol |
+| ASP2 (21 nt) | 63.3 °C | 63.1 °C | +0.2 | 0.0 kcal/mol (Tm 37 °C) | −7.1 kcal/mol |
+| CP (22 nt) | 63.2 °C | 63 °C | +0.2 | −0.3 kcal/mol (Tm 41 °C) | −5.7 kcal/mol |
+
+**Cross-dimer ΔG:**
+
+- `ASP1×ASP2: -7.1 kcal/mol` (orange — borderline)
+- `ASP1×CP: -2.8 kcal/mol` (green — safe)
+- `ASP2×CP: -2.8 kcal/mol` (green — safe)
+
+**Color coding:**
+
+| Color | Hairpin ΔG | Dimer ΔG | Interpretation |
+|-------|------------|----------|----------------|
+| 🟢 green | > −3 | > −6 | Safe |
+| 🟠 orange | −3 to −6 | −6 to −9 | Caution — usually still works |
+| 🔴 red | < −6 | < −9 | Risky — consider redesign |
+
+> **Note:** ASP1×ASP2 cross-dimer is often slightly elevated in KASP designs
+> because both ASPs share the same 3'-region (they differ only at the SNP base).
+> A ΔG of −7 kcal/mol is within normal KASP operating range; values below
+> −9 kcal/mol warrant redesign.
+
+#### Expected Sample Groups
+
+The bottom panel previews which samples should fall into the FAM and HEX
+clusters based on the haplotype-allele assignments:
+
+- **FAM Allele A** — 122 samples across Haplotypes 3, 4, 5, 6, ...
+- **HEX Allele G** — 78 samples across Haplotypes 1, 2, 35, 36, 37, ...
+
+Each group lists individual sample IDs (e.g., `ERS468475`, `ERS469118`) so you
+can pre-select reference controls for the KASP plate.
+
+#### Exported text file
+
+Clicking **Export** downloads a plain-text file with all primer information,
+formatted for easy copy-paste into ordering forms:
+
+```
+=== KASP Marker Design ===
+Gene: Hd1 (Os06g0275000)
+Position: 9,338,330 (RAP-DB)
+Amplicon: 111 bp
+
+[ASP1 — FAM] Allele A
+  5'-GAAGGTGACCAAGTTCATGCT-[TCCACTGCAGCTCTATCTGACA]-3'
+  Tm: 63.4°C  GC: 50%  Len: 22nt
+[ASP2 — HEX] Allele G
+  5'-GAAGGTCGGAGTCAACGGATT-[CCACTGCAGCTCTATCTGACG]-3'
+  Tm: 63.1°C  GC: 57%  Len: 21nt
+[CP] Common Primer
+  5'-ACTACTCCCACTGGATCGATGT-3'
+  Tm: 63°C  GC: 50%  Len: 22nt
+
+--- Sample Groups ---
+FAM (Allele A): 122 samples
+  Haplotype 3      ERS468475
+  Haplotype 3      ERS468646
+  Haplotype 3      ERS468710
+  ...
+```
+
+The square brackets `[...]` around the allele-specific portion of each ASP make
+it easy to inspect or modify the discrimination region without re-typing the
+universal tail. You can paste these sequences directly into KASP ordering forms
+(LGC Biosearch, Standard BioTools, etc.) — most vendors accept the bracketed
+notation or simply strip it.
+
+---
+
+### 5.5 Troubleshooting: blocking variants
+
+When **Avoid neighboring variants** is turned on, the designer masks every
+SNP/InDel position within the candidate primer-binding region. If no candidate
+can avoid all nearby variants, the design fails with a detailed error message
+explaining what blocked it.
+
+![Failed KASP design with Avoid neighboring variants ON — error message and blocking variant visualization](docs/images/kasp_blocking.png)
+
+**Error anatomy:**
+
+```
+⚠ Cannot design Allele1 (A) ASP.
+Reasons: 5 candidates blocked by nearby variants (masked)
+Local sequence: GC=48%, Tm≈65.1°C
+Suggestion: Nearby variants are masking primer sites — try a different SNP
+```
+
+Below the error, HapBrowser visualizes the primer-binding region with the
+target SNP at the 3' end and color-coded annotations for blocking variants:
+
+```
+ASP binding region (5'→3'), 25 bp ending at target SNP:
+                  ▼
+  5' TTCTCCACTGCAGCTCT[T]ATCTGACG [SNP]
+                       6947
+  blue = SNP   orange = InDel   yellow = target SNP (3' end)
+```
+
+The blocking variant is then listed explicitly:
+
+```
+pos 9,338,322  (local 6947)  InDel +3bp  1 sample (rare)  [show varieties]
+```
+
+This tells you:
+
+- **Where** the variant is (RAP-DB position and local coordinate within the gene)
+- **What kind** (SNP or InDel, and the indel size if applicable)
+- **How common** (sample count and a "rare" tag when n=1)
+- **Who** carries it (click **show varieties** to expand the sample list)
+
+**Decision guide:**
+
+The tip line at the bottom of the error gives the key heuristic:
+
+> *Tip: variants with n=1 may be sequencing artifacts. Disable "Avoid
+> neighboring variants" if rare variants are acceptable.*
+
+| Blocking variant profile | Recommended action |
+|--------------------------|---------------------|
+| `n=1` and labeled `rare` | Likely a sequencing artifact or singleton; disabling **Avoid neighboring variants** is usually safe |
+| Low frequency (n=2–5) in panel outliers | Inspect via **show varieties**; if the carriers are not in your target germplasm, disable the option |
+| Common variant (n>10) | Do not disable — primer will fail in a meaningful fraction of samples. Try a different target SNP, or shorten ASP length |
+| Multiple blocking variants at different positions | Consider shifting to a nearby SNP, or use a longer amplicon to allow the designer more flexibility |
+
+**Alternative strategies if redesign keeps failing:**
+
+1. **Enable Auto-adjust params** — Lets the designer expand Tm/GC windows.
+2. **Shorten the ASP length range** — e.g., 18–22 bp instead of 21–25 bp.
+3. **Switch target SNP** — Re-open the genome view and select a different
+   discriminating position in the same haplotype block.
+4. **Switch to InDel Marker design** — If the haplotype is distinguished by a
+   structural variant rather than a SNP, an InDel marker may be more robust
+   (see Section 6).
+
+> **Warning:** Disabling **Avoid neighboring variants** can produce primers
+> that bind across rare variants. For most KASP applications this is
+> acceptable, but if you plan to genotype a diverse panel that includes the
+> rare variant carrier, expect occasional failed reactions for those samples.
+> Always cross-check the **show varieties** list against your target
+> germplasm before proceeding.
+
+---
