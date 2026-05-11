@@ -219,7 +219,7 @@ Toggle which variant types contribute to haplotype clustering:
 
 - **SNP** — single-base substitutions
 - **InDel** — insertions and deletions
-- **Gap** — gap regions (missing data / low coverage)
+- **Gap** — gap regions (no mapping data)
 
 Turning off `Gap`, for example, excludes samples differing only in coverage, leaving "true" haplotypes based on actual sequence differences.
 
