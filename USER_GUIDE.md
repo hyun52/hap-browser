@@ -1168,3 +1168,200 @@ This makes it natural to build up an analysis incrementally:
 > inputs.
 
 ---
+
+## 8. BLAST Haplotype Search
+
+BLAST Haplotype Search lets you take any nucleotide sequence — a Sanger
+sequencing read, a public database entry, a sequence sent by a collaborator —
+and identify which gene, which sample, and which haplotype it matches in the
+HapBrowser database. Under the hood, the query is BLASTed against a database
+built from per-sample consensus sequences for every registered gene, and
+results are returned with both the standard BLAST metrics (identity, score,
+e-value) and the corresponding haplotype assignment under your current
+classification settings.
+
+Typical use cases:
+
+- Identifying an unknown sequence from sequencing-based genotyping ("what
+  gene and what allele is this?").
+- Validating that a designed primer or amplicon matches the expected
+  haplotype before ordering.
+- Cross-checking a sequence from a publication or public database against
+  your panel's haplotype catalog.
+- Demonstrating the tool quickly to new users via the built-in
+  **Mystery Sample** button.
+
+---
+
+### 8.1 Opening BLAST
+
+BLAST is reached from the **`BLAST`** button in the Top Bar (see Section 1 ①).
+
+![Top bar showing the BLAST button next to HapMatrix, Export, and Protein](docs/screenshots/hapmatrix_entry.png)
+
+Click **`BLAST`** to switch the main view to the BLAST Haplotype Search
+interface. As with HapMatrix (Section 7), this is a view within the same
+single-page application — your gene selection and Control Panel state are
+preserved when you return to the Genome View.
+
+---
+
+### 8.2 BLAST interface overview
+
+The BLAST view is intentionally minimal: one query input, one Search button,
+and a results panel that appears below after a search completes.
+
+![BLAST Haplotype Search interface — current-haplotype breadcrumb, query input, and three action buttons](docs/screenshots/blast_view.png)
+
+**Interface elements:**
+
+- **Current Haplotype breadcrumb** (top, blue box) — Shows the active
+  classification settings inherited from the Genome View, e.g.
+  `CDS · SNP+InDel+Gap · 185 haplotypes · 438 variants`. This is both
+  informational and functional: the **CDS HAP** column in the results
+  (Section 8.4) is computed under exactly these settings, so changing Range
+  or Mode in the Control Panel before opening BLAST will change which
+  haplotype number a hit is assigned to.
+- **Title** — 🔍 **BLAST Haplotype Search**.
+- **Description** — One-line summary of what the tool does.
+- **Database scope** — `DB: 24 genes × 135 samples`. The database is built
+  from per-sample consensus sequences across all registered genes. Only
+  samples with sufficient coverage to produce a reliable consensus are
+  included, so the BLAST DB sample count may be smaller than the 200-sample
+  Genome View panel.
+- **QUERY SEQUENCE input** — Large text area accepting FASTA or raw
+  nucleotide. The placeholder text recommends sequences ≥ 500 bp for
+  reliable identification.
+- **Action buttons:**
+  * **`Search`** — Submit the query. Disabled until at least one character
+    is entered.
+  * **`🪄 Mystery Sample`** — Auto-fill the query with a demo sequence so
+    you can see the full pipeline output in one click.
+  * **`Clear`** — Empty the query box.
+- **Keyboard shortcut** — `Ctrl+Enter` submits the search without moving
+  your hands from the keyboard.
+
+> **Note:** The 24-gene / 135-sample database is rebuilt whenever new genes
+> are added via the Snakemake pipeline (see `USER_GUIDE_ADD_GENES.md`).
+> The numbers shown here reflect the current state of the deployed
+> instance, which may differ from a fresh demo install.
+
+---
+
+### 8.3 Submitting a query
+
+To run a search, paste your sequence into the query box and click
+**`Search`** (or press `Ctrl+Enter`). For a quick demo, click
+**`🪄 Mystery Sample`** to auto-fill a known test sequence.
+
+![BLAST query input with a 2101 bp FASTA-formatted Mystery Sample loaded](docs/screenshots/blast_query.png)
+
+**Accepted input formats:**
+
+- **FASTA** — Standard `>header\nsequence` format. Header is preserved in
+  the results display.
+- **Raw nucleotide** — Plain sequence without any header. The parser
+  accepts this and labels it as an anonymous query.
+- **Mixed case** — Upper/lower case bases are both accepted.
+- **Whitespace** — Spaces, tabs, and line breaks within the sequence are
+  ignored.
+
+In the example above, **`Mystery Sample`** has loaded a 2,101 bp sequence
+with the FASTA header `>mystery_sample (2101bp)`. The button itself is
+outlined to indicate it was just clicked.
+
+**Length recommendations:**
+
+| Query length | Reliability |
+|--------------|-------------|
+| < 100 bp | Possible but ambiguous — many short matches in a 24-gene DB |
+| 100–500 bp | Usually identifies the correct gene; sample-level assignment may be uncertain |
+| **≥ 500 bp** (recommended) | Reliable gene + sample + haplotype identification |
+| 1–3 kb (typical Sanger or amplicon) | Optimal — full-gene resolution |
+
+> **Tip:** If you only have a short read (< 200 bp) and the result is
+> ambiguous, try concatenating multiple reads from the same sample, or use
+> the longer read as a query and treat the result as a hypothesis to verify
+> in the Genome View.
+
+---
+
+### 8.4 Reading the results
+
+After clicking **`Search`**, results appear below the query box. The top of
+the results section is dominated by a green **Answer** box that summarizes
+the best hit, followed by a sortable table of all hits.
+
+![BLAST results showing the top-hit Answer box and a 20-row hit table with gene, sample, identity, alignment length, score, e-value, and CDS HAP columns](docs/screenshots/blast_results.png)
+
+#### Answer box
+
+The green callout at the top of the results gives the single most likely
+identity of your query:
+
+```
+💡 Answer: Hd1 (Os06g0275000) — sample ERS468487
+```
+
+This is the top-scoring hit by BLAST score and identity, presented as a
+plain-language one-liner. In most cases, this is the only line you need to
+read — the table below is for verifying, exploring nearby hits, and
+exporting.
+
+#### Results table
+
+Below the Answer box, the full hit list is shown:
+
+```
+Results (20 hits, query 2101bp)    [⬇ Download TSV]
+```
+
+| Column | Meaning |
+|--------|---------|
+| `#` | Hit rank (1 = best by score) |
+| `GENE` | Gene symbol + RAP-DB ID of the matched gene |
+| `SAMPLE` | Sample ID (e.g., `ERS468487`) whose consensus produced the hit |
+| `IDENTITY` | Percent identity over the aligned region, color-coded as a green pill |
+| `ALIGN` | Aligned length in bp |
+| `SCORE` | Raw BLAST bit score |
+| `E-VALUE` | Expectation value (`0.0` indicates a perfect or near-perfect match) |
+| `CDS HAP` | Haplotype assignment for this sample under the **current
+classification settings** shown in the breadcrumb at the top |
+
+In the example above, all 20 top hits map to *Hd1* with > 99.7% identity,
+e-values of 0.0, and a 1,773 bp alignment (the full Hd1 CDS length in this
+demo).
+
+**CDS HAP column color coding:**
+
+Each haplotype number is color-coded to match the same haplotype's color
+in the Genome View. Multiple hits with the same color carry the same
+classification haplotype — for example, three of the hits above are
+`Hap5` (purple), meaning those three samples share an identical CDS
+haplotype even though they are listed as separate hits because the BLAST
+DB has one entry per sample.
+
+> **Tip:** Click any haplotype number (`Hap5`, `Hap125`, ...) is a future
+> enhancement. For now, to inspect a hit's full haplotype in the Genome
+> View, copy the gene symbol from the `GENE` column, return to the
+> Genome View, load that gene from the sidebar, and look up the sample ID
+> in the haplotype matrix.
+
+#### Download TSV
+
+The **`⬇ Download TSV`** button (top-right of the results table) exports a
+tab-separated file with the same eight columns shown in the table. This is
+convenient for:
+
+- Filtering or re-sorting hits in R, Python, or Excel.
+- Building a manual genotype table by querying multiple sequences in
+  succession and concatenating the TSVs.
+- Sharing identification results with collaborators in a format compatible
+  with any spreadsheet tool.
+
+> **Note:** The BLAST search runs locally against the HapBrowser instance's
+> precomputed database — no data is sent to NCBI or any external service.
+> This means your query sequences stay private and the search is fast even
+> for ~2 kb queries (typically < 1 second).
+
+---
