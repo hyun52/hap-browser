@@ -168,7 +168,8 @@ The top of the Genome View shows:
 
 ### Variant density bar
 
-The thin red/orange band at the top is a **variant density heatmap** across the entire region. Darker (red) = more variants in that window; lighter = fewer. Use this to quickly spot variant hotspots before zooming in.
+The thin red/orange band at the top is a **variant density heatmap** across the entire region. 
+Darker (red) = more variants in that window; lighter = fewer. Use this to quickly spot variant hotspots before zooming in.
 
 ### Gene track
 
