@@ -1,59 +1,50 @@
 # User Guide — Adding New Genes to HapBrowser
 
-This guide walks you through everything needed to add new rice genes to
-your HapBrowser instance, from scratch. Intended for end users — no
-knowledge of the internal pipeline is required.
+This guide walks through adding new rice genes to a HapBrowser instance.
 
 ---
 
 ## Overview
 
 HapBrowser stores, per gene:
+
 1. A region FASTA (gene ± flanking) and its GFF annotation
 2. One BAM per sample, mapped to that region
 3. A per-gene pileup JSON
 4. A precomputed haplotype JSON
 5. An entry in `public/data/index.json` that the browser reads
 
-Adding a new gene means producing all of these artifacts. The
-`add_genes.sh` script automates the entire pipeline — you edit one TSV
-file and run one command.
+Adding a new gene means producing all of these artifacts. The `add_genes.sh`
+script automates the entire pipeline — you edit one TSV file and run one
+command.
 
 ---
 
 ## What You Need Before Starting
 
-### 1. A running HapBrowser installation
+**A running HapBrowser installation.** You should already have HapBrowser
+v1.0.0 deployed with existing data (e.g., the 23 heading-date genes that
+ship with v1.0.0). Verify it works first:
 
-You should already have HapBrowser v1.0.0 deployed on a server or
-workstation with existing data (the 23 heading-date genes that ship
-with v1.0.0, for example).
-
-**Check it works first:**
 ```bash
 cd /path/to/hap-browser
 bash start.sh
 # Open browser → existing genes load correctly
 ```
 
-### 2. Reference genome and annotations (RAP-DB IRGSP-1.0)
+**Reference genome and annotations (RAP-DB IRGSP-1.0).** Three files on disk:
 
-You need these three files somewhere on disk:
+| File | Source |
+|------|--------|
+| `IRGSP-1.0_genome.fasta` | RAP-DB genome FASTA |
+| `locus.gff` | RAP-DB gene-level GFF |
+| `transcripts.gff` | RAP-DB transcript-level GFF |
 
-| File                        | Source                                                       |
-|-----------------------------|--------------------------------------------------------------|
-| `IRGSP-1.0_genome.fasta`    | RAP-DB genome FASTA                                          |
-| `locus.gff`                 | RAP-DB gene-level GFF                                        |
-| `transcripts.gff`           | RAP-DB transcript-level GFF                                  |
+Download from <https://rapdb.dna.affrc.go.jp/> if you don't have them, and
+place in a directory of your choice (e.g., `/data/genomes/IRGSP-1.0/`).
 
-If you already ran the pipeline once, you have these. Otherwise download
-from https://rapdb.dna.affrc.go.jp/ and place in a directory of your
-choice (e.g. `/data/genomes/IRGSP-1.0/`).
-
-### 3. FASTQ files for your samples
-
-Paired-end FASTQ files, trimmed, in a single directory. Filenames must
-follow this pattern exactly:
+**FASTQ files for your samples.** Paired-end FASTQ files, trimmed, in a
+single directory. Filenames must follow this pattern exactly:
 
 ```
 {sample_id}_R1_trimmed.fastq.gz
@@ -61,6 +52,7 @@ follow this pattern exactly:
 ```
 
 Example:
+
 ```
 /data/fastq/trimmed/
     ERS467761_R1_trimmed.fastq.gz
@@ -69,10 +61,9 @@ Example:
     ...
 ```
 
-If your FASTQ filenames differ, either rename them (or symlink) or edit
-the Snakefile accordingly.
+If your filenames differ, rename them (or symlink) or edit the Snakefile.
 
-### 4. Required software
+**Required software:**
 
 ```bash
 # Python tools (via pip or conda)
@@ -92,14 +83,14 @@ as an example.
 
 ### Step 1 — Find the RAP-DB gene ID
 
-Look up your gene at https://rapdb.dna.affrc.go.jp/ and note the
+Look up your gene at <https://rapdb.dna.affrc.go.jp/> and note the
 `Os##g######` ID. For Sub1A it is `Os09g0286600`.
 
 ### Step 2 — Decide on a group name
 
 Groups become folders under `public/data/` and sidebar sections in the
-browser. You can use an existing group ("Heading date genes") or
-create a new one ("Flood tolerance", "Yield components", etc.).
+browser. Use an existing group ("Heading date genes") or create a new
+one ("Flood tolerance", "Yield components", etc.).
 
 Group names may contain spaces — the pipeline handles them safely.
 
@@ -116,13 +107,14 @@ Os09g0286600   Flood tolerance    Sub1A              Submergence tolerance 1A
 **Minimum 2 columns** is enough — symbol and description will be
 auto-extracted from the RAP-DB GFF Note field.
 
-**Add your gene at the end:**
+Add your gene at the end:
 
 ```bash
 echo -e "Os09g0286600\tFlood tolerance\tSub1A" >> genes.tsv
 ```
 
 Verify:
+
 ```bash
 tail -3 genes.tsv
 ```
@@ -142,7 +134,8 @@ Always preview before actually running:
     --log-dir      logs
 ```
 
-**Expected output** (example for 1 new gene, 200 samples):
+Expected output for 1 new gene, 200 samples:
+
 ```
 Job stats:
 job              count
@@ -160,8 +153,8 @@ all              1
 total            408
 ```
 
-Only the new gene's jobs are scheduled. If you see **4000+ jobs**,
-something is wrong with file timestamps — see Troubleshooting below.
+Only the new gene's jobs are scheduled. If you see 4000+ jobs, something
+is wrong with file timestamps — see Troubleshooting below.
 
 ### Step 5 — Run the actual pipeline
 
@@ -178,7 +171,7 @@ Remove `--dry-run` and execute:
     --log-dir      logs
 ```
 
-**Runtime**: ~30–45 min for 1 new gene × 200 samples on a 72-core
+Runtime: ~30–45 min for 1 new gene × 200 samples on a 72-core
 workstation.
 
 To run in the background and disconnect:
@@ -214,16 +207,14 @@ bash start.sh
 
 Open the browser and refresh (Cmd+Shift+R / Ctrl+Shift+R). You should see:
 
-- The new group name in the sidebar (e.g. "Flood tolerance")
-- Your gene entry (e.g. "Sub1A")
+- The new group name in the sidebar (e.g., "Flood tolerance")
+- Your gene entry (e.g., "Sub1A")
 - Clicking it loads the haplotype view with 200 samples
 
-### Step 8 — Fix the displayed name if needed
+If the auto-extracted symbol looks wrong (e.g., RAP-DB's Note doesn't
+contain a clean symbol), override it in `genes.tsv` column 3:
 
-If the auto-extracted symbol looks wrong (e.g. RAP-DB's Note doesn't
-contain a clean symbol), override it in `genes.tsv`:
-
-```tsv
+```
 Os09g0286600	Flood tolerance	Sub1A	Submergence tolerance 1A
 ```
 
@@ -261,11 +252,11 @@ For batches of 10+ genes, run overnight with `nohup`.
 
 ### Dry-run shows too many jobs (thousands instead of ~400)
 
-This happens when file timestamps are inconsistent (e.g. after copying
+This happens when file timestamps are inconsistent (e.g., after copying
 the `public/data` folder with `cp -r` instead of `cp -p`). Snakemake
 thinks existing data is "new" and wants to regenerate everything.
 
-**Fix**: set timestamps in DAG order (older → newer):
+Fix — set timestamps in DAG order (older → newer):
 
 ```bash
 cd /path/to/hap-browser
@@ -323,25 +314,27 @@ other special characters (`$`, `!`, quotes), rename the group.
 
 1. Refresh hard (Cmd+Shift+R)
 2. Verify `index.json` was updated:
+
    ```bash
    grep "Os09g0286600" public/data/index.json
    ```
+
 3. If missing, regenerate:
+
    ```bash
    python scripts/generate_index.py --data-dir public/data --gene-tsv genes.tsv
    ```
 
-### Wrong symbol displayed (e.g. gene ID instead of Sub1A)
+### Wrong symbol displayed (e.g., gene ID instead of Sub1A)
 
 Some RAP-DB Note fields don't contain a clean symbol. Override in
-`genes.tsv` (column 3) and run `generate_index.py` again — see Step 8.
+`genes.tsv` (column 3) and run `generate_index.py` again — see Step 7.
 
 ### Pipeline is too slow
 
 Default is 12 threads per BWA job, running ~6 jobs in parallel on a
-72-core system. If your machine has fewer cores, reduce threads:
-
-Edit `Snakefile` and change `threads: 12` to a lower value (e.g. `threads: 4`),
+72-core system. If your machine has fewer cores, reduce threads: edit
+`Snakefile` and change `threads: 12` to a lower value (e.g., `threads: 4`),
 then rerun.
 
 ---
@@ -392,4 +385,4 @@ echo -e "Os09g0286600\tFlood tolerance\tSub1A" >> genes.tsv
 # 4. Refresh browser
 ```
 
-That's it. Total elapsed time for one new gene: ~30–45 min.
+Total elapsed time for one new gene: ~30–45 min.
