@@ -194,3 +194,96 @@ Just above the haplotype matrix:
 > **Note**: Reading the haplotype matrix itself (cell colors, haplotype groups) is covered in [Section 1 Quick Tour ④](#-genome-view-haplotype-matrix). Controlling which region is visible is covered in [Section 4 Haplotype Classification](#4-haplotype-classification).
 
 ---
+
+## 4. Haplotype Classification
+
+The Control Panel on the right governs **how samples are grouped into haplotypes** and **what is shown** in the matrix.
+
+<p align="center">
+  <img src="docs/screenshots/control_panel.png" width="320">
+</p>
+
+### Range — which region defines a haplotype
+
+Determines the set of positions used to cluster samples.
+
+| Option | Behavior |
+|--------|----------|
+| **Gene** | Use all variants within the gene body (UTRs + introns + CDS) |
+| **CDS** | Use only variants within the coding sequence — fewer, biologically meaningful positions |
+| **Custom** | Use only positions you specify manually (see below) |
+
+### Mode — which variant types to use
+
+Toggle which variant types contribute to haplotype clustering:
+
+- **SNP** — single-base substitutions
+- **InDel** — insertions and deletions
+- **Gap** — gap regions (missing data / low coverage)
+
+Turning off `Gap`, for example, excludes samples differing only in coverage, leaving "true" haplotypes based on actual sequence differences.
+
+### Custom Range — manually selected positions
+
+<p align="center">
+  <img src="docs/screenshots/range_custom.png" width="320">
+</p>
+
+To classify by a specific position or region of interest:
+
+1. Click **`Custom`** under RANGE
+2. Type a **RAP-DB position** in the `#1` `start` box (e.g., `9336660`)
+3. Optionally enter an `end` position for a range; leave it empty for a single position
+4. Click **`+ Add position`** to add up to 10 more independent positions/ranges
+5. Click **`Reset`** to clear all entries
+6. The matrix and haplotype list update instantly
+
+> **Tip**: Single-position mode is useful when classifying by one focal SNP (e.g., a GWAS lead variant). For example, entering position `9336660` of Hd1 yields 3 haplotypes based on that single SNP (Ref G, Alt C, and reference samples).
+
+### View — what is visible in the matrix
+
+Independent of Range. Controls **only display**, not classification.
+
+| Option | Visible columns |
+|--------|----------------|
+| **All** | Full extracted region (gene ± 5 kb flanking) |
+| **Gene** | Gene body only |
+| **CDS** | Coding sequence only |
+
+> **Tip**: `View` and `Range` can be set independently. For example, `Range = CDS` (classify by coding variants) + `View = All` (but show the full region for context).
+
+### Show — row visibility filters
+
+Toggle which sample rows appear in the matrix:
+
+- **Identical** — samples with no variants in the current Range (reference-like)
+- **SNP / InDel / Gap** — samples carrying each variant type
+
+Useful for focusing on, e.g., only samples with InDels, or hiding all reference-identical samples.
+
+### Sample Filter — Representatives
+
+<p align="center">
+  <img src="docs/screenshots/representatives.png" width="900">
+</p>
+
+When working with many samples, **★ Representatives** shows just one sample per haplotype — the smallest non-redundant set.
+
+- **Left**: full sample list (e.g., 200 samples, all rows shown)
+- **Right**: after clicking `Representatives` — only one sample per haplotype remains, plus the haplotype list collapses to show only headers with sample counts
+
+Useful for:
+- Publication figures (cleaner matrix)
+- Downstream sequence analysis (one representative per haplotype = unique sequences)
+
+Use **`Select All`** / **`Deselect All`** to toggle every sample at once. Click individual sample rows to manually include/exclude them.
+
+### Haplotype list
+
+Color-coded list of all current haplotypes with their sample counts (shown as `n s` next to the name).
+
+- The color circle matches the haplotype's color in the matrix
+- Click a haplotype to filter the matrix to only those samples
+- The summary line above (e.g., `185 haplotypes · 438 variants`) reflects current Range + Mode settings
+
+---
