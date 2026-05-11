@@ -127,11 +127,12 @@ export default function App() {
     if (hapTarget === 'custom') {
       const posData = hapCombos?._regionPositionData;
       if (!posData || !gene || !samples.length) return null;
+      const offset = gene?.offset || 0;
       const validRanges = customRange
         .filter(r => r.start !== '')
         .map(r => {
-          const s = parseInt(r.start) || 1;
-          const e = parseInt(r.end) || s;
+          const s = (parseInt(r.start) || 1) - offset;
+          const e = (parseInt(r.end) || (parseInt(r.start) || 1)) - offset;
           return { start: Math.min(s, e), end: Math.max(s, e) };
         });
       if (!validRanges.length) return getHapData('gene', classifyFlags);
