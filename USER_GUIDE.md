@@ -1365,3 +1365,121 @@ convenient for:
 > for ~2 kb queries (typically < 1 second).
 
 ---
+
+## 9. Sample Variety Names
+
+Sample IDs like `ERS467761` are unambiguous but hard to remember and hard
+to interpret at a glance. HapBrowser lets you attach a human-readable
+**variety / cultivar name** to each sample ID — for example, mapping
+`ERS467761` to `IRIS 313-11973` — and the names appear inline alongside
+the sample IDs in every view. This is purely a display layer: classification,
+BLAST hits, and exports continue to use the underlying sample IDs.
+
+---
+
+### 9.1 Opening Sample varieties
+
+Click the **🏷 tag icon** in the Top Bar (right side, next to the BLAST
+button) to open the Sample varieties modal.
+
+![Sample varieties modal — empty state with the example placeholder text](docs/screenshots/sample_varieties.png)
+
+**Modal anatomy:**
+
+- **Header** — 🏷 **Sample varieties** with an `×` close button.
+- **Description** — Required and optional column rules.
+- **Upload file** — Choose a `.tsv` or `.csv` file from disk.
+- **Load example (15)** — Fill the input with a 15-row demo mapping.
+- **Load full (200)** — Fill the input with the full 200-sample mapping
+  that ships with HapBrowser (IRIS-ID names for every demo accession).
+- **Paste box** — Text area for direct paste; shows an example placeholder
+  when empty.
+- **Status line** — `Currently: N samples with variety info saved`
+  reflects how many mappings are currently persisted.
+- **Action buttons** — `Clear input` / `Remove all saved` (destructive) /
+  `Cancel` / `Apply`.
+
+---
+
+### 9.2 Mapping file format
+
+The mapping is a tab- or comma-separated table with the following columns:
+
+| Column | Required | Description |
+|--------|----------|-------------|
+| `sample_id` | **Yes** | Must match the sample IDs used in the Genome View (e.g., `ERS467893`) |
+| `variety` | **Yes** | Human-readable name (e.g., `IRIS 313-8256`, `B017`, `Nipponbare`) |
+| `subpop`, `country`, ... | No | Any extra columns are kept as optional metadata |
+
+Example (tab-separated):
+
+```
+sample_id    variety
+ERS467893    IRIS 313-8256
+ERS467845    IRIS 313-9438
+ERS470235    B017
+```
+
+The parser is lenient — both TSV and CSV work, and the column order does
+not matter as long as the two required columns are named correctly. Any
+unknown sample IDs in the file are silently ignored.
+
+> **Tip:** **Load full (200)** is the fastest way to get started: it
+> populates the input with the IRIS-ID mapping for every IRRI accession
+> in the demo panel. After loading, click **Apply** and the names appear
+> across the entire interface.
+
+---
+
+### 9.3 Applying a mapping
+
+After loading or pasting, a green confirmation appears under the input:
+
+```
+✓ 200 samples parsed
+```
+
+The **Apply** button activates (turns blue). Click it to commit the
+mapping — the modal closes, and variety names appear immediately under
+every sample ID in the Genome View, Sample Filter list, BLAST results,
+and any other panel that displays sample IDs.
+
+![Sample varieties modal after Load full (200) — 200 rows parsed and Apply button activated](docs/screenshots/sample_varieties_loaded.png)
+
+The effect is visible immediately in the Sample Filter list and the
+Genome View — each ERS ID gets a second line with the variety name in a
+smaller, muted font:
+
+![Genome View Sample Filter before (left) and after (right) applying the variety mapping — IRIS 313-xxxxx names appear under each ERS ID](docs/screenshots/varieties_before_and_after.png)
+
+The variety name is purely a display addition. The sample ID remains the
+primary identifier in CSV exports, BLAST result TSVs, and all internal
+operations.
+
+---
+
+### 9.4 Managing saved mappings
+
+Mappings persist across page reloads, so applying once is enough — the
+names remain after a browser refresh or after navigating between
+HapBrowser views.
+
+The bottom row of the modal provides four actions:
+
+| Button | Behavior |
+|--------|----------|
+| **Clear input** | Empty the text area only; previously applied mappings stay in effect |
+| **Remove all saved** | Delete every saved mapping; sample IDs revert to ERS-only display |
+| **Cancel** | Close the modal without saving changes |
+| **Apply** | Save the current input and update the display |
+
+> **Note:** **Remove all saved** is the only way to fully un-map; clicking
+> **Apply** with an empty input does not erase existing mappings (it
+> simply applies an empty addition).
+
+> **Tip:** If you work with a custom panel (not the IRRI 200), prepare
+> your own `sample_id <TAB> variety` file and use **Upload file** to
+> load it. The "varieties" column is free-form text — any meaningful
+> label (line name, registration code, breeding code) works.
+
+---
