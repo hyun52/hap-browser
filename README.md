@@ -18,7 +18,9 @@
 
 ---
 
-> ** See [`USER_GUIDE.md`](USER_GUIDE.md) for a full feature walkthrough with screenshots — haplotype matrix, KASP/InDel marker design, HapMatrix, BLAST, and Protein View. **
+> ### 📘 [Read the User Guide →](USER_GUIDE.md)
+>
+> Step-by-step walkthrough of every feature with screenshots — from selecting a gene to designing KASP markers and analyzing phenotype overlays across multiple genes.
 
 ---
 
