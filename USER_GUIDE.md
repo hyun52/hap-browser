@@ -109,7 +109,42 @@ Filters and classification options.
 
 ## 2. Selecting a Gene
 
-*(content for section 2 — to be added)*
+There are three ways to load a gene in HapBrowser.
+
+### A. From the sidebar (most common)
+
+<p align="center">
+  <img src="docs/screenshots/sidebar.png" width="280">
+</p>
+
+The **Gene Navigator** on the left lists all registered genes, grouped by trait category.
+
+- **Recent**: up to 4 most recently viewed genes (current session). Click `clear` to reset.
+- **Gene Navigator**: full gene list, organized by group (e.g., `Heading date genes`, `Flood tolerance`). The number badge shows how many genes are in each group.
+  - Click a group header to expand or collapse it
+  - Click any gene name (e.g., `Hd1`) to load it
+- The currently active gene is **highlighted in blue**
+- The small arrow on the right of each gene (`→` or `←`) indicates strand orientation (+ or − strand)
+
+### B. Jump to a genomic coordinate
+
+<p align="center">
+  <img src="docs/screenshots/rapdb_jump.png" width="500">
+</p>
+
+If you know the RAP-DB position of a SNP or feature you want to inspect:
+
+1. Type the position into the **`RAP-DB pos`** input box at the top (e.g., `9336985`)
+2. Click **`Go`** (or press Enter)
+3. HapBrowser finds the gene containing this coordinate and loads it, scrolling the matrix to that position
+
+This is useful when working from publications, GWAS results, or external databases that report specific genomic coordinates.
+
+> **Note**: The coordinate must fall within one of the registered gene regions (gene body ± flanking). The current gene's range is shown to the right of the input (e.g., `chr06:9,331,376–9,343,569 (+) · 12.2kb`). If the position is outside any registered gene, an error message appears.
+
+### C. Toggle the sidebar
+
+Click the **`☰ Genes`** button in the top bar to collapse or expand the sidebar. Useful for getting more horizontal space when reading a wide haplotype matrix.
 
 ---
 
