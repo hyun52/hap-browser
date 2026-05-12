@@ -18,7 +18,7 @@
 
 ---
 
-> ### 📘 [Read the User Guide](USER_GUIDE.md)
+> ### 📘 [Read the User Guide (click)](USER_GUIDE.md)
 >
 > Step-by-step walkthrough of every feature with screenshots — from selecting a gene to designing KASP markers and analyzing phenotype overlays across multiple genes.
 
