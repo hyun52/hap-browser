@@ -1,9 +1,8 @@
-HapBrowser — Academic Non-Commercial License
-=============================================
+Hap-Browser — Academic Non-Commercial License
+==============================================
 
 Copyright (c) 2026 Hyunoh Lee, Plant Genome and Breeding Lab,
 Jeonbuk National University (JBNU).
-
 All rights reserved.
 
 Permission is hereby granted, free of charge, to any person or institution
@@ -22,10 +21,10 @@ NON-COMMERCIAL RESEARCH PURPOSES ONLY, subject to the following conditions:
 2. CITATION REQUIREMENT
    Any publication, presentation, dataset, or report that uses the
    Software, in whole or in part, must cite the Software as follows:
-
-       Lee, H. (2026). HapBrowser: A Rice Haplotype Browser with Integrated
-       Marker Design. Plant Genome and Breeding Lab, Jeonbuk National
-       University. https://github.com/hyun52/hap-browser
+       Lee, H. (2026). Hap-Browser: A Web Application for Gene-Level
+       Haplotype Visualization and Marker Design. Plant Genome and
+       Breeding Lab, Jeonbuk National University.
+       https://github.com/hyun52/hap-browser
 
 3. MODIFICATION AND REDISTRIBUTION
    Modification of the Software is permitted for academic purposes.
@@ -42,12 +41,12 @@ NON-COMMERCIAL RESEARCH PURPOSES ONLY, subject to the following conditions:
    built on the Software, or inclusion in commercial software products —
    is strictly prohibited without prior written permission from the
    copyright holder.
-
    For commercial licensing inquiries, please contact:
        Hyunoh Lee
        Plant Genome and Breeding Lab
        Jeonbuk National University
-       [Contact via the GitHub repository]
+       Email: yjmo@jbnu.edu
+       GitHub: https://github.com/hyun52/hap-browser
 
 5. NO WARRANTY
    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
