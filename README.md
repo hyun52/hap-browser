@@ -4,7 +4,7 @@
 >
 > Visualize gene-level haplotype patterns across 200 rice accessions, design KASP and InDel markers in-browser, and add new genes with a Snakemake pipeline.
 
-[![License: Academic](https://img.shields.io/badge/license-Academic%20Non--Commercial-blue.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](CHANGELOG_pipeline.md)
 [![User Guide](https://img.shields.io/badge/📘_User_Guide-USER__GUIDE.md-028090.svg)](USER_GUIDE.md)
 [![React](https://img.shields.io/badge/React-18-61DAFB.svg)](https://react.dev/)
@@ -164,14 +164,9 @@ Issues and pull requests welcome.
 
 ## License
 
-Licensed under an **Academic Non-Commercial License**. See [`LICENSE`](LICENSE) for full terms.
+Licensed under the **MIT License**. See [`LICENSE`](LICENSE) for full terms.
 
-- Free for academic and educational research
-- Modification and redistribution allowed for academic use
-- Commercial use prohibited without prior permission
-- Citation required in publications
-
-For commercial licensing, contact via GitHub.
+If you use Hap-Browser in published work, a citation is appreciated.
 
 ## Citation
 
