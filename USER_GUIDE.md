@@ -53,7 +53,8 @@ Rows directly above the matrix:
 - **RAP-DB position** — genomic coordinates (click `→ Local` for
   gene-relative coords)
 - **Reference** — reference base (A/T/G/C)
-- **Alt sample** — number of samples with the alternative allele
+- **Alt sample** — number of samples whose call differs from the
+  reference, counting positions without coverage as well as substitutions
 - **Alt read** — % of reads supporting the alt call
 
 ### ④ Genome View
@@ -82,6 +83,8 @@ Filters and classification.
 
 - **Range** — region that defines a haplotype: `Gene` / `CDS` / `Custom`
 - **Mode** — which variant types cluster samples: `SNP` / `InDel` / `Gap`
+- **Variant Filter** — read-support thresholds: `Min depth` / `Het freq`
+  (both disabled at 0)
 - **View** — which columns are visible: `All` / `Gene` / `CDS`
 - **Show** — row filters: `Identical` / `SNP` / `InDel` / `Gap`
 - **Sample Filter** — `Select All` / `Deselect All` / `Representatives`
@@ -160,7 +163,10 @@ Just above the matrix:
 - **RAP-DB position** — genomic coords; click `→ Local` to switch to
   gene-relative
 - **Reference** — reference base, BASE-legend colored
-- **Alt sample** — number of samples with any non-reference allele
+- **Alt sample** — number of samples with any non-reference call. A
+  sample with no coverage at that position is counted here too, since an
+  absent call is also a departure from the reference and matters when you
+  are judging a haplotype or a primer site
 - **Alt read** — average % of reads supporting alt across those samples
 
 ---
@@ -185,7 +191,7 @@ Which positions define a haplotype:
 
 Which variant types contribute to clustering. Toggle `SNP`, `InDel`, `Gap`
 independently. Disabling `Gap`, for example, excludes samples that differ
-only in coverage.
+only in coverage. These apply to every Range, including `Custom`.
 
 ### Custom Range
 
@@ -198,6 +204,32 @@ and haplotype list update on each change. `Reset` clears all entries.
 Single-position custom range is useful for classifying by one focal SNP —
 e.g., position `9336660` in *Hd1* yields 3 haplotypes based on that SNP
 alone.
+
+### Variant Filter
+
+Two thresholds on the read support behind each cell. Both are off at `0`,
+so the matrix opens exactly as it would without them.
+
+| Setting | Effect |
+| --- | --- |
+| **Min depth** | Cells with fewer reads than this are drawn in dark grey |
+| **Het freq** | Cells where the second allele reaches this fraction of the two commonest alleles are drawn as `H` |
+
+Filtered cells are held back from haplotype classification, so raising
+either threshold can merge or split groups and the haplotype count will
+change. The counts themselves are never altered: hover still reports the
+depth and per-base tallies exactly as before, along with the reason the
+cell was filtered.
+
+`Het freq` is worth a moment's thought on an inbred panel, where genuine
+heterozygotes are rare. A run of `H` calls shared by the same accessions
+across neighbouring positions usually means reads from a similar sequence
+elsewhere in the genome are landing here, rather than real heterozygosity
+— which is a good reason to treat that stretch with caution when placing
+a primer.
+
+When either threshold is active, the legend above the matrix gains a
+`Filter:` section showing what the greys and `H` cells mean.
 
 ### View
 
@@ -516,11 +548,19 @@ for each lane, look up the haplotype.
 
 ### 6.5 InDel size and gel choice
 
-Small InDels (1–5 bp) need PAGE (6–10%) or capillary fragment analysis;
-keep the amplicon short (≤150 bp) so the size difference is large
-relative to total amplicon length. Medium InDels (5–20 bp) work on
-3–4% high-resolution agarose. Anything >20 bp is straightforward on
-standard 2% agarose.
+Small InDels (1–5 bp) need PAGE (6–10%) or capillary fragment analysis,
+and a shorter amplicon helps, since the size difference is then large
+relative to the total length. Medium InDels (5–20 bp) work on 3–4%
+high-resolution agarose. Anything >20 bp is straightforward on standard
+2% agarose.
+
+The amplicon range in Design Options is enforced on the finished product,
+not merely on how far each primer is sought from the target, and the
+result carries an `Amplicon NNNbp` badge alongside the hairpin and dimer
+checks. A design outside the range is flagged rather than passed
+silently. Where no pair can be found, the message says whether the
+amplicon range or the Tm criteria were the obstacle, and lists the
+amplicon lengths that were actually available.
 
 Multiple Alt bands (like the +4, +3, −3 bp example above) can resolve
 several haplotype groups in one lane, but only if the gel can separate
@@ -616,13 +656,22 @@ Median, SD per haplotype) and a box plot below it. Boxes are colored
 to match the genotype table. `⬇ SVG` / `⬇ PNG` buttons in the top-right
 of each plot save the figure.
 
-The example shows a clear signal in DTH_2021: Haplotype 4 (`C-C-C`,
-n=3) heads earliest at ~80 days, Haplotype 3 (`A-C-C`, n=5) latest at
-~96 days. This kind of combinatorial pattern is invisible from any
-single locus analyzed alone.
+Groups of fewer than five accessions are drawn in grey with a dashed
+outline and their sample size marked `▵`, in both the plot and the table.
+A group that size cannot support a claim about association, whatever the
+boxes look like, and marking them is meant to keep that in view.
 
-HapMatrix box plots are exploratory — for ANOVA, Kruskal–Wallis, or
-mixed-effects modeling, export the CSV and use R or Python.
+The panel is descriptive throughout. No statistical test is applied and
+none is implied by a difference between boxes: which test is appropriate
+depends on the trait distribution and on the design under which the
+phenotypes were collected, neither of which the browser can know. Export
+the CSV and use R or Python for ANOVA, Kruskal–Wallis, or a mixed model.
+
+Read that way, the panel is a quick look at how trait values fall across
+composite haplotypes — a pattern invisible from any single locus analyzed
+alone — rather than a result. The figures in this section use the
+synthetic example data, so the differences between boxes carry no
+biological meaning.
 
 ### 7.5 State persistence
 
