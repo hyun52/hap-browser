@@ -47,15 +47,18 @@ conda activate hapbrowser
 git clone https://github.com/hyun52/hap-browser.git
 cd hap-browser
 
-# 3. Download pileup data (~870 MB) from the v1.1.0 release
-wget https://github.com/hyun52/hap-browser/releases/download/v1.1.0/hap-browser-pileup-data-v1.1.0.tar.gz
-tar xzf hap-browser-pileup-data-v1.1.0.tar.gz -C public/data/
+# 3. Download pileup data (~157 MB) from the v1.1.0 release
+wget https://github.com/hyun52/hap-browser/releases/download/v1.1.0/hap-browser-pileup-data-v1.1.0.tar
+tar xf hap-browser-pileup-data-v1.1.0.tar -C public/data/
 
-# 4. Install dependencies
+# 4. Decompress (the .gz copies are kept for faster serving)
+cd public/data && gunzip -k pileup/*/*.gz precomputed/*.gz && cd ../..
+
+# 5. Install dependencies
 npm install
 pip install -r backend/requirements.txt
 
-# 5. Start
+# 6. Start
 bash start.sh
 # → Frontend: http://localhost:8080
 # → Backend:  http://localhost:8081
