@@ -53,6 +53,27 @@ from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
+# ── Read-level filter defaults ───────────────────────────────────────────────
+# The base-quality threshold follows the default of `samtools mpileup`.
+#
+# The proper-pair requirement, which samtools applies by default, is NOT enabled
+# here. When reads are aligned against a single extracted locus, the aligner
+# estimates its insert-size distribution from a reference of a few tens of
+# kilobases against which almost no read aligns, and the resulting pair flags are
+# not informative: measured on one accession, 96.3% of alignments were flagged as
+# properly paired against the whole genome, against 11.6% for the same reads
+# aligned to a 20 kb locus. Requiring proper pairs under those conditions
+# discards most genuine coverage. Alignments failing the requirement are
+# therefore counted rather than removed, and the count is retained per position
+# as "xpp" so that positions liable to receive reads from elsewhere in the genome
+# remain identifiable in the interface.
+#
+# The requirement can be enabled with --require-proper-pair, which is appropriate
+# when pileups are generated from genome-wide alignments.
+DEFAULT_MIN_BASEQ = 13
+DEFAULT_MIN_MAPQ = 0
+DEFAULT_REQUIRE_PROPER_PAIR = False
+
 try:
     import pysam
 except ImportError:
@@ -61,11 +82,34 @@ except ImportError:
     sys.exit(1)
 
 
-def process_bam(bam_path, gene_id, sample_id, region_chr, region_start, region_end, region_length, offset):
+BAM_FPROPER_PAIR = 0x2
+
+
+def process_bam(bam_path, gene_id, sample_id, region_chr, region_start, region_end, region_length, offset,
+                min_baseq=DEFAULT_MIN_BASEQ, min_mapq=DEFAULT_MIN_MAPQ,
+                require_proper_pair=DEFAULT_REQUIRE_PROPER_PAIR):
     """
     Process a single BAM file and extract pileup data with insertion sequences.
-    
+
     BAM files use gene_id as contig name with local coordinates (1-based).
+
+    Read-level filters
+    ------------------
+    min_baseq            Bases with a Phred quality below this value are discarded.
+                         Matches the `samtools mpileup -Q` default of 13.
+    min_mapq             Alignments with MAPQ below this value are discarded.
+                         Note that per-gene BAMs are aligned against a single
+                         extracted locus, so there is no competing placement and
+                         MAPQ is uninformative; this is retained for genome-wide
+                         BAM input, where MAPQ is meaningful.
+    require_proper_pair  Keep only alignments flagged as a proper pair (0x2).
+                         Reads whose mate does not map concordantly within the
+                         extracted locus are the dominant source of spurious
+                         mixed-allele calls in the flanking regions.
+
+    When require_proper_pair is enabled, the number of reads rejected by that
+    filter is retained per position as "xpp" so that positions prone to
+    mismapping remain visible to the user rather than being silently dropped.
     """
     pileup = {}
 
@@ -110,8 +154,11 @@ def process_bam(bam_path, gene_id, sample_id, region_chr, region_start, region_e
             fetch_start = region_start - 1
             fetch_end = region_end
 
+        # The base-quality filter is applied explicitly in the loop below rather
+        # than through pysam's min_base_quality, so that a rejected base is not
+        # confused with absent coverage.
         for col in bam.pileup(contig, fetch_start, fetch_end,
-                              min_base_quality=0, min_mapping_quality=0,
+                              min_base_quality=0, min_mapping_quality=min_mapq,
                               truncate=True, stepper='all'):
             if use_local:
                 local_pos = col.reference_pos + 1  # 0-based → 1-based local
@@ -124,8 +171,27 @@ def process_bam(bam_path, gene_id, sample_id, region_chr, region_start, region_e
 
             counts = {'A': 0, 'T': 0, 'G': 0, 'C': 0, 'del': 0, 'ins': 0}
             ins_seqs = defaultdict(int)
+            n_improper = 0
+            n_lowq = 0
 
             for read in col.pileups:
+                aln = read.alignment
+
+                # Reject alignments that are not in a proper pair. Retain the
+                # count so that the discarded evidence stays inspectable.
+                if require_proper_pair and not (aln.flag & BAM_FPROPER_PAIR):
+                    n_improper += 1
+                    continue
+
+                # Reject low-quality bases. Deleted and skipped positions carry
+                # no base quality of their own and are exempt.
+                if not read.is_del and not read.is_refskip and min_baseq > 0:
+                    quals = aln.query_qualities
+                    qpos = read.query_position
+                    if quals is not None and qpos is not None and quals[qpos] < min_baseq:
+                        n_lowq += 1
+                        continue
+
                 if read.is_del:
                     counts['del'] += 1
                 elif read.is_refskip:
@@ -146,10 +212,15 @@ def process_bam(bam_path, gene_id, sample_id, region_chr, region_start, region_e
                             ins_seqs[ins_seq] += 1
 
             total = counts['A'] + counts['T'] + counts['G'] + counts['C'] + counts['del']
-            if total > 0 or counts['ins'] > 0:
+            if total > 0 or counts['ins'] > 0 or n_improper > 0:
                 entry = counts.copy()
                 if ins_seqs:
                     entry['ins_seqs'] = dict(ins_seqs)
+                # Only recorded when non-zero, so unaffected positions cost nothing.
+                if n_improper:
+                    entry['xpp'] = n_improper
+                if n_lowq:
+                    entry['xbq'] = n_lowq
                 pileup[str(local_pos)] = entry
 
     except Exception as e:
@@ -161,13 +232,19 @@ def process_bam(bam_path, gene_id, sample_id, region_chr, region_start, region_e
         'gene_id': gene_id,
         'sample_id': sample_id,
         'region_length': region_length,
+        'filters': {
+            'min_baseq': min_baseq,
+            'min_mapq': min_mapq,
+            'require_proper_pair': bool(require_proper_pair),
+        },
         'pileup': pileup,
     }
 
 
 def process_one(args):
     """Worker function for parallel processing."""
-    bam_path, gene_id, sample_id, out_path, region_chr, region_start, region_end, region_length, offset, force = args
+    (bam_path, gene_id, sample_id, out_path, region_chr, region_start, region_end,
+     region_length, offset, force, min_baseq, min_mapq, require_proper_pair) = args
 
     if not force and os.path.exists(out_path):
         try:
@@ -175,13 +252,23 @@ def process_one(args):
                 existing = json.load(f)
             pileup = existing.get('pileup', {})
             has_ins_seqs = any('ins_seqs' in v for v in pileup.values() if isinstance(v, dict))
-            if has_ins_seqs:
-                return f"  · {gene_id}/{sample_id} (skip, already has ins_seqs)"
+            # A pileup written under a different filter setting must be rebuilt,
+            # otherwise a run would silently mix incompatible files.
+            prev = existing.get('filters')
+            same_filters = prev == {
+                'min_baseq': min_baseq,
+                'min_mapq': min_mapq,
+                'require_proper_pair': bool(require_proper_pair),
+            }
+            if has_ins_seqs and same_filters:
+                return f"  · {gene_id}/{sample_id} (skip, up to date)"
         except:
             pass
 
     result = process_bam(bam_path, gene_id, sample_id,
-                         region_chr, region_start, region_end, region_length, offset)
+                         region_chr, region_start, region_end, region_length, offset,
+                         min_baseq=min_baseq, min_mapq=min_mapq,
+                         require_proper_pair=require_proper_pair)
 
     if result is None:
         return f"  x {gene_id}/{sample_id} (failed)"
@@ -207,6 +294,24 @@ def main():
                         help='Number of parallel workers (default: 4)')
     parser.add_argument('--force', action='store_true',
                         help='Force regeneration even if pileup exists')
+    parser.add_argument('--min-baseq', type=int, default=DEFAULT_MIN_BASEQ,
+                        help=f'Discard bases below this Phred quality '
+                             f'(default: {DEFAULT_MIN_BASEQ}, as in samtools mpileup)')
+    parser.add_argument('--min-mapq', type=int, default=DEFAULT_MIN_MAPQ,
+                        help=f'Discard alignments below this mapping quality '
+                             f'(default: {DEFAULT_MIN_MAPQ}; uninformative for per-gene BAMs)')
+    parser.add_argument('--require-proper-pair', dest='require_proper_pair',
+                        action='store_true', default=DEFAULT_REQUIRE_PROPER_PAIR,
+                        help='Count only alignments flagged as a proper pair. '
+                             'Meaningful for genome-wide alignments; for per-gene '
+                             'alignments the flag is unreliable and enabling this '
+                             'discards most genuine coverage (default: off).')
+    parser.add_argument('--bam-dir', default=None,
+                        help='Directory of existing alignments to summarise instead of the '
+                             'per-gene BAMs under <data-dir>/bam. Files are looked up as '
+                             '<bam-dir>/<sample>.bam, and genome-wide alignments are '
+                             'detected from the BAM header and converted to local '
+                             'coordinates automatically.')
     args = parser.parse_args()
 
     data_dir = Path(args.data_dir).resolve()
@@ -224,6 +329,11 @@ def main():
     print(f"{'='*55}")
     print(f"  data: {data_dir}")
     print(f"  workers: {args.workers}")
+    print(f"  min base quality: {args.min_baseq}")
+    print(f"  min mapping quality: {args.min_mapq}")
+    print(f"  proper pairs only: {args.require_proper_pair}")
+    if args.bam_dir:
+        print(f"  alignment source: {args.bam_dir} (shared across genes)")
     if args.gene:
         print(f"  gene filter: {args.gene}")
     if args.force:
@@ -238,9 +348,17 @@ def main():
             if args.gene and gene_id != args.gene:
                 continue
 
-            bam_dir = data_dir / 'bam' / gene_id
+            # With --bam-dir the same set of alignments serves every gene, so
+            # the locus is taken from the BAM header rather than from a
+            # per-gene directory. This is the path to use when genome-wide
+            # alignments already exist, and it also avoids the unreliable pair
+            # flags that per-locus alignment produces.
+            if args.bam_dir:
+                bam_dir = Path(args.bam_dir)
+            else:
+                bam_dir = data_dir / 'bam' / gene_id
             if not bam_dir.exists():
-                print(f"  - {gene_id}: no BAM directory")
+                print(f"  - {gene_id}: no BAM directory ({bam_dir})")
                 continue
 
             region_chr = gi.get('chr', '')
@@ -262,7 +380,7 @@ def main():
                 tasks.append((
                     str(bam_path), gene_id, sample_id, out_path,
                     region_chr, region_start, region_end, region_length, offset,
-                    args.force,
+                    args.force, args.min_baseq, args.min_mapq, args.require_proper_pair,
                 ))
 
     if not tasks:

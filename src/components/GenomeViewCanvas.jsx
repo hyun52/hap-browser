@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useRef, useCallback, useEffect, forwardRef, useImperativeHandle } from 'react';
 import ReactDOM from 'react-dom';
 import { HAP_COLORS, BASE_COL } from '../utils/constants.js';
+import { classifyCell, isDefaultVariantFilter, CELL_OK, CELL_NOCOV, CELL_LOWDEPTH, CELL_HET, CELL_REASON } from '../utils/variantFilter.js';
 import { getDominantAllele, buildMsaColumns } from '../utils/haplotype.js';
 import { classifyPosition, REGION_COL, REGION_LBL, buildAnnotSegments } from '../utils/annotation.js';
 import AnnotationRow from './AnnotationRow.jsx';
@@ -13,6 +14,7 @@ const BUFFER = 30;
 
 const GenomeViewCanvas = forwardRef(function GenomeViewCanvas({
   gene, hapData, regionPositionData, shownSamples, sampleHapMap, getPileup,
+  variantFilter, getRawPileup,
   viewRegion = 'all',
   viewFlags = { identical: true, snp: true, indel: true, gap: true },
   samples = [],
@@ -463,6 +465,8 @@ const GenomeViewCanvas = forwardRef(function GenomeViewCanvas({
 
   const annotSegments = useMemo(() => buildAnnotSegments(visibleCols, regionCache), [visibleCols, regionCache]);
 
+  const filterOn = !isDefaultVariantFilter(variantFilter);
+
   const handleHover = useCallback((e, sid, col) => {
     if (!gene) return;
     // col can be { type:'ref', pos } or { type:'ins', afterPos, insIdx }
@@ -487,6 +491,12 @@ const GenomeViewCanvas = forwardRef(function GenomeViewCanvas({
     const ref = (gene.seq[pos - 1] || 'N');
     const info = getDominantAllele(pileup, pos, ref);
     const rt = regionCache[pos] || classifyPosition(pos, gene);
+
+    // Filter provenance: why this cell is displayed the way it is, and how much
+    // evidence the pileup step discarded before the call was made. The counts
+    // themselves are reported unaltered regardless of the filter.
+    const rawCell = (getRawPileup ? getRawPileup(gene.id, sid) : null)?.[String(pos)] || null;
+    const st = filterOn ? classifyCell(rawCell, variantFilter) : CELL_OK;
     setTip({
       x: Math.min(e.clientX + 14, window.innerWidth - 230),
       y: Math.min(e.clientY - 10, window.innerHeight - 200),
@@ -496,8 +506,11 @@ const GenomeViewCanvas = forwardRef(function GenomeViewCanvas({
       sid, hapId: sampleHapMap[sid] || '?',
       region: REGION_LBL[rt] || rt, regionColor: REGION_COL[rt],
       isInsCol: false,
+      maskReason: (st !== CELL_OK && st !== CELL_NOCOV) ? (CELL_REASON[st] || null) : null,
+      excludedImproper: rawCell?.xpp || 0,
+      excludedLowQual: rawCell?.xbq || 0,
     });
-  }, [gene, getPileup, sampleHapMap, regionCache, sampleInsMap]);
+  }, [gene, getPileup, getRawPileup, variantFilter, filterOn, sampleHapMap, regionCache, sampleInsMap]);
 
   // Force-update renderRange (used on jumps)
   const jumpToIdx = useCallback((idx) => {
@@ -649,9 +662,23 @@ const GenomeViewCanvas = forwardRef(function GenomeViewCanvas({
         {['A', 'T', 'G', 'C'].map(b => (
           <span key={b} className="vo-leg-item"><span className="vo-leg-dot" style={{ background: BASE_COL[b] }} />{b}</span>
         ))}
-        <span className="vo-leg-item"><span className="vo-leg-dot" style={{ background: '#c0bdb6' }} />Gap</span>
+        <span className="vo-leg-item" title="No reads mapped to this position"><span className="vo-leg-dot" style={{ background: '#c0bdb6' }} />Gap</span>
         <span className="vo-leg-item"><span className="vo-leg-dot" style={{ background: '#ede9fe', border: '1px solid #c4b5fd' }} />Ins col</span>
         <span className="vo-leg-item" title="Variant density in minimap top track"><span className="vo-leg-dot" style={{ background: 'linear-gradient(90deg,#f5e6b8,#dc5020)' }} />Density</span>
+        {/* Filter states are only meaningful, and only rendered, while a
+            threshold is active, so the legend follows the filter. */}
+        {filterOn && <span className="vo-leg-sep" />}
+        {filterOn && <span className="vo-leg-title">Filter:</span>}
+        {variantFilter?.minDepth > 0 && (
+          <span className="vo-leg-item" title={`Fewer than ${variantFilter.minDepth} reads; excluded from classification`}>
+            <span className="vo-leg-dot" style={{ background: '#9a9690' }} />Low depth
+          </span>
+        )}
+        {variantFilter?.hetFreq > 0 && (
+          <span className="vo-leg-item" title={`Second allele at or above ${variantFilter.hetFreq} of the two commonest; excluded from classification`}>
+            <span className="vo-leg-dot" style={{ background: '#f2e9c9', border: '1px solid #d8c98a' }} />H&nbsp;Het
+          </span>
+        )}
       </div>
 
       {/* Minimap: 3-track layout (density + main gene + neighbor genes) */}
@@ -1201,6 +1228,8 @@ const GenomeViewCanvas = forwardRef(function GenomeViewCanvas({
                   totalW={totalW}
                   viewW={viewW}
                   positionData={regionPositionData}
+                  variantFilter={variantFilter}
+                  getRawPileup={getRawPileup}
                   sampleIdxMap={sampleIdxMap}
                   sampleList={sampleList}
                   sampleInsMap={sampleInsMap}
@@ -1319,6 +1348,17 @@ const GenomeViewCanvas = forwardRef(function GenomeViewCanvas({
           ) : !tip.isInsCol && tip.counts ? (
             <div style={{ fontSize: 10 }}>depth:{tip.depth}× <span style={{ color: BASE_COL.A }}>A:{tip.counts.A}</span> <span style={{ color: BASE_COL.T }}>T:{tip.counts.T}</span> <span style={{ color: BASE_COL.G }}>G:{tip.counts.G}</span> <span style={{ color: BASE_COL.C }}>C:{tip.counts.C}</span> <span style={{ color: '#94a3b8' }}>D:{tip.counts.del||0}</span> <span style={{ color: '#7c3aed' }}>I:{tip.counts.ins||0}</span></div>
           ) : null}
+          {!tip.isInsCol && (tip.excludedImproper > 0 || tip.excludedLowQual > 0) && (
+            <div style={{ fontSize: 10, color: '#8a6d1f' }}>
+              excluded during pileup:
+              {tip.excludedImproper > 0 && <> {tip.excludedImproper} improper pair{tip.excludedImproper > 1 ? 's' : ''}</>}
+              {tip.excludedImproper > 0 && tip.excludedLowQual > 0 && ','}
+              {tip.excludedLowQual > 0 && <> {tip.excludedLowQual} low-quality base{tip.excludedLowQual > 1 ? 's' : ''}</>}
+            </div>
+          )}
+          {!tip.isInsCol && tip.maskReason && (
+            <div style={{ fontSize: 10, color: '#b35a00', marginTop: 2 }}>● {tip.maskReason}</div>
+          )}
           {!tip.isInsCol && tip.isIns && tip.insSeqs && (
             <div className="vo-tip-ins-detail">
               <div style={{ fontWeight: 600, color: '#7c3aed', marginBottom: 2 }}>Insertion sequences:</div>
@@ -1642,6 +1682,7 @@ function CanvasSampleRows({
   totalW, viewW,
   positionData, sampleIdxMap, sampleList, sampleInsMap,
   dragSelection, scrollRef, onHover, onLeave, isPanning,
+  variantFilter, getRawPileup,
   rowH = 20,
 }) {
   const canvasRef = useRef(null);
@@ -1678,6 +1719,17 @@ function CanvasSampleRows({
     return refBase;
   }
 
+  // Raw counts are looked up only while a filter is active, and only for the
+  // cells actually being drawn, so an unfiltered view costs nothing.
+  const filterOn = !isDefaultVariantFilter(variantFilter);
+  const rawCacheRef = useRef({ gid: null, m: new Map() });
+  function rawPileupFor(sid) {
+    const c = rawCacheRef.current;
+    if (c.gid !== gene?.id) { c.gid = gene?.id; c.m = new Map(); }
+    if (!c.m.has(sid)) c.m.set(sid, getRawPileup ? getRawPileup(gene.id, sid) : null);
+    return c.m.get(sid);
+  }
+
   function drawFrame() {
     const canvas = canvasRef.current;
     if (!canvas || !gene || !visibleCols?.length) return;
@@ -1710,7 +1762,7 @@ function CanvasSampleRows({
     }
 
     // Data batching
-    const bk={}, tx=[], dels=[];
+    const bk={}, tx=[], dels=[], masked=[];
     for (let i=0; i<drawCols.length; i++) {
       const col = drawCols[i];
       const x = i * COL_W_C;
@@ -1725,6 +1777,19 @@ function CanvasSampleRows({
         }
         const ref=gene.seq[col.pos-1]||'N';
         const pd=pdMapRef.current.get(col.pos);
+        // The filter is evaluated here, against the raw counts, rather than
+        // from positionData. Positions at which every accession matches the
+        // reference carry no entry in positionData at all, yet their cells can
+        // still fall below the depth threshold and must be shown as filtered.
+        if(filterOn){
+          const st=classifyCell(rawPileupFor(sid)?.[String(col.pos)]||null, variantFilter);
+          if(st===CELL_LOWDEPTH){masked.push([x,y]);continue;}
+          if(st===CELL_HET){
+            if(!bk.het)bk.het=[];bk.het.push([x,y,COL_W_C-1,rowH-1]);
+            if(COL_W_C>=8)tx.push({t:'H',x:x+COL_W_C/2,y:y+rowH/2,c:'#6b5416'});
+            continue;
+          }
+        }
         const a=getAllele(pd,si,ref);
         if(a==='-'){if(!bk.n)bk.n=[];bk.n.push([x,y,COL_W_C-1,rowH-1]);}
         else if(a==='D'){dels.push([x,y]);}
@@ -1736,8 +1801,16 @@ function CanvasSampleRows({
         }
       }
     }
-    const BG={n:'#e2e0db',A:'#1d6fba',T:'#15803d',G:'#b35a00',C:'#c41c1c',ins:'#ede9fe'};
+    const BG={n:'#e2e0db',A:'#1d6fba',T:'#15803d',G:'#b35a00',C:'#c41c1c',ins:'#ede9fe',het:'#f2e9c9'};
     for(const[k,list] of Object.entries(bk)){ctx.fillStyle=BG[k]||'#888';for(const r of list)ctx.fillRect(r[0],r[1],r[2],r[3]);}
+    if(masked.length){
+      // Filtered out for insufficient read support. Deliberately a darker grey
+      // than the no-coverage fill, so that the two remain distinguishable at
+      // every zoom level without relying on a pattern that collapses when
+      // columns are only a few pixels wide.
+      ctx.fillStyle='#9a9690';
+      for(const[x,y] of masked)ctx.fillRect(x,y,COL_W_C-1,rowH-1);
+    }
     ctx.fillStyle='#c8c5be'; for(const[x,y] of dels)ctx.fillRect(x,y,COL_W_C-1,rowH-1);
     ctx.strokeStyle='#9a9690';ctx.lineWidth=1;
     for(const[x,y] of dels){ctx.beginPath();ctx.moveTo(x+3,y+rowH/2);ctx.lineTo(x+COL_W_C-4,y+rowH/2);ctx.stroke();}

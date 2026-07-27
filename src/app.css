@@ -481,3 +481,13 @@
 .fp-pos-add:hover{background:var(--bg4)}
 .fp-pos-del{background:none;border:none;color:var(--t2);cursor:pointer;font-size:12px;padding:0 3px}
 .fp-pos-del:hover{color:#e11d48}
+
+/* ─── Variant Filter ─── */
+.fp-vf-row { display: flex; align-items: center; gap: 6px; margin: 3px 0; }
+.fp-vf-lbl { font-size: 10px; color: var(--t2); width: 92px; flex: none; }
+.fp-vf-active { color: #b35a00; font-weight: 600; }
+.fp-vf-note {
+  font-size: 10px; line-height: 1.4; color: var(--t2);
+  margin-top: 5px; padding: 4px 6px;
+  background: rgba(179, 90, 0, 0.07); border-radius: 3px;
+}

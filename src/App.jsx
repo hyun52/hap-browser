@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useGeneData } from './hooks/useGeneData.js';
 import { computeCustomHaplotypes } from './utils/haplotype.js';
+import {
+  DEFAULT_VARIANT_FILTER, isDefaultVariantFilter,
+  applyVariantFilter, buildCombosFromPositionData,
+} from './utils/variantFilter.js';
 import { parseUserPos } from './utils/positionUtils.js';
 import GenomeView from './components/GenomeView.jsx';
 import CDSViewCanvas from './components/CDSViewCanvas.jsx';
@@ -18,8 +22,10 @@ export default function App() {
     index, gene, samples, hapCombos, loading, pileupProgress,
     classifyFlags, setClassifyFlags, getHapData,
     loadIndex, loadGene, loadSamples, loadAllPileups,
-    getPileup, getPositionData, getSampleIdxMap, getSampleList,
+    getPileup, getRawPileup, hasRawPileup, getPositionData, getSampleIdxMap, getSampleList,
   } = useGeneData();
+
+  const [variantFilter, setVariantFilter] = useState(DEFAULT_VARIANT_FILTER);
 
   const [sideOpen, setSideOpen] = useState(true);
   const [tab, setTab] = useState('view');
@@ -123,9 +129,38 @@ export default function App() {
     return index.groups.flatMap(g => g.genes);
   }, [index]);
 
+  // ── Variant-level filtering ────────────────────────────────────────────────
+  // When the filter is left at its defaults the precomputed summary is used
+  // unchanged. Otherwise the calls are re-evaluated in the browser from the raw
+  // per-base counts, which requires no server-side regeneration.
+  const filterActive = !isDefaultVariantFilter(variantFilter);
+
+  const filteredCombos = useMemo(() => {
+    if (!filterActive || !gene || !hapCombos || !samples.length) return null;
+    if (!hasRawPileup(gene.id)) return null;   // raw counts not loaded yet
+    const basePositionData = hapCombos._regionPositionData || [];
+    if (!basePositionData.length) return null;
+    const positionData = applyVariantFilter({
+      positionData: basePositionData,
+      refSeq: gene.seq,
+      sampleIds: samples,
+      getRawPileup: (sid) => getRawPileup(gene.id, sid),
+      vf: variantFilter,
+    });
+    return buildCombosFromPositionData(positionData, gene.seq, samples);
+  }, [filterActive, variantFilter, gene, hapCombos, samples, getRawPileup, hasRawPileup]);
+
+  const effectiveCombos = filteredCombos || hapCombos;
+
+  const getEffectiveHapData = useCallback((target, flags) => {
+    if (!effectiveCombos) return null;
+    const key = `${target}_${flags.snp ? 1 : 0}${flags.indel ? 1 : 0}${flags.gap ? 1 : 0}`;
+    return effectiveCombos[key] || null;
+  }, [effectiveCombos]);
+
   const hapData = useMemo(() => {
     if (hapTarget === 'custom') {
-      const posData = hapCombos?._regionPositionData;
+      const posData = effectiveCombos?._regionPositionData;
       if (!posData || !gene || !samples.length) return null;
       const offset = gene?.offset || 0;
       const validRanges = customRange
@@ -135,14 +170,14 @@ export default function App() {
           const e = (parseInt(r.end) || (parseInt(r.start) || 1)) - offset;
           return { start: Math.min(s, e), end: Math.max(s, e) };
         });
-      if (!validRanges.length) return getHapData('gene', classifyFlags);
+      if (!validRanges.length) return getEffectiveHapData('gene', classifyFlags);
       const [first, ...rest] = validRanges;
       return computeCustomHaplotypes(posData, gene.seq, samples, classifyFlags, first.start, first.end, rest);
     }
-    return getHapData(hapTarget, classifyFlags);
-  }, [getHapData, hapTarget, classifyFlags, hapCombos, gene, samples, customRange]);
+    return getEffectiveHapData(hapTarget, classifyFlags);
+  }, [getEffectiveHapData, hapTarget, classifyFlags, effectiveCombos, gene, samples, customRange]);
 
-  const regionPositionData = useMemo(() => hapCombos?._regionPositionData || [], [hapCombos]);
+  const regionPositionData = useMemo(() => effectiveCombos?._regionPositionData || [], [effectiveCombos]);
 
   const hapInfo = useMemo(() => {
     if (!hapData) return '';
@@ -426,6 +461,8 @@ export default function App() {
               shownSamples={shownSamples}
               sampleHapMap={sampleHapMap}
               getPileup={getPileup}
+              getRawPileup={getRawPileup}
+              variantFilter={variantFilter}
               viewRegion={viewRegion}
               viewFlags={viewFlags}
               samples={samples}
@@ -469,6 +506,8 @@ export default function App() {
               hapTarget={hapTarget} setHapTarget={setHapTarget}
               customRange={customRange} setCustomRange={setCustomRange}
               classifyFlags={classifyFlags} setClassifyFlags={setClassifyFlags}
+              variantFilter={variantFilter} setVariantFilter={setVariantFilter}
+              rawPileupReady={!!gene && hasRawPileup(gene.id)}
               viewRegion={viewRegion} setViewRegion={setViewRegion}
               viewFlags={viewFlags} setViewFlags={setViewFlags}
               resetFilters={resetFilters}

@@ -292,6 +292,12 @@ export default function HapMatrix({ geneIndex, sampleMeta = {}, onClose }) {
     img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgStr)));
   };
 
+  // Groups below this size cannot support an inferential claim, and are marked
+  // wherever summary statistics or a box are drawn for them. The value follows
+  // common practice rather than any test, since no test is applied here.
+  const MIN_GROUP_N = 5;
+  const isSmall = (n) => n > 0 && n < MIN_GROUP_N;
+
   // ── Publication-quality box-plot constants ───────────────────────────
   // Okabe-Ito color-blind-safe palette (recommended by Nature)
   const PUB_COLORS = ['#0072B2','#D55E00','#009E73','#CC79A7','#E69F00','#56B4E9','#F0E442','#999999'];
@@ -396,7 +402,10 @@ export default function HapMatrix({ geneIndex, sampleMeta = {}, onClose }) {
           {haps.map((h, i) => {
             const { q1, q3, med, lw, uw, outliers } = computeBoxStats(h);
             const cx = PAD.l + xStep*i + xStep/2;
-            const col = PUB_COLORS[i % PUB_COLORS.length];
+            // Under-supported groups are drawn in grey so that they are not read
+            // as comparable with the rest.
+            const small = isSmall(h.n);
+            const col = small ? '#9a9690' : PUB_COLORS[i % PUB_COLORS.length];
             return <g key={h.id}>
               {/* whisker vertical line */}
               <line x1={cx} y1={toY(lw)} x2={cx} y2={toY(uw)}
@@ -409,8 +418,9 @@ export default function HapMatrix({ geneIndex, sampleMeta = {}, onClose }) {
               {/* box */}
               <rect x={cx-boxW/2} y={toY(q3)} width={boxW}
                 height={Math.max(1, toY(q1)-toY(q3))}
-                fill={col} fillOpacity={0.35}
-                stroke={col} strokeWidth={1.4}/>
+                fill={col} fillOpacity={small ? 0.15 : 0.35}
+                stroke={col} strokeWidth={1.4}
+                strokeDasharray={small ? '3 2' : undefined}/>
               {/* median line (white for contrast) */}
               <line x1={cx-boxW/2} y1={toY(med)} x2={cx+boxW/2} y2={toY(med)}
                 stroke="#ffffff" strokeWidth={2.4}/>
@@ -426,8 +436,8 @@ export default function HapMatrix({ geneIndex, sampleMeta = {}, onClose }) {
                 fill="#1f2937" fontSize={11} fontWeight={600} fontFamily={PUB_FONT}>{h.id}</text>
               {/* n */}
               <text x={cx} y={H-PAD.b+34} textAnchor="middle"
-                fill="#6b7280" fontSize={10} fontFamily={PUB_FONT}
-                fontStyle="italic">n = {h.n}</text>
+                fill={small ? '#b45309' : '#6b7280'} fontSize={10} fontFamily={PUB_FONT}
+                fontStyle="italic">n = {h.n}{small ? ' \u25b5' : ''}</text>
             </g>;
           })}
 
@@ -437,6 +447,15 @@ export default function HapMatrix({ geneIndex, sampleMeta = {}, onClose }) {
           <line x1={PAD.l} y1={H-PAD.b} x2={W-PAD.r} y2={H-PAD.b}
             stroke="#9ca3af" strokeWidth={1}/>
         </svg>
+        {/* The overlay is descriptive; stating so beside the plot keeps the
+            caveat with the output rather than only in the documentation. */}
+        <div style={{ fontSize:10, color:'var(--t2)', lineHeight:1.5, maxWidth:W, marginTop:4 }}>
+          Descriptive summary only: no statistical test is applied, and no
+          significance is implied by any difference between groups.
+          {haps.some(h => isSmall(h.n)) && <> Groups with fewer than {MIN_GROUP_N} accessions
+          are shown in grey and marked &#9653;; comparisons involving them cannot
+          support an inferential claim.</>}
+        </div>
       </div>
     );
   };
@@ -479,7 +498,7 @@ export default function HapMatrix({ geneIndex, sampleMeta = {}, onClose }) {
           {/* Overall title */}
           <text x={W/2} y={20} textAnchor="middle" fill="#111827"
             fontSize={14} fontWeight={600} fontFamily={PUB_FONT}>
-            Haplotype–phenotype association across traits
+            Haplotype–phenotype distribution across traits
           </text>
 
           {/* Subplots */}
@@ -538,7 +557,8 @@ export default function HapMatrix({ geneIndex, sampleMeta = {}, onClose }) {
                   const cx = ox + PAD.l + xStep*i + xStep/2;
                   // Color by haplotype id so it matches the legend order
                   const colIdx = allHapIds.indexOf(h.id);
-                  const col = PUB_COLORS[colIdx % PUB_COLORS.length];
+                  const small = isSmall(h.n);
+                  const col = small ? '#9a9690' : PUB_COLORS[colIdx % PUB_COLORS.length];
                   return <g key={h.id}>
                     <line x1={cx} y1={toY(lw)} x2={cx} y2={toY(uw)}
                       stroke={col} strokeWidth={1.1}/>
@@ -548,8 +568,9 @@ export default function HapMatrix({ geneIndex, sampleMeta = {}, onClose }) {
                       stroke={col} strokeWidth={1.1}/>
                     <rect x={cx-boxW/2} y={toY(q3)} width={boxW}
                       height={Math.max(1, toY(q1)-toY(q3))}
-                      fill={col} fillOpacity={0.35}
-                      stroke={col} strokeWidth={1.2}/>
+                      fill={col} fillOpacity={small ? 0.15 : 0.35}
+                      stroke={col} strokeWidth={1.2}
+                      strokeDasharray={small ? '3 2' : undefined}/>
                     <line x1={cx-boxW/2} y1={toY(med)} x2={cx+boxW/2} y2={toY(med)}
                       stroke="#ffffff" strokeWidth={2.2}/>
                     <line x1={cx-boxW/2} y1={toY(med)} x2={cx+boxW/2} y2={toY(med)}
@@ -598,6 +619,12 @@ export default function HapMatrix({ geneIndex, sampleMeta = {}, onClose }) {
             })()}
           </g>
         </svg>
+        <div style={{ fontSize:10, color:'var(--t2)', lineHeight:1.5, maxWidth:W, marginTop:4 }}>
+          Descriptive summary only: no statistical test is applied, and no
+          significance is implied by any difference between groups. Groups with
+          fewer than {MIN_GROUP_N} accessions are shown in grey; comparisons
+          involving them cannot support an inferential claim.
+        </div>
       </div>
     );
   };
@@ -788,9 +815,15 @@ export default function HapMatrix({ geneIndex, sampleMeta = {}, onClose }) {
                   </thead>
                   <tbody>
                     {ts.haps.filter(h=>h.n>0).map((h,i) => (
-                      <tr key={h.id} style={{ borderBottom:'1px solid var(--border)', background:i%2?'var(--bg1)':'var(--bg2)' }}>
+                      <tr key={h.id} style={{ borderBottom:'1px solid var(--border)',
+                        background:i%2?'var(--bg1)':'var(--bg2)',
+                        color: isSmall(h.n) ? 'var(--t2)' : undefined }}>
                         <td style={tdSt}><b>{h.label||h.id}</b></td>
-                        <td style={{...tdSt,textAlign:'center'}}>{h.n}</td>
+                        <td style={{...tdSt,textAlign:'center',
+                          color: isSmall(h.n) ? '#b45309' : undefined,
+                          fontWeight: isSmall(h.n) ? 600 : undefined}}
+                          title={isSmall(h.n) ? `Fewer than ${MIN_GROUP_N} accessions; not interpretable as an association` : undefined}>
+                          {h.n}{isSmall(h.n) ? ' \u25b5' : ''}</td>
                         <td style={{...tdSt,textAlign:'right',fontFamily:'var(--mono)'}}>{h.min}</td>
                         <td style={{...tdSt,textAlign:'right',fontFamily:'var(--mono)'}}>{h.max}</td>
                         <td style={{...tdSt,textAlign:'right',fontFamily:'var(--mono)'}}>{h.mean}</td>

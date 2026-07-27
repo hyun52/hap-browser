@@ -531,7 +531,7 @@ export default function MarkerPanel({ gene, positionData, hapData, sampleList: p
                         <input type="checkbox" checked={autoAdjust}
                           onChange={e => { setAutoAdjust(e.target.checked); setResult(null); }} />
                         <span style={{fontWeight:600}}>Auto-adjust params</span>
-                        <span style={{color:'var(--t2)',fontSize:11}}>— automatically expand Tm/GC range if no primer found</span>
+                        <span style={{color:'var(--t2)',fontSize:11}}>— if no pair is found, relax the Tm and GC criteria and widen the search; the amplicon range above is always respected</span>
                       </label>
                     </div>
                     <div className="mp-opts-group" style={{flexBasis:'100%'}}>
@@ -591,7 +591,7 @@ export default function MarkerPanel({ gene, positionData, hapData, sampleList: p
                         <input type="checkbox" checked={autoAdjust}
                           onChange={e => { setAutoAdjust(e.target.checked); setResult(null); }} />
                         <span style={{fontWeight:600}}>Auto-adjust params</span>
-                        <span style={{color:'var(--t2)',fontSize:11}}>— expand Tm/GC range automatically if no primer found</span>
+                        <span style={{color:'var(--t2)',fontSize:11}}>— if no pair is found, relax the Tm and GC criteria and widen the search; the amplicon range above is always respected</span>
                       </label>
                     </div>
                     <div className="mp-opts-group">
@@ -705,7 +705,7 @@ export default function MarkerPanel({ gene, positionData, hapData, sampleList: p
                       {/* PAGE warning */}
                       {result.needsPage && (
                         <div style={{padding:'6px 12px',background:'#fffbeb',borderTop:'1px solid #fde68a',fontSize:11,color:'#92400e',fontWeight:600}}>
-                          ⚠ InDel size ~{result.indelSize}bp — PAGE electrophoresis recommended, keep amplicon ≤ 150bp
+                          ⚠ InDel size ~{result.indelSize}bp — polyacrylamide electrophoresis recommended; a shorter amplicon resolves a small length difference more readily, and the range currently in force is {indelMinAmp}–{indelMaxAmp}bp
                         </div>
                       )}
                       {/* Neighboring-variant warning */}
@@ -735,6 +735,10 @@ export default function MarkerPanel({ gene, positionData, hapData, sampleList: p
                           <QCBadge label="Hairpin" ok={!result.qc.hairpinA1 && !result.qc.hairpinA2 && !result.qc.hairpinCP} />
                           <QCBadge label="Self-dimer" ok={!result.qc.selfDimerA1 && !result.qc.selfDimerA2} />
                           <QCBadge label="Cross-dimer" ok={!result.qc.crossDimer} />
+                          <QCBadge
+                            label={`Amplicon ${result.ampliconSize}bp`}
+                            ok={result.ampliconSize >= minAmplicon && result.ampliconSize <= maxAmplicon}
+                          />
                           {result.qc.variantsMasked > 0 && (
                             <span className="mp-qc-mask" style={{color:'#d97706'}}>
                               ⚠ {result.qc.variantsMasked} SNP(s) in primer region
@@ -749,6 +753,12 @@ export default function MarkerPanel({ gene, positionData, hapData, sampleList: p
                           <QCBadge label="Hairpin" ok={!result.qc.hairpinFwd && !result.qc.hairpinRev} />
                           <QCBadge label="Self-dimer" ok={!result.qc.selfDimerFwd && !result.qc.selfDimerRev} />
                           <QCBadge label="Cross-dimer" ok={!result.qc.crossDimer} />
+                          {/* Amplicon length is checked against the range in force, so that a
+                              product outside it is reported rather than passed silently. */}
+                          <QCBadge
+                            label={`Amplicon ${result.ampliconSize}bp`}
+                            ok={result.ampliconSize >= indelMinAmp && result.ampliconSize <= indelMaxAmp}
+                          />
                           {result.tmDiff !== undefined && (
                             <span className="mp-qc-mask">Tm diff: {result.tmDiff.toFixed(1)}°C</span>
                           )}

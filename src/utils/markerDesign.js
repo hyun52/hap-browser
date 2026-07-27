@@ -714,7 +714,10 @@ Suggestion: Select a range further from the sequence end.` };
   for (const f of fwdResults.sort((a,b)=>b.score-a.score).slice(0,50)) {
     for (const r of revResults.sort((a,b)=>b.score-a.score).slice(0,50)) {
       const ampliconSize = r.startPos + r.len - f.endPos;
-      if (ampliconSize < 50) continue; // minimum 50 bp
+      // The amplicon range set by the user constrains the product itself, not
+      // merely how far each primer is sought from the target, and is applied as
+      // such here.
+      if (ampliconSize < minAmplicon || ampliconSize > maxAmplicon) continue;
       if (hasCrossDimer(f.seq, r.seq, dimerMinOverlap)) continue;
       const tmDiff = Math.abs(f.tm - r.tm);
       if (tmDiff > tmDiffMax) continue;
@@ -727,7 +730,7 @@ Suggestion: Select a range further from the sequence end.` };
     for (const f of fwdResults.slice(0,50)) {
       for (const r of revResults.slice(0,50)) {
         const ampliconSize = r.startPos + r.len - f.endPos;
-        if (ampliconSize < 50) continue;
+        if (ampliconSize < minAmplicon || ampliconSize > maxAmplicon) continue;
         const tmDiff = Math.abs(f.tm - r.tm);
         if (tmDiff > tmDiffMax) continue;
         const score = f.score + r.score - tmDiff * 2;
@@ -741,9 +744,22 @@ Suggestion: Select a range further from the sequence end.` };
     const minDiff = fwdResults.length && revResults.length
       ? Math.min(...fwdResults.slice(0,20).flatMap(f => revResults.slice(0,20).map(r => Math.abs(f.tm-r.tm)))).toFixed(1)
       : '?';
+    // Report the amplicon lengths that were available, so that a failure caused
+    // by the size constraint is not mistaken for a thermodynamic one.
+    const sizes = fwdResults.slice(0,50).flatMap(f =>
+      revResults.slice(0,50).map(r => r.startPos + r.len - f.endPos)).filter(x => x > 0);
+    const sizeHint = sizes.length
+      ? `Available amplicon lengths: ${Math.min(...sizes)}–${Math.max(...sizes)}bp, against a range of ${minAmplicon}–${maxAmplicon}bp.
+`
+      : '';
+    const outOfRange = sizes.length && !sizes.some(x => x >= minAmplicon && x <= maxAmplicon);
+    if (outOfRange) {
+      return { error: `No primer pair found within the amplicon range ${minAmplicon}–${maxAmplicon}bp.
+${sizeHint}Suggestion: Increase Max amplicon in options, narrow the drag range, or enable Auto-adjust, which relaxes the Tm and GC criteria and widens the search while looking for a pair.` };
+    }
     return { error: `No primer pair found within Tm diff ≤${tmDiffMax}°C.
 Fwd Tm ~${fTm}°C, Rev Tm ~${rTm}°C (min diff: ${minDiff}°C)
-Suggestion: Increase F/R Tm Diff max in options, or try a different range.` };
+${sizeHint}Suggestion: Increase F/R Tm Diff max in options, or enable Auto-adjust, which relaxes the Tm and GC criteria while looking for a pair.` };
   }
 
   // Check whether there are SNPs at primer positions within the amplicon
@@ -757,7 +773,15 @@ Suggestion: Increase F/R Tm Diff max in options, or try a different range.` };
   const rangeIndels = positionData
     ? positionData.filter(pd => pd.pos >= rangeStart && pd.pos <= rangeEnd && (pd.hasDel || pd.hasIns || pd.hasNoCov))
     : [];
-  const minIndelSize = rangeIndels.length > 0 ? 1 : 0; // can be improved with actual size later
+  // Largest length difference among the indels in the range. The advisory in the
+  // interface refers to this quantity, which was previously never computed, so
+  // that the size was reported as blank.
+  const indelSizes = rangeIndels.map(pd => {
+    if (pd.hasIns && pd.alt?.[0]?.includes('+')) return pd.alt[0].split('+')[1]?.length || 1;
+    if (pd.hasDel || pd.hasNoCov) return 1;
+    return 0;
+  }).filter(x => x > 0);
+  const indelSize = indelSizes.length ? Math.max(...indelSizes) : 0;
   const needsPage = rangeIndels.some(pd => pd.hasIns && pd.alt?.[0]?.includes('+') && pd.alt[0].split('+')[1]?.length < 10);
 
   return {
@@ -770,6 +794,7 @@ Suggestion: Increase F/R Tm Diff max in options, or try a different range.` };
     },
     ampliconSize: best.ampliconSize,
     tmDiff: best.tmDiff,
+    indelSize,
     needsPage,
     primerSnps: primerSnps.length,
     rangeIndels: rangeIndels.length,

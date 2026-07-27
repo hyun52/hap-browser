@@ -16,6 +16,8 @@ import os
 import sys
 import glob
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 DATA_DIR = sys.argv[1] if len(sys.argv) > 1 else "public/data"
 PILEUP_DIR = os.path.join(DATA_DIR, "pileup")
 
@@ -50,6 +52,14 @@ for gene in gene_dirs:
     out_path = os.path.join(gene_dir, "all.json")
     with open(out_path, "w") as out:
         json.dump(merged, out)
+
+    # The browser prefers the packed binary written here, which needs no
+    # parsing. The JSON is kept as a fallback and for other consumers.
+    try:
+        from pack_pileup import pack_gene
+        print(pack_gene(gene_dir, force=True))
+    except Exception as exc:
+        print("  ! could not pack " + gene_dir + ": " + str(exc))
 
     size_mb = os.path.getsize(out_path) / 1024 / 1024
     print(f"  OK: {gene} — {len(files)} samples → all.json ({size_mb:.1f}MB)")

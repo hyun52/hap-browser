@@ -77,6 +77,25 @@ UPSTREAM         = int(config.get("upstream", 5000))
 DOWNSTREAM       = int(config.get("downstream", 5000))
 SCRIPTS_DIR      = "scripts"
 
+# -- Read-level filters applied when summarising alignments into pileups ------
+# The base-quality threshold follows the default of samtools mpileup. The
+# pairing requirement, which samtools also applies by default, is not enabled
+# here: when each locus is aligned in isolation the aligner cannot estimate an
+# insert-size distribution from a reference against which almost no read
+# aligns, so the flag is uninformative and requiring it discards most genuine
+# coverage. Such alignments are counted instead, per position.
+#
+# Enable it with require_proper_pair=true where pileups are generated from
+# genome-wide alignments, for which the flag is meaningful.
+MIN_BASEQ           = int(config.get("min_baseq", 13))
+MIN_MAPQ            = int(config.get("min_mapq", 0))
+REQUIRE_PROPER_PAIR = str(config.get("require_proper_pair", "false")).lower() in ("true", "1", "yes")
+PILEUP_FILTER_ARGS  = (
+    f"--min-baseq {MIN_BASEQ} --min-mapq {MIN_MAPQ}"
+    + (" --require-proper-pair" if REQUIRE_PROPER_PAIR else "")
+)
+
+
 # ─────────────────────────────────────────────────────────────────────────
 # Load gene registry
 # ─────────────────────────────────────────────────────────────────────────
@@ -260,6 +279,10 @@ rule pileup_single:
         index = ancient(f"{DATA_DIR}/index.json.initial"),
     output:
         f"{DATA_DIR}/pileup/{{gene}}/{{sample}}.json"
+    params:
+        # Declared as a param so that a change of thresholds is detectable:
+        #   snakemake --rerun-triggers params ...
+        filters = PILEUP_FILTER_ARGS
     log:
         f"{LOG_DIR}/pileup/{{gene}}_{{sample}}.log"
     shell:
@@ -267,7 +290,7 @@ rule pileup_single:
         python {SCRIPTS_DIR}/generate_pileup.py \
             --gene {wildcards.gene} \
             --sample {wildcards.sample} \
-            --data-dir {DATA_DIR} 2> {log}
+            --data-dir {DATA_DIR} {params.filters} 2> {log}
         """
 
 # ─────────────────────────────────────────────────────────────────────────

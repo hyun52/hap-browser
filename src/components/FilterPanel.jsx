@@ -1,5 +1,66 @@
 import React from 'react';
 import { HAP_COLORS } from '../utils/constants.js';
+import { DEFAULT_VARIANT_FILTER, isDefaultVariantFilter } from '../utils/variantFilter.js';
+
+/**
+ * Variant-level quality filtering.
+ *
+ * Every control here re-evaluates the per-sample calls from the raw per-base
+ * counts already held in the browser, so no file has to be regenerated on the
+ * server. Defaults reproduce the precomputed summary exactly; the panel reports
+ * when a non-default setting is in force so that a displayed haplotype count is
+ * never ambiguous as to which thresholds produced it.
+ */
+function VariantFilterSection({ variantFilter, setVariantFilter, rawPileupReady, resetFilters }) {
+  if (!variantFilter) return null;
+  const vf = variantFilter;
+  const set = (patch) => { setVariantFilter({ ...vf, ...patch }); resetFilters(); };
+  const isDefault = isDefaultVariantFilter(vf);
+
+  const Num = (label, key, min, max, step, hint) => (
+    <div className="fp-vf-row" title={hint}>
+      <span className="fp-vf-lbl">{label}</span>
+      <input
+        type="number" className="fp-pos-input" style={{ width: 62 }}
+        min={min} max={max} step={step} value={vf[key]}
+        disabled={!rawPileupReady}
+        onChange={e => {
+          const v = e.target.value === '' ? 0 : parseFloat(e.target.value);
+          if (Number.isNaN(v)) return;
+          set({ [key]: Math.min(max, Math.max(min, v)) });
+        }}
+      />
+    </div>
+  );
+
+  return (
+    <div className="fp-section">
+      <div className="fp-section-title">
+        Variant Filter{!isDefault && <span className="fp-vf-active"> · modified</span>}
+      </div>
+
+      {!rawPileupReady && <div className="fp-vf-note">Loading read counts…</div>}
+
+      {Num('Min depth', 'minDepth', 0, 200, 1,
+        'Cells with fewer reads than this are shown in grey and excluded from haplotype classification. 0 disables.')}
+
+      {Num('Het freq', 'hetFreq', 0, 0.5, 0.05,
+        'Cells at which the second allele reaches this fraction of the two commonest alleles are reported as heterozygous (H) and excluded from haplotype classification. 0 disables.')}
+
+      <div className="fp-vf-note">
+        Filtered cells are excluded from classification. Hover always reports the
+        underlying read counts unchanged.
+      </div>
+
+      {!isDefault && (
+        <button className="fp-btn" style={{ width: '100%', marginTop: 4 }}
+          onClick={() => { setVariantFilter(DEFAULT_VARIANT_FILTER); resetFilters(); }}>
+          Reset to defaults
+        </button>
+      )}
+    </div>
+  );
+}
 
 export default function FilterPanel({
   hapData, pileupProgress, samples,
@@ -8,6 +69,7 @@ export default function FilterPanel({
   hapTarget, setHapTarget, customRange, setCustomRange,
   classifyFlags, setClassifyFlags,
   viewRegion, setViewRegion, viewFlags, setViewFlags,
+  variantFilter, setVariantFilter, rawPileupReady,
   resetFilters,
 }) {
   if (!hapData) return (
@@ -83,15 +145,23 @@ export default function FilterPanel({
             </div>
           </div>
         )}
-        {hapTarget !== 'custom' && (
+        {/* The variant-type selection applies to every scope, including Custom,
+            where it was previously hidden although the classification honoured it. */}
         <div className="fp-checks">
           <span className="fp-range-lbl">Mode</span>
           <label className="fp-check"><input type="checkbox" checked={classifyFlags.snp} onChange={() => { const f = { ...classifyFlags, snp: !classifyFlags.snp }; if (!f.snp && !f.indel && !f.gap) return; setClassifyFlags(f); resetFilters(); }} /><span>SNP</span></label>
           <label className="fp-check"><input type="checkbox" checked={classifyFlags.indel} onChange={() => { const f = { ...classifyFlags, indel: !classifyFlags.indel }; if (!f.snp && !f.indel && !f.gap) return; setClassifyFlags(f); resetFilters(); }} /><span>InDel</span></label>
           <label className="fp-check"><input type="checkbox" checked={classifyFlags.gap} onChange={() => { const f = { ...classifyFlags, gap: !classifyFlags.gap }; if (!f.snp && !f.indel && !f.gap) return; setClassifyFlags(f); resetFilters(); }} /><span>Gap</span></label>
         </div>
-        )}
       </div>
+
+      {/* ─── Variant Filter ─── */}
+      <VariantFilterSection
+        variantFilter={variantFilter}
+        setVariantFilter={setVariantFilter}
+        rawPileupReady={rawPileupReady}
+        resetFilters={resetFilters}
+      />
 
       {/* ─── View Settings ─── */}
       <div className="fp-section">
@@ -120,6 +190,7 @@ export default function FilterPanel({
         </div>
         <button className="fp-btn fp-btn-accent" onClick={showReps} style={{ marginTop: 4, width: '100%' }}>★ Representatives</button>
         <div className="fp-summary">{hapData.haplotypes.length} haplotypes · {hapData.variantPositions.length} variants</div>
+
       </div>
 
       {hapData.haplotypes.map((h, i) => {

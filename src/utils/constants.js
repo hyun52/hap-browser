@@ -2,9 +2,11 @@
 export const BASE_COL = {
   A: '#1d6fba', T: '#15803d', G: '#b35a00', C: '#c41c1c',
   del: '#9a9690', ins: '#7c3aed', N: '#c8c5be',
+  H: '#8a6d1f',   // heterozygous / allelically imbalanced
 };
 export const BASE_BG = {
   A: '#d6e8f7', T: '#d4eddc', G: '#f5e6cc', C: '#fad6d6', N: '#e8e6e0',
+  H: '#f2e9c9',
 };
 export const HAP_COLORS = [
   '#2563eb', '#15803d', '#b35a00', '#c41c1c',

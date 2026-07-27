@@ -1,6 +1,51 @@
 import { useState, useCallback, useRef } from 'react';
 import { parseFASTA, parseGFF3 } from '../utils/parsers.js';
 
+// ── Packed pileup ───────────────────────────────────────────────────────────
+// scripts/pack_pileup.py writes the per-base counts as a dense array of 16-bit
+// values, eight channels per cell, in the order below. Reading it costs nothing
+// beyond the transfer, whereas the equivalent JSON must be parsed into millions
+// of small objects before the first cell can be drawn.
+const NCH = 8;
+
+/**
+ * A read-only view of one accession's counts, indexed by position exactly as
+ * the JSON form was, so that every consumer is unaffected by the change of
+ * format. Entries are materialised on access and cached, which keeps the cost
+ * proportional to the cells actually inspected rather than to the locus.
+ */
+function makeSampleView(counts, sampleIdx, length, insSeqs) {
+  const base = sampleIdx * length * NCH;
+  const cache = new Map();
+
+  const read = (pos) => {
+    if (!Number.isInteger(pos) || pos < 1 || pos > length) return undefined;
+    if (cache.has(pos)) return cache.get(pos);
+    const o = base + (pos - 1) * NCH;
+    const A = counts[o], T = counts[o + 1], G = counts[o + 2], C = counts[o + 3];
+    const del = counts[o + 4], ins = counts[o + 5];
+    const xpp = counts[o + 6], xbq = counts[o + 7];
+    let entry;
+    if (A || T || G || C || del || ins || xpp || xbq) {
+      entry = { A, T, G, C, del, ins };
+      if (xpp) entry.xpp = xpp;
+      if (xbq) entry.xbq = xbq;
+      const seqs = insSeqs && insSeqs[String(pos)];
+      if (seqs) entry.ins_seqs = seqs;
+    } else {
+      // No reads at all here, which the JSON form expressed by omitting the key.
+      entry = undefined;
+    }
+    cache.set(pos, entry);
+    return entry;
+  };
+
+  return new Proxy(Object.create(null), {
+    get: (_, prop) => (typeof prop === 'string' ? read(Number(prop)) : undefined),
+    has: (_, prop) => (typeof prop === 'string' ? read(Number(prop)) !== undefined : false),
+  });
+}
+
 export function useGeneData() {
   const [index, setIndex] = useState(null);
   const [gene, setGene] = useState(null);
@@ -123,19 +168,53 @@ export function useGeneData() {
       setGene(g => g ? { ...g, cdsSeq, cdsMap } : g);
 
       // ── Load actual pileup (for depth/counts) ────────────────────────
-      // Try all.json first; fall back to per-sample files
+      // Preferred: the packed binary, which is mapped onto an ArrayBuffer and
+      // needs no parsing. The JSON form holds one object per sample and
+      // position, some two million for a 200-accession panel, and allocating
+      // those dominates the time to open a gene however the file is served.
       let pileupLoaded = false;
       try {
-        const pr = await fetch(`data/pileup/${geneId}/all.json`, { signal: controller.signal });
-        if (pr.ok) {
-          const merged = await pr.json();
+        const [br, mr] = await Promise.all([
+          fetch(`data/pileup/${geneId}/all.bin`, { signal: controller.signal }),
+          fetch(`data/pileup/${geneId}/all_meta.json`, { signal: controller.signal }),
+        ]);
+        if (br.ok && mr.ok) {
+          const [buf, meta] = await Promise.all([br.arrayBuffer(), mr.json()]);
+          const dv = new DataView(buf);
+          const magic = String.fromCharCode(dv.getUint8(0), dv.getUint8(1), dv.getUint8(2), dv.getUint8(3));
+          if (magic !== 'HAPB') throw new Error('bad pileup header');
+          const nSamples = dv.getUint32(8, true);
+          const length = dv.getUint32(12, true);
+          const counts = new Uint16Array(buf, 16, nSamples * length * NCH);
+          for (let si = 0; si < meta.samples.length; si++) {
+            const sid = meta.samples[si];
+            pileupCache.current[`${geneId}/${sid}`] =
+              makeSampleView(counts, si, length, meta.ins_seqs?.[sid]);
+          }
+          // Any accession absent from the packed file has no data at all.
           for (const sid of sampleList) {
-            pileupCache.current[`${geneId}/${sid}`] = merged[sid] || null;
+            if (pileupCache.current[`${geneId}/${sid}`] === undefined)
+              pileupCache.current[`${geneId}/${sid}`] = null;
           }
           pileupLoaded = true;
           if (!controller.signal.aborted) setPileupProgress(1);
         }
       } catch {}
+
+      // Fall back to the merged JSON where the binary has not been generated.
+      if (!pileupLoaded) {
+        try {
+          const pr = await fetch(`data/pileup/${geneId}/all.json`, { signal: controller.signal });
+          if (pr.ok) {
+            const merged = await pr.json();
+            for (const sid of sampleList) {
+              pileupCache.current[`${geneId}/${sid}`] = merged[sid] || null;
+            }
+            pileupLoaded = true;
+            if (!controller.signal.aborted) setPileupProgress(1);
+          }
+        } catch {}
+      }
 
       if (!pileupLoaded) {
         // Load individual files (background, batched)
@@ -302,6 +381,21 @@ export function useGeneData() {
     return { haplotypes, variantPositions };
   }, []);
 
+  /**
+   * Raw per-base counts as written by scripts/generate_pileup.py, without the
+   * pseudo-pileup fallback used by getPileup. Variant-level filtering needs
+   * genuine read counts, and must not be applied to reconstructed ones.
+   */
+  const getRawPileup = useCallback((geneId, sampleId) => {
+    return pileupCache.current[`${geneId}/${sampleId}`] || null;
+  }, []);
+
+  const hasRawPileup = useCallback((geneId) => {
+    const cache = precomputedCache.current[geneId];
+    if (!cache) return false;
+    return cache.samples.some(sid => !!pileupCache.current[`${geneId}/${sid}`]);
+  }, []);
+
   const getSampleIdxMap = useCallback((geneId) => {
     return precomputedCache.current[geneId]?.sampleIdxMap || {};
   }, []);
@@ -316,7 +410,7 @@ export function useGeneData() {
     loadIndex, loadGene, loadSamples,
     loadAllPileups: loadPrecomputed,
     loadPrecomputed,
-    getPileup, getPositionData, getMsaInsData,
+    getPileup, getRawPileup, hasRawPileup, getPositionData, getMsaInsData,
     getSampleIdxMap, getSampleList,
     computeCustomHaplotypesFromEnc,
   };
