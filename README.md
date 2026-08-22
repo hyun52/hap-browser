@@ -5,7 +5,7 @@
 > Visualize gene-level haplotype patterns across 200 rice accessions, design KASP and InDel markers in-browser, and add new genes with a Snakemake pipeline.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](CHANGELOG_pipeline.md)
+[![Version](https://img.shields.io/badge/version-1.1.1-green.svg)](CHANGELOG_pipeline.md)
 [![User Guide](https://img.shields.io/badge/📘_User_Guide-USER__GUIDE.md-028090.svg)](USER_GUIDE.md)
 [![React](https://img.shields.io/badge/React-18-61DAFB.svg)](https://react.dev/)
 [![Snakemake](https://img.shields.io/badge/Snakemake-9-039475.svg)](https://snakemake.github.io/)
@@ -47,24 +47,48 @@ conda activate hapbrowser
 git clone https://github.com/hyun52/hap-browser.git
 cd hap-browser
 
-# 3. Download pileup data (~157 MB) from the v1.1.0 release
-wget https://github.com/hyun52/hap-browser/releases/download/v1.1.0/hap-browser-pileup-data-v1.1.0.tar
-tar xf hap-browser-pileup-data-v1.1.0.tar -C public/data/
+# 3. Download the pileup data (~164 MB) from the v1.1.1 release
+#    This one archive is the whole dataset. Do not also install v1.0.0.
+wget https://github.com/hyun52/hap-browser/releases/download/v1.1.1/hap-browser-pileup-data-v1.1.1.tar
+tar xf hap-browser-pileup-data-v1.1.1.tar -C public/data/
 
 # 4. Decompress (the .gz copies are kept for faster serving)
 cd public/data && gunzip -k pileup/*/*.gz precomputed/*.gz && cd ../..
 
-# 5. Install dependencies
+# 5. Check that the archive landed where the browser looks for it
+ls public/data/precomputed/Os06g0275000.json \
+   public/data/pileup/Os06g0275000/all.bin \
+   public/data/bam/Os06g0275000/samples.json
+
+# 6. Install dependencies
 npm install
 pip install -r backend/requirements.txt
 
-# 6. Start
+# 7. Start
 bash start.sh
 # → Frontend: http://localhost:8080
 # → Backend:  http://localhost:8081
 ```
 
 The demo dataset includes 23 rice heading-date genes plus Sub1A across 200 IRRI accessions. See [`USER_GUIDE.md`](USER_GUIDE.md) for step-by-step usage.
+
+On opening, the browser should show the Hd1 locus with 200 accession rows. If the
+matrix is empty, or a message reports a missing file under `data/`, step 3 or 4
+did not complete — re-check the paths listed in step 5.
+
+### Which data archive to install
+
+Install **v1.1.1 only**. It is self-contained.
+
+| Release | Use it? | |
+|---|---|---|
+| **v1.1.1** (~164 MB) | **yes** | Packed binary pileups, precomputed summaries, and accession lists |
+| v1.1.0 (~157 MB) | no | Same data, but the per-gene accession lists were left out; superseded by v1.1.1 |
+| v1.0.0 (~773 MB) | no | Predates the precomputed summaries the browser now reads; superseded, kept only for provenance |
+
+The archives are not cumulative and are not meant to be layered on top of one
+another. Installing v1.0.0 as well as v1.1.1 leaves the older per-sample JSON
+pileups in `public/data/pileup/`, which are ignored but occupy several GB.
 
 ## Adding new genes
 
@@ -182,7 +206,7 @@ If you use Hap-Browser in published work, a citation is appreciated.
   year      = {2026},
   publisher = {Plant Genome and Breeding Lab, Jeonbuk National University},
   url       = {https://github.com/hyun52/hap-browser},
-  version   = {1.0.0}
+  version   = {1.1.1}
 }
 ```
 

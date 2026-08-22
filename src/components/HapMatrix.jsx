@@ -7,7 +7,10 @@ async function fetchGeneData(geneInfo) {
   const id = geneInfo.id;
   if (geneDataCache[id]) return geneDataCache[id];
   const res = await fetch(`data/precomputed/${id}.json`);
-  if (!res.ok) throw new Error(`precomputed/${id}.json not found`);
+  // A dev server that falls back to the SPA shell answers a missing file with
+  // `200 text/html`, so the content type, not the status, decides.
+  if (!res.ok || !(res.headers.get('content-type') || '').includes('json'))
+    throw new Error(`data/precomputed/${id}.json is missing — install the v1.1.1 pileup archive (README step 3)`);
   const pc = await res.json();
   const sampleList = pc.samples || [];
   const sampleIdxMap = {};

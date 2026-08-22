@@ -105,7 +105,10 @@ export default function App() {
     setSelectedHaps(new Set()); setExpandedHap(null); setDeselectedSamples(new Set()); setTab('view');
     setGotoInput(''); setGotoTarget(null); setShowMarker(false); setShowExport(false);
     setCustomRange([{ start: '', end: '' }]);
-    if (slist.length > 0) loadAllPileups(gi.id, slist, g);
+    // Loaded unconditionally: the summary carries its own accession list, and
+    // running it even when slist is empty is what surfaces a missing-data
+    // message instead of an empty grid with no explanation.
+    loadAllPileups(gi.id, slist, g);
   }, [loadGene, loadSamples, loadAllPileups, pushRecentGene]);
 
   // Access latest handleSelectGene via ref — always use the latest closure without re-running the mount effect

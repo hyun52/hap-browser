@@ -9,6 +9,20 @@ import { parseFASTA, parseGFF3 } from '../utils/parsers.js';
 const NCH = 8;
 
 /**
+ * The dev server answers an unknown path with the single-page shell rather than
+ * a 404, so a data file that was never installed arrives as `200 text/html` and
+ * only fails later, inside JSON.parse, as an unexplained syntax error. Reading
+ * the content type first turns that back into the "file is absent" case every
+ * caller already handles.
+ */
+async function fetchJSON(url, opts) {
+  const res = await fetch(url, opts);
+  if (!res.ok) return null;
+  if (!(res.headers.get('content-type') || '').includes('json')) return null;
+  return res.json();
+}
+
+/**
  * A read-only view of one accession's counts, indexed by position exactly as
  * the JSON form was, so that every consumer is unaffected by the change of
  * format. Entries are materialised on access and cached, which keeps the cost
@@ -69,9 +83,8 @@ export function useGeneData() {
   const loadIndex = useCallback(async () => {
     setLoading('Loading gene index…');
     try {
-      const res = await fetch('data/index.json?v=' + Date.now(), { cache: 'no-store' });
-      if (!res.ok) throw new Error('data/index.json not found');
-      const data = await res.json();
+      const data = await fetchJSON('data/index.json?v=' + Date.now(), { cache: 'no-store' });
+      if (!data) throw new Error('data/index.json not found');
       setIndex(data); setLoading(''); return data;
     } catch (err) { setLoading(`Error: ${err.message}`); return null; }
   }, []);
@@ -97,11 +110,27 @@ export function useGeneData() {
     } catch (err) { setLoading(`Error: ${err.message}`); return null; }
   }, []);
 
+  /**
+   * The accession list for one gene. The pipeline writes it to
+   * bam/<gene>/samples.json, but that file only ships in the v1.0.0 data
+   * archive; the packed archives record the same list in the pileup metadata
+   * and in the precomputed summary. Falling back to those keeps the panel
+   * populated whichever archive is installed, instead of silently rendering an
+   * empty grid.
+   */
   const loadSamples = useCallback(async (geneId) => {
-    try {
-      const r = await fetch(`data/bam/${geneId}/samples.json`);
-      if (r.ok) { const list = await r.json(); setSamples(list); return list; }
-    } catch {}
+    const sources = [
+      `data/bam/${geneId}/samples.json`,
+      `data/pileup/${geneId}/all_meta.json`,
+      `data/precomputed/${geneId}.json`,
+    ];
+    for (const url of sources) {
+      try {
+        const data = await fetchJSON(url);
+        const list = Array.isArray(data) ? data : data?.samples;
+        if (Array.isArray(list) && list.length) { setSamples(list); return list; }
+      } catch {}
+    }
     setSamples([]); return [];
   }, []);
 
@@ -124,12 +153,11 @@ export function useGeneData() {
 
     setLoading(`Loading ${geneId}…`);
     try {
-      const res = await fetch(`data/precomputed/${geneId}.json`, { signal: controller.signal });
-      if (!res.ok) {
-        setLoading(`⚠ precomputed/${geneId}.json not found — run scripts/precompute.py`);
+      const pc = await fetchJSON(`data/precomputed/${geneId}.json`, { signal: controller.signal });
+      if (!pc) {
+        setLoading(`⚠ data/precomputed/${geneId}.json is missing — install the v1.1.1 pileup archive (README step 3), or run scripts/precompute.py`);
         return;
       }
-      const pc = await res.json();
       if (controller.signal.aborted) return;
 
       // positionData: convert enc schema → JS-friendly form (add sample-index map)
@@ -174,12 +202,16 @@ export function useGeneData() {
       // those dominates the time to open a gene however the file is served.
       let pileupLoaded = false;
       try {
-        const [br, mr] = await Promise.all([
+        const [br, meta] = await Promise.all([
           fetch(`data/pileup/${geneId}/all.bin`, { signal: controller.signal }),
-          fetch(`data/pileup/${geneId}/all_meta.json`, { signal: controller.signal }),
+          fetchJSON(`data/pileup/${geneId}/all_meta.json`, { signal: controller.signal }),
         ]);
-        if (br.ok && mr.ok) {
-          const [buf, meta] = await Promise.all([br.arrayBuffer(), mr.json()]);
+        // A dev server that falls back to the SPA shell answers a missing
+        // all.bin with HTML, which would otherwise reach the header check below
+        // as four bytes of "<!DO".
+        const binOk = br.ok && !(br.headers.get('content-type') || '').includes('html');
+        if (binOk && meta) {
+          const buf = await br.arrayBuffer();
           const dv = new DataView(buf);
           const magic = String.fromCharCode(dv.getUint8(0), dv.getUint8(1), dv.getUint8(2), dv.getUint8(3));
           if (magic !== 'HAPB') throw new Error('bad pileup header');
@@ -204,9 +236,8 @@ export function useGeneData() {
       // Fall back to the merged JSON where the binary has not been generated.
       if (!pileupLoaded) {
         try {
-          const pr = await fetch(`data/pileup/${geneId}/all.json`, { signal: controller.signal });
-          if (pr.ok) {
-            const merged = await pr.json();
+          const merged = await fetchJSON(`data/pileup/${geneId}/all.json`, { signal: controller.signal });
+          if (merged) {
             for (const sid of sampleList) {
               pileupCache.current[`${geneId}/${sid}`] = merged[sid] || null;
             }
@@ -226,10 +257,8 @@ export function useGeneData() {
             const key = `${geneId}/${sid}`;
             if (pileupCache.current[key] !== undefined) return;
             try {
-              const r = await fetch(`data/pileup/${geneId}/${sid}.json`, { signal: controller.signal });
-              if (!r.ok) { pileupCache.current[key] = null; return; }
-              const data = await r.json();
-              pileupCache.current[key] = data.pileup || data;
+              const data = await fetchJSON(`data/pileup/${geneId}/${sid}.json`, { signal: controller.signal });
+              pileupCache.current[key] = data ? (data.pileup || data) : null;
             } catch { pileupCache.current[key] = null; }
           }));
           if (!controller.signal.aborted)

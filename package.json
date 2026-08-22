@@ -1,6 +1,6 @@
 {
   "name": "hap-browser",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "type": "module",
   "description": "Rice heading-date gene haplotype browser (Oryza sativa, RAP-DB Nipponbare)",
   "scripts": {
