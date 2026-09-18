@@ -4,6 +4,8 @@
 >
 > Visualize gene-level haplotype patterns across 200 rice accessions, design KASP and InDel markers in-browser, and add new genes with a Snakemake pipeline.
 
+[![Demo](https://img.shields.io/badge/demo-hapbrowser.jbnu.ac.kr-success.svg)](https://hapbrowser.jbnu.ac.kr)
+[![DOI](https://img.shields.io/badge/DOI-10.1186%2Fs12859--026--06651--5-blue.svg)](https://doi.org/10.1186/s12859-026-06651-5)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.1.1-green.svg)](CHANGELOG_pipeline.md)
 [![User Guide](https://img.shields.io/badge/📘_User_Guide-USER__GUIDE.md-028090.svg)](USER_GUIDE.md)
@@ -35,6 +37,10 @@
 - Snakemake pipeline to add new genes from FASTQ
 
 ## Quick Start
+
+> A public instance is running at **[hapbrowser.jbnu.ac.kr](https://hapbrowser.jbnu.ac.kr)** —
+> no installation or registration required. Follow the steps below only for a
+> local deployment or to add your own genes.
 
 > **Prerequisite**: [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installed. No sudo required.
 
@@ -193,24 +199,27 @@ Issues and pull requests welcome.
 
 Licensed under the **MIT License**. See [`LICENSE`](LICENSE) for full terms.
 
-If you use Hap-Browser in published work, a citation is appreciated.
-
 ## Citation
 
-> A peer-reviewed publication is in preparation. Until it is published, please cite this repository.
+If you use Hap-Browser in published work, please cite:
+
+> Lee H-O, Kim M, Jun Y, Yang C-Y, Kwak S-H, Mo Y (2026)
+> Hap-Browser: a web application for gene-level haplotype visualization and
+> marker design. *BMC Bioinformatics*.
+> [https://doi.org/10.1186/s12859-026-06651-5](https://doi.org/10.1186/s12859-026-06651-5)
 
 ```bibtex
-@software{hapbrowser2026,
-  author    = {Lee, Hyunoh},
-  title     = {HapBrowser: A Rice Haplotype Browser with Integrated Marker Design},
-  year      = {2026},
-  publisher = {Plant Genome and Breeding Lab, Jeonbuk National University},
-  url       = {https://github.com/hyun52/hap-browser},
-  version   = {1.1.1}
+@article{hapbrowser2026,
+  author  = {Lee, Hyun-Oh and Kim, Mina and Jun, Yeeun and
+             Yang, Chi-Young and Kwak, Sun-Hwa and Mo, Youngjun},
+  title   = {Hap-Browser: a web application for gene-level haplotype
+             visualization and marker design},
+  journal = {BMC Bioinformatics},
+  year    = {2026},
+  doi     = {10.1186/s12859-026-06651-5},
+  url     = {https://doi.org/10.1186/s12859-026-06651-5}
 }
 ```
-
-This page will be updated with the journal reference and DOI once published.
 
 ## Acknowledgments
 
